@@ -325,6 +325,60 @@ local function SortTimers()
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
+     elseif (sh > sr) and (sr == ec) then
+          dbg("sh > sr == ec")
+          if (sr ~= 0) then
+               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
+
+               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - ec))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - ec_end))
+          end
+     elseif (sr > sh) and (sh == ec) then
+          dbg("sr > sh == ec")
+          if (sh ~= 0) then
+               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
+
+               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - sh))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - sh_end))
+          end
+     elseif (ec > sh) and (sh == sr) then
+          dbg("ec > sh == sr")
+          if (sh ~= 0) then
+               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
+
+               AsylumTracker.timers["exhaustive_charges"] = ec + (9 - (ec - sr))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (9 - (ec_end - sr_end))
+          end
+     elseif (sh == sr) and (sr > ec) then
+          dbg("sh == sr > ec")
+          if (ec ~= 0) then
+               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
+
+               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - sh))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - sh_end))
+          end
+     elseif (sr == ec) and (ec > sh) then
+          dbg("sr == ec > sh")
+          if (sh ~= 0) then
+               AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
+
+               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - ec))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - ec_end))
+          end
+     elseif (sh == ec) and (ec > sr) then
+          dbg("sh == ec > sr")
+          if (sr ~= 0) then
+               AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
+
+               AsylumTracker.timers["exhaustive_charges"] = sh + (13 - (sh - sh))
+               AsylumTracker.endTimes["exhaustive_charges"] = sh_end + (13 - (sh_end - sh_end))
+          end
      else
           dbg("reee")
      end
@@ -741,6 +795,7 @@ function AsylumTracker.RegisterEvents()
           -- Registers Olms' Steam Breath regardless of whether it is to be displayed in order to correctly track Olms' Storm the Heavens Timer
           if not AsylumTracker.sv.scalding_roar then RegisterForAbility(AsylumTracker.id["scalding_roar"]) end
           if not AsylumTracker.sv.storm_the_heavens then RegisterForAbility(AsylumTracker.id["storm_the_heavens"]) end
+          if not AsylumTracker.sv.exhaustive_charges then RegisterForAbility(AsylumTracker.id["exhaustive_charges"]) end
 
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name, EVENT_PLAYER_COMBAT_STATE, AsylumTracker.CombatState) -- Used to determine player's combat state
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
