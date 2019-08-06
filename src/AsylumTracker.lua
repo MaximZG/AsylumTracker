@@ -325,14 +325,15 @@ local function SortTimers()
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
+--[[
      elseif (sh > sr) and (sr == ec) then
           dbg("sh > sr == ec")
           if (sr ~= 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
+               AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
 
-               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - ec))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - ec_end))
+               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - AsylumTracker.timers["scalding_roar"]))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - AsylumTracker.endTimes["scalding_roar"]))
           end
      elseif (sr > sh) and (sh == ec) then
           dbg("sr > sh == ec")
@@ -340,8 +341,8 @@ local function SortTimers()
                AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
 
-               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - sh_end))
+               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - AsylumTracker.timers["storm_the_heavens"]))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - AsylumTracker.endTimes["storm_the_heavens"]))
           end
      elseif (ec > sh) and (sh == sr) then
           dbg("ec > sh == sr")
@@ -349,8 +350,8 @@ local function SortTimers()
                AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
                AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
 
-               AsylumTracker.timers["exhaustive_charges"] = ec + (9 - (ec - sr))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (9 - (ec_end - sr_end))
+               AsylumTracker.timers["exhaustive_charges"] = ec + (9 - (ec - AsylumTracker.timers["scalding_roar"]))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (9 - (ec_end - AsylumTracker.endTimes["scalding_roar"]))
           end
      elseif (sh == sr) and (sr > ec) then
           dbg("sh == sr > ec")
@@ -358,27 +359,28 @@ local function SortTimers()
                AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
 
-               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - sh_end))
+               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - AsylumTracker.timers["storm_the_heavens"]))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - AsylumTracker.endTimes["storm_the_heavens"]))
           end
      elseif (sr == ec) and (ec > sh) then
           dbg("sr == ec > sh")
           if (sh ~= 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
+               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
+               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
 
-               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - ec))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - ec_end))
+               AsylumTracker.timers["exhaustive_charges"] = ec + (13 - (ec - AsylumTracker.timers["scalding_roar"]))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (13 - (ec_end - AsylumTracker.timers["scalding_roar"]))
           end
      elseif (sh == ec) and (ec > sr) then
           dbg("sh == ec > sr")
           if (sr ~= 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
+               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
+               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
 
-               AsylumTracker.timers["exhaustive_charges"] = sh + (13 - (sh - sh))
-               AsylumTracker.endTimes["exhaustive_charges"] = sh_end + (13 - (sh_end - sh_end))
+               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - AsylumTracker.timers["exhaustive_charges"]))
+               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - AsylumTracker.endTimes["exhaustive_charges"]))
           end
+]]
      else
           dbg("reee")
      end
