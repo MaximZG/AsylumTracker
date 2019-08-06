@@ -610,6 +610,64 @@ function AsylumTracker.CreateSettingsWindow()
           },
           {
                type = "checkbox",
+               name = AST_SETT_CHARGES,
+               tooltip = AST_SETT_CHARGES_TOOL,
+               getFunc = function() return sv["exhaustive_charges"] end,
+               setFunc = function(value)
+                    sv["exhaustive_charges"] = value
+                    AsylumTracker.ToggleMovable()
+                    AsylumTracker.ToggleMovable()
+               end,
+               default = false,
+               requiresReload = true,
+               width = "full",
+          },
+          {
+               type = "slider",
+               name = AST_SETT_FONT_SIZE,
+               tooltip = AST_SETT_CHARGES_SIZE_TOOL,
+               getFunc = function() return sv["font_size_exhaustive_charges"] end,
+               setFunc = function(value) sv["font_size_exhaustive_charges"] = value AsylumTracker.SetFontSize(AsylumTrackerChargesLabel, value) end,
+               min = 38,
+               max = 72,
+               step = 2,
+               default = 48,
+               width = "full",
+               disabled = function() return not sv["exhaustive_charges"] end,
+          },
+          {
+               type = "slider",
+               name = AST_SETT_SCALE,
+               tooltip = AST_SETT_CHARGES_SCALE_TOOL,
+               warning = AST_SETT_SCALE_WARN,
+               getFunc = function() return sv["exhaustive_charges_scale"] end,
+               setFunc = function(value) sv["exhaustive_charges_scale"] = value AsylumTracker.SetScale(AsylumTrackerChargesLabel, value) end,
+               min = 0.5,
+               max = 2,
+               step = 0.1,
+               default = 1,
+               width = "full",
+               disabled = function() return not sv["exhaustive_charges"] end,
+          },
+          {
+               type = "colorpicker",
+               name = AST_SETT_COLOR,
+               tooltip = AST_SETT_CHARGES_COLOR_TOOL,
+               getFunc = function() return unpack(sv["color_exhaustive_charges"]) end,
+               setFunc = function(r, g, b, a)
+                    sv["color_exhaustive_charges"] = {r, g, b, a}
+                    AsylumTrackerChargesLabel:SetColor(unpack(sv["color_exhaustive_charges"]))
+                    AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+               end,
+               width = "full",
+               disabled = function() return not sv["exhaustive_charges"] end,
+          },
+          {
+               type = "header",
+               width = "full",
+          },
+          {
+               type = "checkbox",
                name = AST_SETT_FIRE,
                tooltip = AST_SETT_FIRE_TOOL,
                getFunc = function() return sv["trial_by_fire"] end,

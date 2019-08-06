@@ -36,6 +36,7 @@ AsylumTracker.id = {
      gusts_of_steam = 98868, -- Olms' jump
      trial_by_fire = 98582, -- Olms' fire below 25% HP
      scalding_roar = 98683,
+     exhaustive_charges = 95482,
      maim = 95657, -- Felms' Maim
      dormant = 99990, -- Used to tell if Felms/Llothis have been taken down in HM
 
@@ -66,6 +67,7 @@ AsylumTracker.defaults = {
      oppressive_bolts = false,
      trial_by_fire = false,
      scalding_roar = false,
+     exhaustive_charges = false,
      maim = false,
 
      -- XML Offsets
@@ -87,6 +89,8 @@ AsylumTracker.defaults = {
      steam_offsetY = 680,
      maim_offsetX = AsylumTracker.displayResolution["width"] / 2,
      maim_offsetY = 730,
+     exhaustive_charges_offsetX = AsylumTracker.displayResolution["width"] / 2,
+     exhaustive_charges_offsetY = 780,
 
      -- Font Sizes
      font_size = 48,
@@ -99,6 +103,7 @@ AsylumTracker.defaults = {
      font_size_fire = 48,
      font_size_scalding_roar = 48,
      font_size_maim = 48,
+     font_size_exhaustive_charges = 48,
 
      -- Notification Scale
      olms_hp_scale = 1,
@@ -110,6 +115,7 @@ AsylumTracker.defaults = {
      fire_scale = 1,
      scalding_roar_scale = 1,
      maim_scale = 1,
+     exhaustive_charges_scale = 1,
 
      -- Colors
      color_olms_hp = {1, 0.4, 0, 1},
@@ -124,6 +130,7 @@ AsylumTracker.defaults = {
      color_fire = {1, 0.4, 0, 1},
      color_scalding_roar = {0.5, 0.05, 1, 1},
      color_maim = {0.2, 0.93, .79, 1},
+     color_exhaustive_charges = {0.18, 0.37, 0.45, 1},
 
      -- Sound Effects
      storm_the_heavens_sound = "BATTLEGROUND_CAPTURE_FLAG_CAPTURED_BY_OWN_TEAM",
@@ -139,6 +146,7 @@ AsylumTracker.timers = {
      oppressive_bolts = 0,
      scalding_roar = 0,
      maim = 0,
+     exhaustive_charges = 0,
      felms_dormant = 0,
      llothis_dormant = 0,
 }
@@ -168,7 +176,7 @@ end
 --[[ Name is a bit misleading. The function is called whenever there is a change to the world map,
 meaning this will not only be called when you change zones, but also whenever you're using your world map]]
 local function OnZoneChanged()
---     local zone = zo_strformat("<<C:1>>", GetUnitZone("player"))
+     --     local zone = zo_strformat("<<C:1>>", GetUnitZone("player"))
      local zone = zo_strformat("<<C:1>>", GetUnitZone("player"))
      local targetZone = zo_strformat("<<C:1>>", GetZoneNameById(ASYLUM_SANCTORIUM))
      dbg("Current Zone: " .. zone)
@@ -193,23 +201,28 @@ local function SetTimer(key)
      local duration
      if key == "storm_the_heavens" then
           duration = 40
+          local steamTimeRemaining = AsylumTracker.timers.scalding_roar
+          if (duration - AsylumTracker.timers.scalding_roar > 25) then
+               steamTimeRemaining = steamTimeRemaining + 25
+          end
+          if (duration - steamTimeRemaining < 5) and (duration - steamTimeRemaining >= 0) then
+               duration = duration + (5 - (duration - AsylumTracker.timers.scalding_roar))
+          end
      elseif key == "defiling_blast" then
           duration = 21
      elseif key == "teleport_strike" then
           duration = 21
      elseif key == "oppressive_bolts" then
           duration = 12
+     elseif key == "exhaustive_charges" then
+          duration = 12
+          if (duration - AsylumTracker.timers.scalding_roar < 5) and (duration - AsylumTracker.timers.scalding_roar >= 0) then
+               duration = duration + (5 - (duration - AsylumTracker.timers.scalding_roar))
+          end
      elseif key == "scalding_roar" then
-          dbg("[" .. GetGameTimeSeconds() .. "] Time Until Steam: 25s")
-          dbg("[" .. GetGameTimeSeconds() .. "] Time Until Storm the Heavens: " .. AsylumTracker.timers.storm_the_heavens .. "s")
-          dbg("[" .. GetGameTimeSeconds() .. "] Steam - Storm: " .. 25 - AsylumTracker.timers.storm_the_heavens)
           duration = 25
-          if duration - AsylumTracker.timers.storm_the_heavens < 6 and duration - AsylumTracker.timers.storm_the_heavens > 0 then
-               AsylumTracker.timers.scalding_roar = AsylumTracker.timers.storm_the_heavens + 6
-               dbg("Adjusting Steam Timer.")
-          elseif duration - AsylumTracker.timers.storm_the_heavens > -5 and duration - AsylumTracker.timers.storm_the_heavens < 0 then
-               AsylumTracker.timers.storm_the_heavens = duration + 5
-               dbg("Adjusting Kite Timer")
+          if (duration - AsylumTracker.timers.storm_the_heavens < 6) and (duration - AsylumTracker.timers.storm_the_heavens) >= 0 then
+               duration = duration + (6 - (duration - AsylumTracker.timers.storm_the_heavens))
           end
      elseif key == "llothis_dormant" then
           duration = 45
@@ -253,7 +266,7 @@ local function UpdateTimers()
                     AsylumTracker.timers[key] = AsylumTracker.timers[key] - 0.5
                     local timeRemaining = AsylumTracker.timers[key]
 
-                    if key == "storm_the_heavens" and timeRemaining < 6 and timeRemaining >= 0 then -- If roughly 5 seconds until the next event should happen
+                    if key == "storm_the_heavens" and timeRemaining < 6 and timeRemaining >= 0 and AsylumTracker.sv.storm_the_heavens then -- If roughly 5 seconds until the next event should happen
                          AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|cff0000" .. math.floor(timeRemaining) .. "|r") --Update the on-screen message
                          AsylumTrackerStorm:SetHidden(false) --Show the message
                          if timeRemaining > 0 and timeRemaining == math.floor(timeRemaining) then
@@ -279,6 +292,10 @@ local function UpdateTimers()
                          else
                               AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|cff0000" .. GetString(AST_SETT_SOON) .. "|r")
                          end
+                    elseif key == "exhaustive_charges" and timeRemaining < 5 and timeRemaining >= 0 and AsylumTracker.sv.exhaustive_charges then
+                         dbg("Charges: " .. math.floor(timeRemaining))
+                         AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|cff0000" .. math.floor(timeRemaining) .. "|r")
+                         AsylumTrackerCharges:SetHidden(false)
                     elseif key == "scalding_roar" and timeRemaining < 5 and timeRemaining >= 0 and AsylumTracker.sv.scalding_roar then
                          AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|cff0000" .. math.floor(timeRemaining) .. "|r")
                          AsylumTrackerSteam:SetHidden(false)
@@ -439,6 +456,7 @@ function AsylumTracker.CombatState(event, isInCombat)
                AsylumTrackerFire:SetHidden(true)
                AsylumTrackerSteam:SetHidden(true)
                AsylumTrackerMaim:SetHidden(true)
+               AsylumTrackerCharges:SetHidden(true)
           end
      end
 end
@@ -457,10 +475,13 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                end
                AsylumTracker.stormIsActive = true
                SetTimer("storm_the_heavens") -- Storm the Heavens just started, so create a new timer to preemtively warn for the next Storm the Heavens
-               AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE_NOW)) -- Sets the warning notifcation to KITE when Storm the Heavens is active
-               AsylumTrackerStorm:SetHidden(false) -- Unhides the notifcation for Storm the Heavens
-               -- Storm the Heavens doesn't return a result to let you know when the storm ends, so I tell it to remove the notifcation from the screen 6 seconds after the storm started
+               if AsylumTracker.sv.storm_the_heavens then
+                    AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE_NOW)) -- Sets the warning notifcation to KITE when Storm the Heavens is active
+                    AsylumTrackerStorm:SetHidden(false) -- Unhides the notifcation for Storm the Heavens
+               end
+                    -- Storm the Heavens doesn't return a result to let you know when the storm ends, so I tell it to remove the notifcation from the screen 6 seconds after the storm started
                zo_callLater(function() AsylumTrackerStorm:SetHidden(true) AsylumTracker.stormIsActive = false end, 6000)
+
           elseif abilityId == AsylumTracker.id["defiling_blast"] and hitValue == 2000 then
                dbg("Blast: " .. GetAbilityName(abilityId))
                targetName = UnitIdToName(targetUnitId) -- Gets the @DisplayName for the player targeted by Llothis' defiling blast cone
@@ -476,11 +497,13 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                     if AsylumTracker.sv["sound_enabled"] then PlaySound(SOUNDS.BATTLEGROUND_COUNTDOWN_FINISH) end
                end
                AsylumTrackerBlast:SetHidden(false) -- Unhides the notifcation
+
           elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
                dbg("Bolts: " .. GetAbilityName(abilityId))
                AsylumTracker.timers["oppressive_bolts"] = 0
                AsylumTrackerOppressiveBoltsLabel:SetText("|cff0000" .. GetString(AST_NOTIF_INTERRUPT) .. "|r")
                AsylumTrackerOppressiveBolts:SetHidden(false)
+
           elseif abilityId == AsylumTracker.id["teleport_strike"] then
                dbg("Teleport Strike: " .. GetAbilityName(abilityId))
                targetName = UnitIdToName(targetUnitId)
@@ -495,6 +518,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                AsylumTrackerTeleportStrike:SetHidden(false)
                -- Removes the notifcation from the screen 2 seconds after Felm's jumps on his target
                zo_callLater(function() AsylumTrackerTeleportStrike:SetHidden(true) end, 2000)
+
           elseif abilityId == AsylumTracker.id["gusts_of_steam"] then
                dbg("Olms' Jump: " .. GetAbilityName(abilityId))
                -- Removed the HIDE notification from the screen 10 seconds after Olms starts jumping at his 90% 75% 50% 25% marks
@@ -517,11 +541,13 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                          if AsylumTracker.sv.teleport_strike then AsylumTracker.timers.teleport_strike = 34 end
                     end
                end
+
           elseif abilityId == AsylumTracker.id["trial_by_fire"] then
                dbg("Fire: " .. GetAbilityName(abilityId))
                AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE))
                AsylumTrackerFire:SetHidden(false)
                zo_callLater(function() AsylumTrackerFire:SetHidden(true) end, 8000)
+
           elseif abilityId == AsylumTracker.id["scalding_roar"] then
                SetTimer("scalding_roar")
                if AsylumTracker.sv.scalding_roar then
@@ -530,6 +556,13 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                     AsylumTrackerSteam:SetHidden(false)
                     zo_callLater(function() AsylumTrackerSteam:SetHidden(true) end, 5000)
                end
+
+          elseif abilityId == AsylumTracker.id["exhaustive_charges"] then
+               SetTimer("exhaustive_charges")
+               dbg(GetAbilityName(abilityId) .. " (" .. abilityId .. ") with result " .. result .. " targeting " .. UnitIdToName(targetUnitId) .. " and sourced by " .. UnitIdToName(sourceUnitId))
+               AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|cff0000" .. GetString(AST_SETT_NOW) .. "|r")
+               AsylumTrackerCharges:SetHidden(false)
+               zo_callLater(function() AsylumTrackerCharges:SetHidden(true) end, 2000)
           end
      end
      if result == ACTION_RESULT_EFFECT_GAINED then
@@ -614,6 +647,7 @@ function AsylumTracker.RegisterEvents()
                     eventIndex = eventIndex + 1
                     EVENT_MANAGER:RegisterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent) -- Registers all combat events
                     EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
+                    dbg("Registered " .. GetAbilityName(abilityId) .. " as " .. eventName .. eventIndex)
                end
           end
 
@@ -633,7 +667,8 @@ function AsylumTracker.RegisterEvents()
           end
           RegisterForAbility(AsylumTracker.id["gusts_of_steam"]) -- Olms Jump at 90/75/50/25
           -- Registers Olms' Steam Breath regardless of whether it is to be displayed in order to correctly track Olms' Storm the Heavens Timer
-          if not AsylumTracker.sv.scalding_roar and AsylumTracker.sv.storm_the_heavens then RegisterForAbility(AsylumTracker.id["scalding_roar"]) end
+          if not AsylumTracker.sv.scalding_roar then RegisterForAbility(AsylumTracker.id["scalding_roar"]) end
+          if not AsylumTracker.sv.storm_the_heavens then RegisterForAbility(AsylumTracker.id["storm_the_heavens"]) end
 
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name, EVENT_PLAYER_COMBAT_STATE, AsylumTracker.CombatState) -- Used to determine player's combat state
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
@@ -661,9 +696,9 @@ function AsylumTracker.UnregisterEvents()
 end
 
 local function RGBToHex(r, g, b, a)
-     r = string.format("%x", r*255)
-     g = string.format("%x", g*255)
-     b = string.format("%x", b*255)
+     r = string.format("%x", r * 255)
+     g = string.format("%x", g * 255)
+     b = string.format("%x", b * 255)
      if #r < 2 then r = "0" .. r end
      if #g < 2 then g = "0" .. g end
      if #b < 2 then b = "0" .. b end
@@ -688,6 +723,7 @@ function AsylumTracker.ToggleMovable()
           AsylumTrackerFireLabel:SetText(GetString(AST_PREVIEW_FIRE))
           AsylumTrackerSteamLabel:SetText(GetString(AST_PREVIEW_STEAM))
           AsylumTrackerMaimLabel:SetText(GetString(AST_PREVIEW_MAIM))
+          AsylumTrackerChargesLabel:SetText(GetString(AST_PREVIEW_CHARGES))
 
           AsylumTrackerOlmsHP:SetMovable(true)
           if AsylumTracker.sv["storm_the_heavens"] then AsylumTrackerStorm:SetMovable(true) end
@@ -698,6 +734,7 @@ function AsylumTracker.ToggleMovable()
           if AsylumTracker.sv["trial_by_fire"] then AsylumTrackerFire:SetMovable(true) end
           if AsylumTracker.sv["scalding_roar"] then AsylumTrackerSteam:SetMovable(true) end
           if AsylumTracker.sv["maim"] then AsylumTrackerMaim:SetMovable(true) end
+          if AsylumTracker.sv["exhaustive_charges"] then AsylumTrackerCharges:SetMovable(true) end
 
           AsylumTrackerOlmsHP:SetHidden(false)
           if AsylumTracker.sv["storm_the_heavens"] then AsylumTrackerStorm:SetHidden(false) end
@@ -708,6 +745,7 @@ function AsylumTracker.ToggleMovable()
           if AsylumTracker.sv["trial_by_fire"] then AsylumTrackerFire:SetHidden(false) end
           if AsylumTracker.sv["scalding_roar"] then AsylumTrackerSteam:SetHidden(false) end
           if AsylumTracker.sv["maim"] then AsylumTrackerMaim:SetHidden(false) end
+          if AsylumTracker.sv["exhaustive_charges"] then AsylumTrackerCharges:SetHidden(false) end
      else
           AsylumTrackerOlmsHP:SetMovable(false)
           AsylumTrackerStorm:SetMovable(false)
@@ -718,6 +756,7 @@ function AsylumTracker.ToggleMovable()
           AsylumTrackerFire:SetMovable(false)
           AsylumTrackerSteam:SetMovable(false)
           AsylumTrackerMaim:SetMovable(false)
+          AsylumTrackerCharges:SetMovable(false)
 
           AsylumTrackerOlmsHP:SetHidden(true)
           AsylumTrackerStorm:SetHidden(true)
@@ -728,6 +767,7 @@ function AsylumTracker.ToggleMovable()
           AsylumTrackerFire:SetHidden(true)
           AsylumTrackerSteam:SetHidden(true)
           AsylumTrackerMaim:SetHidden(true)
+          AsylumTrackerCharges:SetHidden(true)
      end
 end
 
@@ -755,6 +795,7 @@ function AsylumTracker.ResetAnchors()
      AsylumTrackerFire:ClearAnchors()
      AsylumTrackerSteam:ClearAnchors()
      AsylumTrackerMaim:ClearAnchors()
+     AsylumTrackerCharges:ClearAnchors()
 
      AsylumTrackerOlmsHP:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["olms_hp_offsetX"], AsylumTracker.sv["olms_hp_offsetY"])
      AsylumTrackerStorm:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["storm_offsetX"], AsylumTracker.sv["storm_offsetY"])
@@ -765,6 +806,7 @@ function AsylumTracker.ResetAnchors()
      AsylumTrackerFire:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["fire_offsetX"], AsylumTracker.sv["fire_offsetY"])
      AsylumTrackerSteam:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["steam_offsetX"], AsylumTracker.sv["steam_offsetY"])
      AsylumTrackerMaim:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["maim_offsetX"], AsylumTracker.sv["maim_offsetY"])
+     AsylumTrackerCharges:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["exhaustive_charges_offsetX"], AsylumTracker.sv["exhaustive_charges_offsetY"])
 end
 
 function AsylumTracker.SavePosition()
@@ -786,6 +828,8 @@ function AsylumTracker.SavePosition()
      AsylumTracker.sv["steam_offsetY"] = AsylumTrackerSteam:GetTop()
      AsylumTracker.sv["maim_offsetX"] = AsylumTrackerMaim:GetLeft()
      AsylumTracker.sv["maim_offsetY"] = AsylumTrackerMaim:GetTop()
+     AsylumTracker.sv["exhaustive_charges_offsetX"] = AsylumTrackerCharges:GetLeft()
+     AsylumTracker.sv["exhaustive_charges_offsetY"] = AsylumTrackerCharges:GetTop()
 end
 
 function AsylumTracker.ResetToDefaults()
@@ -807,6 +851,8 @@ function AsylumTracker.ResetToDefaults()
      AsylumTracker.sv["steam_offsetY"] = AsylumTracker.defaults["steam_offsetY"]
      AsylumTracker.sv["maim_offsetX"] = AsylumTracker.defaults["maim_offsetX"]
      AsylumTracker.sv["maim_offsetY"] = AsylumTracker.defaults["maim_offsetY"]
+     AsylumTracker.sv["exhaustive_charges_offsetX"] = AsylumTracker.defaults["exhaustive_charges_offsetX"]
+     AsylumTracker.sv["exhaustive_charges_offsetY"] = AsylumTracker.defaults["exhaustive_charges_offsetY"]
 
      AsylumTrackerOlmsHP:ClearAnchors()
      AsylumTrackerStorm:ClearAnchors()
@@ -817,6 +863,7 @@ function AsylumTracker.ResetToDefaults()
      AsylumTrackerFire:ClearAnchors()
      AsylumTrackerSteam:ClearAnchors()
      AsylumTrackerMaim:ClearAnchors()
+     AsylumTrackerCharges:ClearAnchors()
 
      AsylumTrackerOlmsHP:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["olms_hp_offsetX"], AsylumTracker.sv["olms_hp_offsetY"])
      AsylumTrackerStorm:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["storm_offsetX"], AsylumTracker.sv["storm_offsetY"])
@@ -827,6 +874,7 @@ function AsylumTracker.ResetToDefaults()
      AsylumTrackerFire:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["fire_offsetX"], AsylumTracker.sv["fire_offsetY"])
      AsylumTrackerSteam:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["steam_offsetX"], AsylumTracker.sv["steam_offsetY"])
      AsylumTrackerMaim:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["maim_offsetX"], AsylumTracker.sv["maim_offsetY"])
+     AsylumTrackerCharges:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["exhaustive_charges_offsetX"], AsylumTracker.sv["exhaustive_charges_offsetY"])
 end
 
 -- Initialization function
@@ -846,6 +894,7 @@ function AsylumTracker.Initialize()
      AsylumTracker.SetFontSize(AsylumTrackerFireLabel, AsylumTracker.sv["font_size_fire"])
      AsylumTracker.SetFontSize(AsylumTrackerSteamLabel, AsylumTracker.sv["font_size_scalding_roar"])
      AsylumTracker.SetFontSize(AsylumTrackerMaimLabel, AsylumTracker.sv["font_size_maim"])
+     AsylumTracker.SetFontSize(AsylumTrackerChargesLabel, AsylumTracker.sv["font_size_exhaustive_charges"])
 
      AsylumTracker.SetScale(AsylumTrackerOlmsHPLabel, AsylumTracker.sv["olms_hp_scale"])
      AsylumTracker.SetScale(AsylumTrackerStormLabel, AsylumTracker.sv["storm_scale"])
@@ -856,6 +905,7 @@ function AsylumTracker.Initialize()
      AsylumTracker.SetScale(AsylumTrackerFireLabel, AsylumTracker.sv["fire_scale"])
      AsylumTracker.SetScale(AsylumTrackerSteamLabel, AsylumTracker.sv["scalding_roar_scale"])
      AsylumTracker.SetScale(AsylumTrackerMaimLabel, AsylumTracker.sv["maim_scale"])
+     AsylumTracker.SetScale(AsylumTrackerChargesLabel, AsylumTracker.sv["exhaustive_charges_scale"])
 
      if AsylumTracker.sv.sphere_message_toggle then
           ZO_CreateStringId("AST_NOTIF_PROTECTOR", AsylumTracker.sv.sphere_message)

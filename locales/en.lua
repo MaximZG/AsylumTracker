@@ -89,6 +89,13 @@ ZO_CreateStringId("AST_SETT_STEAM_SIZE_TOOL"           , "Change the Font Size f
 ZO_CreateStringId("AST_SETT_STEAM_SCALE_TOOL"          , "Change the Scale for Olms' Steam Breath")
 ZO_CreateStringId("AST_SETT_STEAM_COLOR_TOOL"          , "Color for Olms' Steam Breath")
 
+-- Exhaustive Charges
+ZO_CreateStringId("AST_SETT_CHARGES"                   , "Exhaustive Charges")
+ZO_CreateStringId("AST_SETT_CHARGES_TOOL"              , "Olms' Exhaustive Charges Attack")
+ZO_CreateStringId("AST_SETT_CHARGES_SIZE_TOOL"         , "Change the Font Size for Olms' Exhaustive Charges")
+ZO_CreateStringId("AST_SETT_CHARGES_SCALE_TOOL"        , "Change the Scale for Olms' Exhaustive Charges")
+ZO_CreateStringId("AST_SETT_CHARGES_COLOR_TOOL"        , "Color for Olms' Exhaustive Charges")
+
 -- Trial By Fire
 ZO_CreateStringId("AST_SETT_FIRE"                      , "Trial By Fire") -- Olms' Fire mechanic below 25% HP
 ZO_CreateStringId("AST_SETT_FIRE_TOOL"                 , "Olms' Fire Attack below 25% HP")
@@ -125,6 +132,7 @@ ZO_CreateStringId("AST_NOTIF_INTERRUPT"                , "INTERRUPT") -- For whe
 ZO_CreateStringId("AST_NOTIF_FIRE"                     , "FIRE")
 ZO_CreateStringId("AST_NOTIF_STEAM"                    , "STEAM: ") -- Referring to Olms' Steam breath
 ZO_CreateStringId("AST_NOTIF_MAIM"                     , "MAIM: ") -- Referring to Felms' Maim
+ZO_CreateStringId("AST_NOTIF_CHARGES"                  , "CHARGES: ")
 
 -- Previewing Notifications
 ZO_CreateStringId("AST_PREVIEW_OLMS_HP_1"              , "OLMS")
@@ -139,3 +147,4 @@ ZO_CreateStringId("AST_PREVIEW_BOLTS"                  , "BOLTS")
 ZO_CreateStringId("AST_PREVIEW_FIRE"                   , "FIRE")
 ZO_CreateStringId("AST_PREVIEW_STEAM"                  , "STEAM")
 ZO_CreateStringId("AST_PREVIEW_MAIM"                   , "MAIM")
+ZO_CreateStringId("AST_PREVIEW_CHARGES"                , "CHARGES")
