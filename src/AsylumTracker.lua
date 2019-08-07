@@ -182,8 +182,6 @@ local function OnZoneChanged()
      --     local zone = zo_strformat("<<C:1>>", GetUnitZone("player"))
      local zone = zo_strformat("<<C:1>>", GetUnitZone("player"))
      local targetZone = zo_strformat("<<C:1>>", GetZoneNameById(ASYLUM_SANCTORIUM))
-     dbg("Current Zone: " .. zone)
-     dbg("Target  Zone: " .. targetZone)
      if zone == targetZone then -- Checks to see if the player is in Asylum Sanctorium
           AsylumTracker.isInVAS = true
           if not AsylumTracker.isRegistered then --Used to prevent re-registering events when flipping through world map
@@ -254,78 +252,83 @@ local function SortTimers()
      local sh, sr, ec = AsylumTracker.timers["storm_the_heavens"], AsylumTracker.timers["scalding_roar"], AsylumTracker.timers["exhaustive_charges"]
      local sh_end, sr_end, ec_end = AsylumTracker.endTimes["storm_the_heavens"], AsylumTracker.endTimes["scalding_roar"], AsylumTracker.endTimes["exhaustive_charges"]
      if (sh > sr) and (sr > ec) then
-          dbg("sh > sr > ec")
           if (sr - ec < 2) and (sr - ec >= 0) and (ec > 0) then
                AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
                AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
+               dbg("sh > sr > ec")
                dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
           end
           if (sh - sr < 5) and (sh - sr >= 0) and (sr > 0) then
                AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
+               dbg("sh > sr > ec")
                dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
           end
      elseif (sr > sh) and (sh > ec) then
-          dbg("sr > sh > ec")
           if (sh - ec < 2) and (sh - ec >= 0) and (ec > 0) then
                AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
+               dbg("sr > sh > ec")
                dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
           end
           if (sr - sh < 6) and (sr - sh >= 0) and (sh > 0) then
                AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
                AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
+               dbg("sr > sh > ec")
                dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
           end
      elseif (sh > ec) and (ec > sr) then
-          dbg("sh > ec > sr")
           if (ec - sr < 5) and (ec - sr >= 0) and (sr > 0) then
                AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
+               dbg("sh > ec > sr")
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
           if (sh - ec < 2) and (sh - ec >= 0) and (ec > 0) then
                AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
+               dbg("sh > ec > sr")
                dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
           end
      elseif (sr > ec) and (ec > sh) then
-          dbg("sr > ec > sh")
           if (ec - sh < 6) and (ec - sh >= 0) and (sh > 0) then
                AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
+               dbg("sr > ec > sh")
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
           if (sr - ec < 2) and (sr - ec >= 0) and (ec > 0) then
                AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
                AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
+               dbg("sr > ec > sh")
                dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
           end
      elseif (ec > sh) and (sh > sr) then
-          dbg("ec > sh > sr")
           if (sh - sr < 5) and (sh - sr >= 0) and (sr > 0) then
                AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
+               dbg("ec > sh > sr")
                dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
           end
           if (ec - sh < 6) and (ec - sh >= 0) and (sh > 0) then
                AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
+               dbg("ec > sh > sr")
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
      elseif (ec > sr) and (sr > sh) then
-          dbg("ec > sr > sh")
           if (sr - sh < 6) and (sr - sh >= 0) and (sh > 0) then
                AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
                AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
+               dbg("ec > sr > sh")
                dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
           end
           if (ec - sr < 5) and (ec - sr >= 0) and (sr > 0) then
                AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
                AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
+               dbg("ec > sr > sh")
                dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
           end
---[[
      elseif (sh > sr) and (sr == ec) then
           dbg("sh > sr == ec")
           if (sr ~= 0) then
@@ -380,7 +383,6 @@ local function SortTimers()
                AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - AsylumTracker.timers["exhaustive_charges"]))
                AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - AsylumTracker.endTimes["exhaustive_charges"]))
           end
-]]
      else
           dbg("reee")
      end
@@ -552,8 +554,7 @@ local function UpdateTimers()
           end
      end
 end
---[[ The LibUnits library function to return @DisplayNames doesn't seem to work, so I created table that takes all the members
-in the group and stores their character names as a key for their @DisplayNames. This function is called whenever the group enters combat. ]]
+
 function AsylumTracker.IndexGroupMembers()
      local groupSize = GetGroupSize()
      if groupSize == 0 then -- If you're not in a group, but for whatever reason trying to solo Asylum, this will prevent the addon bugging out because it can't index the members in your non-existant group
@@ -598,7 +599,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
      end
      if result == ACTION_RESULT_BEGIN then
           if abilityId == AsylumTracker.id["storm_the_heavens"] then
-               dbg("Storm: " .. GetAbilityName(abilityId))
                if not AsylumTracker.stormIsActive and AsylumTracker.sv["sound_enabled"] then
                     PlaySound(SOUNDS.BATTLEGROUND_COUNTDOWN_FINISH)
                end
@@ -612,7 +612,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                zo_callLater(function() AsylumTrackerStorm:SetHidden(true) AsylumTracker.stormIsActive = false end, 6000)
 
           elseif abilityId == AsylumTracker.id["defiling_blast"] and hitValue == 2000 then
-               dbg("Blast: " .. GetAbilityName(abilityId))
                targetName = UnitIdToName(targetUnitId) -- Gets the @DisplayName for the player targeted by Llothis' defiling blast cone
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end -- If UnitIdToName failed and returned #targetUnitId, then it was probably because you're not in a group, therefore it's on you
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) then targetName = GetString(AST_SETT_YOU) end -- If targetName matches your @DisplayName
@@ -628,13 +627,11 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                AsylumTrackerBlast:SetHidden(false) -- Unhides the notifcation
 
           elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
-               dbg("Bolts: " .. GetAbilityName(abilityId))
                AsylumTracker.timers["oppressive_bolts"] = 0
                AsylumTrackerOppressiveBoltsLabel:SetText("|cff0000" .. GetString(AST_NOTIF_INTERRUPT) .. "|r")
                AsylumTrackerOppressiveBolts:SetHidden(false)
 
           elseif abilityId == AsylumTracker.id["teleport_strike"] then
-               dbg("Teleport Strike: " .. GetAbilityName(abilityId))
                targetName = UnitIdToName(targetUnitId)
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) then targetName = GetString(AST_SETT_YOU) end
@@ -649,7 +646,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                zo_callLater(function() AsylumTrackerTeleportStrike:SetHidden(true) end, 2000)
 
           elseif abilityId == AsylumTracker.id["gusts_of_steam"] then
-               dbg("Olms' Jump: " .. GetAbilityName(abilityId))
                -- Removed the HIDE notification from the screen 10 seconds after Olms starts jumping at his 90% 75% 50% 25% marks
                AsylumTrackerOlmsHPLabel:SetText(GetString(AST_NOTIF_OLMS_JUMP))
                AsylumTracker.olmsJumping = true
@@ -672,7 +668,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                end
 
           elseif abilityId == AsylumTracker.id["trial_by_fire"] then
-               dbg("Fire: " .. GetAbilityName(abilityId))
                AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE))
                AsylumTrackerFire:SetHidden(false)
                zo_callLater(function() AsylumTrackerFire:SetHidden(true) end, 8000)
@@ -695,12 +690,10 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
      end
      if result == ACTION_RESULT_EFFECT_GAINED then
           if abilityId == AsylumTracker.id["static_shield"] then -- Instead of tracking when the protector spawns, I track when the protector gives Olms a shield
-               dbg("Sphere: " .. GetAbilityName(abilityId))
                AsylumTracker.sphereIsUp = true -- If Olms has a shield, then a protector is active
                AsylumTrackerSphereLabel:SetText(GetString(AST_NOTIF_PROTECTOR))
                AsylumTrackerSphere:SetHidden(false)
           elseif abilityId == AsylumTracker.id["maim"] then
-               dbg("Maim: " .. GetAbilityName(abilityId))
                targetName = UnitIdToName(targetUnitId)
                if targetName:sub(1, 1) == "#" then targetName = zo_strformat("<<C:1>>", AsylumTracker.displayName) end
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) or targetName == GetUnitName("player") then
@@ -731,7 +724,7 @@ end
 function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beginTime, endTime, stackCount, iconName, buffType, effectType, abilityType, statusEffectType, unitName, unitId, abilityId, sourceType)
      if abilityId == AsylumTracker.id["dormant"] then
           if changeType == EFFECT_RESULT_GAINED then
-               if unitName:find("Llothis") or unitName:find("ロシス") then
+               if unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
                     AsylumTracker.timers["defiling_blast"] = 0 -- Stops the Defiling Blast timer if Llothis gets taken down
                     AsylumTracker.timers["oppressive_bolts"] = 0
                     AsylumTrackerBlast:SetHidden(true)
@@ -739,7 +732,7 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                          CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_DOWN) .. "|r", 3000, 5, MED_PRIORITY)
                     end
                     SetTimer("llothis_dormant")
-               elseif unitName:find("Felms") or unitName:find("フェルムス") then
+               elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
                     AsylumTracker.timers["teleport_strike"] = 0 -- Stops the Teleport Strike timer if Felms gets taken down
                     AsylumTrackerTeleportStrike:SetHidden(true)
                     if AsylumTracker.sv["felms_notifications"] then
@@ -748,12 +741,12 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                     SetTimer("felms_dormant")
                end
           elseif changeType == EFFECT_RESULT_FADED then
-               if unitName:find("Llothis") or unitName:find("ロシス") then
+               if unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
                     AsylumTracker.timers["llothis_dormant"] = 0
                     if AsylumTracker.sv["llothis_notifications"] then
                          CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_UP) .. "|r", 3000, 5, MED_PRIORITY)
                     end
-               elseif unitName:find("Felms") or unitName:find("フェルムス") then
+               elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
                     AsylumTracker.timers["felms_dormant"] = 0
                     if AsylumTracker.sv["felms_notifications"] then
                          CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_UP) .. "|r", 3000, 5, MED_PRIORITY)
@@ -768,14 +761,12 @@ function AsylumTracker.RegisterEvents()
           local abilities = {} -- Stores event ids to be registered
           local eventName = AsylumTracker.name .. "_event_" -- Each filter must be registered separately, and must therefore have a different unique identifier.
           local eventIndex = 0
-          -- To save resources, I specified specific abilities to register to reduce the amount of calls to the OnCombatEvent function
           local function RegisterForAbility(abilityId)
                if not abilities[abilityId] then -- If ability has not yet been registered
                     abilities[abilityId] = true
                     eventIndex = eventIndex + 1
                     EVENT_MANAGER:RegisterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent) -- Registers all combat events
                     EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
-                    dbg("Registered " .. GetAbilityName(abilityId) .. " as " .. eventName .. eventIndex)
                end
           end
 
