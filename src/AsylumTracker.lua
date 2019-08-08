@@ -8,7 +8,7 @@ local LOW_PRIORITY = 1
 
 AsylumTracker.name = "AsylumTracker"
 AsylumTracker.author = "init3"
-AsylumTracker.version = "1.8"
+AsylumTracker.version = "1.9"
 AsylumTracker.variableVersion = 1
 AsylumTracker.fontSize = 48
 AsylumTracker.isMovable = false
@@ -52,6 +52,8 @@ AsylumTracker.id = {
 AsylumTracker.defaults = {
      -- Debugging
      debug = false,
+     debug_ability = false,
+     debug_timers = false,
      -- Settings
      sound_enabled = true,
      llothis_notifications = true,
@@ -154,16 +156,48 @@ AsylumTracker.timers = {
 
 AsylumTracker.endTimes = {}
 
+local function round(number, decimalPlaces)
+     local mult = 10^(decimalPlaces or 0)
+     local value = math.floor(number * mult + 0.5) / mult
+     local decimal = tostring(value):match("%.(%d+)")
+     if decimal then
+          if #decimal == nil then
+               value = value .. "000"
+          elseif #decimal == 1 then
+               value = value .. "00"
+          elseif #decimal == 2 then
+               value = value .. "0"
+          end
+          return value
+     else
+          return value .. ".000"
+     end
+end
+
 local function dbg(text)
      if AsylumTracker.sv.debug then
-          d(text)
+          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c992A18 " .. text .. "|r")
+     end
+end
+
+local function dbgability(abilityId, result, hitValue)
+     if abilityId and result and hitValue then
+          if AsylumTracker.sv.debug_ability then
+               d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c184599 " .. GetAbilityName(abilityId) .. " (" .. abilityId .. ") with a result of " .. result .. " and a hit value of " .. hitValue)
+          end
+     end
+end
+
+local function dbgtimers(text)
+     if AsylumTracker.sv.debug_timers then
+          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c02731E " .. text .. "|r")
      end
 end
 
 local function UnitIdToName(unitId)
      local name = AsylumTracker.GetNameForUnitId(unitId) -- Character name for the specified TargetUnitId
      if name == "" then
-          name = "#"..unitId -- If the LibUnit function for some reason returns an empty string, it sets the name equal to #unitTargetID
+          name = "#"..unitId
      else
           if AsylumTracker.groupMembers[name] ~= nil then
                name = AsylumTracker.groupMembers[name] -- Looks up the @DisplayName for the corresponding Character
@@ -249,142 +283,62 @@ function AsylumTracker.GetSounds()
 end
 
 local function SortTimers()
-     local sh, sr, ec = AsylumTracker.timers["storm_the_heavens"], AsylumTracker.timers["scalding_roar"], AsylumTracker.timers["exhaustive_charges"]
-     local sh_end, sr_end, ec_end = AsylumTracker.endTimes["storm_the_heavens"], AsylumTracker.endTimes["scalding_roar"], AsylumTracker.endTimes["exhaustive_charges"]
+     local sh, sr, ec = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges
+     local sh_end, sr_end, ec_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges
      if (sh > sr) and (sr > ec) then
-          if (sr - ec < 2) and (sr - ec >= 0) and (ec > 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
-               dbg("sh > sr > ec")
-               dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
-          end
-          if (sh - sr < 5) and (sh - sr >= 0) and (sr > 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
-               dbg("sh > sr > ec")
-               dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
+          if (sr - ec < 1.5) and (sr - ec >= 0) and (ec > 0) then
+               AsylumTracker.timers.scalding_roar = sr + (2 - (sr - ec))
+               sr = AsylumTracker.timers.scalding_roar
+               AsylumTracker.endTimes.scalding_roar = sr_end + (2 - (sr_end - ec_end))
+               sr_end = AsylumTracker.endTimes.scalding_roar
+               dbg("[sh > sr > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (sr > sh) and (sh > ec) then
-          if (sh - ec < 2) and (sh - ec >= 0) and (ec > 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
-               dbg("sr > sh > ec")
-               dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
-          end
-          if (sr - sh < 6) and (sr - sh >= 0) and (sh > 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
-               dbg("sr > sh > ec")
-               dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
+          if (sr - sh < 6.5) and (sr - sh >= 0) and (sh > 0) then
+               AsylumTracker.timers.scalding_roar = sr + (7 - (sr - sh))
+               AsylumTracker.endTimes.scalding_roar = sr_end + (7 - (sr_end - sh_end))
+               dbg("[sr > sh > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (sh > ec) and (ec > sr) then
-          if (ec - sr < 5) and (ec - sr >= 0) and (sr > 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
-               dbg("sh > ec > sr")
-               dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
-          end
-          if (sh - ec < 2) and (sh - ec >= 0) and (ec > 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
-               dbg("sh > ec > sr")
-               dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
+          if (ec - sr < 5.5) and (ec - sr >= 0) and (sr > 0) then
+               AsylumTracker.timers.exhaustive_charges = ec + (6 - (ec - sr))
+               ec = AsylumTracker.timers.exhaustive_charges
+               AsylumTracker.endTimes.exhaustive_charges = ec_end + (6 - (ec_end - sr_end))
+               ec_end = AsylumTracker.endTimes.exhaustive_charges
+               dbg("[sh > ec > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
      elseif (sr > ec) and (ec > sh) then
-          if (ec - sh < 6) and (ec - sh >= 0) and (sh > 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
-               dbg("sr > ec > sh")
-               dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
+          if (ec - sh < 6.5) and (ec - sh >= 0) and (sh > 0) then
+               AsylumTracker.timers.exhaustive_charges = ec + (7 - (ec - sh))
+               ec = AsylumTracker.timers.exhaustive_charges
+               AsylumTracker.endTimes.exhaustive_charges = ec_end + (7 - (ec_end - sh_end))
+               ec_end = AsylumTracker.endTimes.exhaustive_charges
+               dbg("[sr > ec > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
-          if (sr - ec < 2) and (sr - ec >= 0) and (ec > 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
-               dbg("sr > ec > sh")
-               dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
+          if (sr - ec < 1.5) and (sr - ec >= 0) and (ec > 0) then
+               AsylumTracker.timers.scalding_roar = sr + (2 - (sr - ec))
+               AsylumTracker.endTimes.scalding_roar = sr_end + (2 - (sr_end - ec_end))
+               dbg("[sr > ec > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (ec > sh) and (sh > sr) then
-          if (sh - sr < 5) and (sh - sr >= 0) and (sr > 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (6 - (sh - sr))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (6 - (sh_end - sr_end))
-               dbg("ec > sh > sr")
-               dbg("Updated SH to: " .. AsylumTracker.timers["storm_the_heavens"])
-          end
-          if (ec - sh < 6) and (ec - sh >= 0) and (sh > 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (7 - (ec - sh))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (7 - (ec_end - sh_end))
-               dbg("ec > sh > sr")
-               dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
+          if (ec - sh < 6.5) and (ec - sh >= 0) and (sh > 0) then
+               AsylumTracker.timers.exhaustive_charges = ec + (7 - (ec - sh))
+               AsylumTracker.endTimes.exhaustive_charges = ec_end + (7 - (ec_end - sh_end))
+               dbg("[ec > sh > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
      elseif (ec > sr) and (sr > sh) then
-          if (sr - sh < 6) and (sr - sh >= 0) and (sh > 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
-               dbg("ec > sr > sh")
-               dbg("Updated SC to: " .. AsylumTracker.timers["scalding_roar"])
+          if (sr - sh < 6.5) and (sr - sh >= 0) and (sh > 0) then
+               AsylumTracker.timers.scalding_roar = sr + (7 - (sr - sh))
+               sr = AsylumTracker.timers.scalding_roar
+               AsylumTracker.endTimes.scalding_roar = sr_end + (7 - (sr_end - sh_end))
+               sr_end = AsylumTracker.timers.scalding_roar
+               dbg("[ec > sr > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
-          if (ec - sr < 5) and (ec - sr >= 0) and (sr > 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
-               dbg("ec > sr > sh")
-               dbg("Updated EC to: " .. AsylumTracker.timers["exhaustive_charges"])
+          if (ec - sr < 5.5) and (ec - sr >= 0) and (sr > 0) then
+               AsylumTracker.timers.exhaustive_charges = ec + (6 - (ec - sr))
+               AsylumTracker.endTimes.exhaustive_charges = ec_end + (6 - (ec_end - sr_end))
+               dbg("[ec > sr > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
-     elseif (sh > sr) and (sr == ec) then
-          dbg("sh > sr == ec")
-          if (sr ~= 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (2 - (sr - ec))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (2 - (sr_end - ec_end))
-
-               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - AsylumTracker.timers["scalding_roar"]))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - AsylumTracker.endTimes["scalding_roar"]))
-          end
-     elseif (sr > sh) and (sh == ec) then
-          dbg("sr > sh == ec")
-          if (sh ~= 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
-
-               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - AsylumTracker.timers["storm_the_heavens"]))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - AsylumTracker.endTimes["storm_the_heavens"]))
-          end
-     elseif (ec > sh) and (sh == sr) then
-          dbg("ec > sh == sr")
-          if (sh ~= 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
-
-               AsylumTracker.timers["exhaustive_charges"] = ec + (9 - (ec - AsylumTracker.timers["scalding_roar"]))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (9 - (ec_end - AsylumTracker.endTimes["scalding_roar"]))
-          end
-     elseif (sh == sr) and (sr > ec) then
-          dbg("sh == sr > ec")
-          if (ec ~= 0) then
-               AsylumTracker.timers["storm_the_heavens"] = sh + (2 - (sh - ec))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (2 - (sh_end - ec_end))
-
-               AsylumTracker.timers["scalding_roar"] = sr + (9 - (sr - AsylumTracker.timers["storm_the_heavens"]))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (9 - (sr_end - AsylumTracker.endTimes["storm_the_heavens"]))
-          end
-     elseif (sr == ec) and (ec > sh) then
-          dbg("sr == ec > sh")
-          if (sh ~= 0) then
-               AsylumTracker.timers["scalding_roar"] = sr + (7 - (sr - sh))
-               AsylumTracker.endTimes["scalding_roar"] = sr_end + (7 - (sr_end - sh_end))
-
-               AsylumTracker.timers["exhaustive_charges"] = ec + (13 - (ec - AsylumTracker.timers["scalding_roar"]))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (13 - (ec_end - AsylumTracker.timers["scalding_roar"]))
-          end
-     elseif (sh == ec) and (ec > sr) then
-          dbg("sh == ec > sr")
-          if (sr ~= 0) then
-               AsylumTracker.timers["exhaustive_charges"] = ec + (6 - (ec - sr))
-               AsylumTracker.endTimes["exhaustive_charges"] = ec_end + (6 - (ec_end - sr_end))
-
-               AsylumTracker.timers["storm_the_heavens"] = sh + (8 - (sh - AsylumTracker.timers["exhaustive_charges"]))
-               AsylumTracker.endTimes["storm_the_heavens"] = sh_end + (8 - (sh_end - AsylumTracker.endTimes["exhaustive_charges"]))
-          end
-     else
-          dbg("reee")
      end
 end
 
@@ -397,7 +351,7 @@ local function UpdateTimers()
                     AsylumTracker.timers[key] = (AsylumTracker.endTimes[key] - GetGameTimeSeconds())
                     if AsylumTracker.timers[key] < 0 then AsylumTracker.timers[key] = 0 end
                     local timeRemaining = AsylumTracker.timers[key]
-                    dbg(key .. ": " .. timeRemaining)
+                    dbgtimers(key .. ": " .. round(timeRemaining, 3))
                     if key == "storm_the_heavens" and timeRemaining < 6 and timeRemaining >= 0 and AsylumTracker.sv.storm_the_heavens then -- If roughly 5 seconds until the next event should happen
                          AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|cff0000" .. math.floor(timeRemaining) .. "|r") --Update the on-screen message
                          AsylumTrackerStorm:SetHidden(false) --Show the message
@@ -604,6 +558,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                end
                AsylumTracker.stormIsActive = true
                SetTimer("storm_the_heavens") -- Storm the Heavens just started, so create a new timer to preemtively warn for the next Storm the Heavens
+               dbgability(abilityId, result, hitValue)
                if AsylumTracker.sv.storm_the_heavens then
                     AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE_NOW)) -- Sets the warning notifcation to KITE when Storm the Heavens is active
                     AsylumTrackerStorm:SetHidden(false) -- Unhides the notifcation for Storm the Heavens
@@ -617,6 +572,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) then targetName = GetString(AST_SETT_YOU) end -- If targetName matches your @DisplayName
                if HashString(AsylumTracker.displayName) == 1325046754 then targetName = "Gary" end
                SetTimer("defiling_blast") -- Set Timer for defiling blast
+               dbgability(abilityId, result, hitValue)
                if targetName == GetString(AST_SETT_YOU) then
                     AsylumTrackerBlastLabel:SetText(GetString(AST_NOTIF_BLAST) .. "|cff0000" .. targetName .. "|r") -- States who the cone is targeting
                     if AsylumTracker.sv["sound_enabled"] then PlaySound(SOUNDS.BATTLEGROUND_COUNTDOWN_FINISH) end
@@ -628,6 +584,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
 
           elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
                AsylumTracker.timers["oppressive_bolts"] = 0
+               dbgability(abilityId, result, hitValue)
                AsylumTrackerOppressiveBoltsLabel:SetText("|cff0000" .. GetString(AST_NOTIF_INTERRUPT) .. "|r")
                AsylumTrackerOppressiveBolts:SetHidden(false)
 
@@ -636,6 +593,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) then targetName = GetString(AST_SETT_YOU) end
                SetTimer("teleport_strike")
+               dbgability(abilityId, result, hitValue)
                if targetName == GetString(AST_SETT_YOU) then
                     AsylumTrackerTeleportStrikeLabel:SetText(GetString(AST_NOTIF_JUMP) .. "|cff0000" .. targetName .. "|r")
                else
@@ -648,6 +606,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
           elseif abilityId == AsylumTracker.id["gusts_of_steam"] then
                -- Removed the HIDE notification from the screen 10 seconds after Olms starts jumping at his 90% 75% 50% 25% marks
                AsylumTrackerOlmsHPLabel:SetText(GetString(AST_NOTIF_OLMS_JUMP))
+               dbgability(abilityId, result, hitValue)
                AsylumTracker.olmsJumping = true
                if AsylumTracker.firstJump then -- First in sequence (first of his 4 jumps around the room, not referring to the 90% jump)
                     AsylumTracker.firstJump = false
@@ -669,13 +628,14 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
 
           elseif abilityId == AsylumTracker.id["trial_by_fire"] then
                AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE))
+               dbgability(abilityId, result, hitValue)
                AsylumTrackerFire:SetHidden(false)
                zo_callLater(function() AsylumTrackerFire:SetHidden(true) end, 8000)
 
           elseif abilityId == AsylumTracker.id["scalding_roar"] and hitValue == 2300 then
                SetTimer("scalding_roar")
                if AsylumTracker.sv.scalding_roar then
-                    dbg(GetAbilityName(abilityId) .. " (" .. abilityId .. ") with a result of " .. result .. " and a hit value of " .. hitValue)
+                    dbgability(abilityId, result, hitValue)
                     AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|cff0000" .. GetString(AST_SETT_NOW) .. "|r")
                     AsylumTrackerSteam:SetHidden(false)
                     zo_callLater(function() AsylumTrackerSteam:SetHidden(true) end, 5000)
@@ -683,14 +643,18 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
 
           elseif abilityId == AsylumTracker.id["exhaustive_charges"] then
                SetTimer("exhaustive_charges")
-               AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|cff0000" .. GetString(AST_SETT_NOW) .. "|r")
-               AsylumTrackerCharges:SetHidden(false)
-               zo_callLater(function() AsylumTrackerCharges:SetHidden(true) end, 2000)
+               if AsylumTracker.sv.exhaustive_charges then
+                    dbgability(abilityId, result, hitValue)
+                    AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|cff0000" .. GetString(AST_SETT_NOW) .. "|r")
+                    AsylumTrackerCharges:SetHidden(false)
+                    zo_callLater(function() AsylumTrackerCharges:SetHidden(true) end, 2000)
+               end
           end
      end
      if result == ACTION_RESULT_EFFECT_GAINED then
           if abilityId == AsylumTracker.id["static_shield"] then -- Instead of tracking when the protector spawns, I track when the protector gives Olms a shield
                AsylumTracker.sphereIsUp = true -- If Olms has a shield, then a protector is active
+               dbgability(abilityId, result, hitValue)
                AsylumTrackerSphereLabel:SetText(GetString(AST_NOTIF_PROTECTOR))
                AsylumTrackerSphere:SetHidden(false)
           elseif abilityId == AsylumTracker.id["maim"] then
@@ -698,6 +662,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                if targetName:sub(1, 1) == "#" then targetName = zo_strformat("<<C:1>>", AsylumTracker.displayName) end
                if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) or targetName == GetUnitName("player") then
                     SetTimer("maim")
+                    dbgability(abilityId, result, hitValue)
                end
           end
      end
@@ -1033,8 +998,53 @@ function AsylumTracker.Initialize()
 
      AsylumTracker.IndexGroupMembers()
 
-     SLASH_COMMANDS["/astrackertoggle"] = function() AsylumTracker.ToggleMovable() end
-     SLASH_COMMANDS["/astrackerreset"] = function() AsylumTracker.ResetToDefaults() end
+     SLASH_COMMANDS["/astracker"] = AsylumTracker.SlashCommand
+end
+
+function AsylumTracker.SlashCommand(cmd)
+     cmd = string.lower(cmd)
+     if cmd == "toggle" then
+          AsylumTracker.ToggleMovable()
+     elseif cmd == "reset" then
+          AsylumTracker.ResetToDefaults()
+     elseif cmd == "debug general" then
+          AsylumTracker.sv.debug = not AsylumTracker.sv.debug
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
+     elseif cmd == "debug ability" then
+          AsylumTracker.sv.debug_ability = not AsylumTracker.sv.debug_ability
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
+     elseif cmd == "debug timers" then
+          AsylumTracker.sv.debug_timers = not AsylumTracker.sv.debug_timers
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+     elseif cmd == "debug all on" then
+          AsylumTracker.sv.debug = true
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
+          AsylumTracker.sv.debug_ability = true
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
+          AsylumTracker.sv.debug_timers = true
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+     elseif cmd == "debug all off" then
+          AsylumTracker.sv.debug = false
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
+          AsylumTracker.sv.debug_ability = false
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
+          AsylumTracker.sv.debug_timers = false
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+     elseif cmd == nil or cmd == "" then
+          AsylumTracker.OpenSettingsPanel()
+     else
+          d(" ")
+          d("|cff0096AsylumTracker Commands ::|r")
+          d("|cff0096/astracker:|r Opens the AsylumTracker Settings panel")
+          d("|cff0096/astracker toggle:|r Makes the notifications movable on the screen")
+          d("|cff0096/astracker reset:|r Resets notifications to their default positions")
+          d("|cff0096/astracker debug general:|r Toggles general debugging messages")
+          d("|cff0096/astracker debug ability:|r Toggles ability debugging messages")
+          d("|cff0096/astracker debug timers:|r Toggles timer debugging messages")
+          d("|cff0096/astracker debug all on:|r Enables all debugging messages")
+          d("|cff0096/astracker debug all off:|r Disables all debugging messages")
+          d(" ")
+     end
 end
 
 function AsylumTracker.OnAddOnLoaded(event, addonName)

@@ -10,7 +10,7 @@
 ## Description: The Asylum Sanctorium Raid Tracker
 ## APIVersion: 100027 100028
 ## Author: |cff0096@init3 [NA]|r
-## Version: 1.8
+## Version: 1.9
 ## SavedVariables: AsylumTrackerVars
 ## DependsOn: LibAddonMenu-2.0
 

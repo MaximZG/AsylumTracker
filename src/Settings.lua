@@ -10,10 +10,9 @@ function AsylumTracker.CreateSettingsWindow()
           displayName = AST_SETT_HEADER,
           author = AsylumTracker.author,
           version = AsylumTracker.version,
-          slashCommand = "/astracker",
           registerForRefresh = true,
      }
-     LAM2:RegisterAddonPanel(AsylumTracker.name .. "Settings", panelData)
+     local panel = LAM2:RegisterAddonPanel(AsylumTracker.name .. "Settings", panelData)
 
      local Settings = {
           {
@@ -781,4 +780,8 @@ function AsylumTracker.CreateSettingsWindow()
           },
      }
      LAM2:RegisterOptionControls(AsylumTracker.name .. "Settings", Settings)
+
+     AsylumTracker.OpenSettingsPanel = function()
+          LAM2:OpenToPanel(panel)
+     end
 end
