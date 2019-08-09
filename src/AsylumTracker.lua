@@ -17,6 +17,9 @@ AsylumTracker.isInVAS = false
 AsylumTracker.isInCombat = false
 AsylumTracker.olmsJumping = false
 AsylumTracker.firstJump = true
+AsylumTracker.spawnTimes = {}
+AsylumTracker.LlothisSpawned = false
+AsylumTracker.FelmsSpawned = false
 AsylumTracker.isRegistered = false
 AsylumTracker.sphereIsUp = false
 AsylumTracker.groupMembers = {}
@@ -40,6 +43,7 @@ AsylumTracker.id = {
      exhaustive_charges = 95482,
      maim = 95657, -- Felms' Maim
      dormant = 99990, -- Used to tell if Felms/Llothis have been taken down in HM
+     boss_event = 10298, -- Used to tell when Llothis/Felms spawn
 
      -- Abilities that can be used to interrupt Llothis
      bash = 21973,
@@ -54,6 +58,7 @@ AsylumTracker.defaults = {
      debug = false,
      debug_ability = false,
      debug_timers = false,
+     debug_units = false,
      -- Settings
      sound_enabled = true,
      llothis_notifications = true,
@@ -194,6 +199,12 @@ local function dbgtimers(text)
      end
 end
 
+function AsylumTracker.dbgunits(text)
+     if AsylumTracker.sv.debug_units then
+          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c992A18 " .. text .. "|r")
+     end
+end
+
 local function UnitIdToName(unitId)
      local name = AsylumTracker.GetNameForUnitId(unitId) -- Character name for the specified TargetUnitId
      if name == "" then
@@ -232,26 +243,26 @@ local function OnZoneChanged()
 end
 
 -- Sets an estimated timer for some mechanics
-local function SetTimer(key)
+local function SetTimer(key, override)
      local duration
      if key == "storm_the_heavens" then
-          duration = 40
+          duration = override or 41
      elseif key == "defiling_blast" then
-          duration = 21
+          duration = override or 21
      elseif key == "teleport_strike" then
-          duration = 21
+          duration = override or 21
      elseif key == "oppressive_bolts" then
-          duration = 12
+          duration = override or 12
      elseif key == "exhaustive_charges" then
-          duration = 12
+          duration = override or 12
      elseif key == "scalding_roar" then
-          duration = 28
+          duration = override or 28
      elseif key == "llothis_dormant" then
-          duration = 45
+          duration = override or 45
      elseif key == "felms_dormant" then
-          duration = 45
+          duration = override or 45
      elseif key == "maim" then
-          duration = 15
+          duration = override or 15
      end
      AsylumTracker.timers[key] = duration
      AsylumTracker.endTimes[key] = GetGameTimeSeconds() + duration
@@ -282,11 +293,11 @@ function AsylumTracker.GetSounds()
      return sounds
 end
 
-local function SortTimers()
+local function AdjustTimers()
      local sh, sr, ec = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges
      local sh_end, sr_end, ec_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges
      if (sh > sr) and (sr > ec) then
-          if (sr - ec < 1.5) and (sr - ec >= 0) and (ec > 0) then
+          if (sr - ec < 2) and (sr - ec >= 1) and (ec > 0) then
                AsylumTracker.timers.scalding_roar = sr + (2 - (sr - ec))
                sr = AsylumTracker.timers.scalding_roar
                AsylumTracker.endTimes.scalding_roar = sr_end + (2 - (sr_end - ec_end))
@@ -294,13 +305,13 @@ local function SortTimers()
                dbg("[sh > sr > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (sr > sh) and (sh > ec) then
-          if (sr - sh < 6.5) and (sr - sh >= 0) and (sh > 0) then
+          if (sr - sh < 7) and (sr - sh >= 1) and (sh > 0) then
                AsylumTracker.timers.scalding_roar = sr + (7 - (sr - sh))
                AsylumTracker.endTimes.scalding_roar = sr_end + (7 - (sr_end - sh_end))
                dbg("[sr > sh > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (sh > ec) and (ec > sr) then
-          if (ec - sr < 5.5) and (ec - sr >= 0) and (sr > 0) then
+          if (ec - sr < 6) and (ec - sr >= 1) and (sr > 0) then
                AsylumTracker.timers.exhaustive_charges = ec + (6 - (ec - sr))
                ec = AsylumTracker.timers.exhaustive_charges
                AsylumTracker.endTimes.exhaustive_charges = ec_end + (6 - (ec_end - sr_end))
@@ -308,33 +319,33 @@ local function SortTimers()
                dbg("[sh > ec > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
      elseif (sr > ec) and (ec > sh) then
-          if (ec - sh < 6.5) and (ec - sh >= 0) and (sh > 0) then
+          if (ec - sh < 7) and (ec - sh >= 1) and (sh > 0) then
                AsylumTracker.timers.exhaustive_charges = ec + (7 - (ec - sh))
                ec = AsylumTracker.timers.exhaustive_charges
                AsylumTracker.endTimes.exhaustive_charges = ec_end + (7 - (ec_end - sh_end))
                ec_end = AsylumTracker.endTimes.exhaustive_charges
                dbg("[sr > ec > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
-          if (sr - ec < 1.5) and (sr - ec >= 0) and (ec > 0) then
+          if (sr - ec < 2) and (sr - ec >= 1) and (ec > 0) then
                AsylumTracker.timers.scalding_roar = sr + (2 - (sr - ec))
                AsylumTracker.endTimes.scalding_roar = sr_end + (2 - (sr_end - ec_end))
                dbg("[sr > ec > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
      elseif (ec > sh) and (sh > sr) then
-          if (ec - sh < 6.5) and (ec - sh >= 0) and (sh > 0) then
+          if (ec - sh < 7) and (ec - sh >= 1) and (sh > 0) then
                AsylumTracker.timers.exhaustive_charges = ec + (7 - (ec - sh))
                AsylumTracker.endTimes.exhaustive_charges = ec_end + (7 - (ec_end - sh_end))
                dbg("[ec > sh > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
           end
      elseif (ec > sr) and (sr > sh) then
-          if (sr - sh < 6.5) and (sr - sh >= 0) and (sh > 0) then
+          if (sr - sh < 7) and (sr - sh >= 1) and (sh > 0) then
                AsylumTracker.timers.scalding_roar = sr + (7 - (sr - sh))
                sr = AsylumTracker.timers.scalding_roar
                AsylumTracker.endTimes.scalding_roar = sr_end + (7 - (sr_end - sh_end))
                sr_end = AsylumTracker.timers.scalding_roar
                dbg("[ec > sr > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
           end
-          if (ec - sr < 5.5) and (ec - sr >= 0) and (sr > 0) then
+          if (ec - sr < 6) and (ec - sr >= 1) and (sr > 0) then
                AsylumTracker.timers.exhaustive_charges = ec + (6 - (ec - sr))
                AsylumTracker.endTimes.exhaustive_charges = ec_end + (6 - (ec_end - sr_end))
                dbg("[ec > sr > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
@@ -344,7 +355,7 @@ end
 
 local function UpdateTimers()
      if AsylumTracker.isInCombat then
-          SortTimers()
+          AdjustTimers()
           for key, value in pairs(AsylumTracker.timers) do -- The key is the ability and the value is the endTime for the event
                if AsylumTracker.timers[key] > 0 then -- If there is a timer for the specified key event
 --                    AsylumTracker.timers[key] = AsylumTracker.timers[key] - (AsylumTracker.refreshRate / 1000)
@@ -429,7 +440,7 @@ local function UpdateTimers()
 
           local bossName = zo_strformat("<<C:1>>", GetUnitName("boss1"))
           if bossName ~= "" then -- HP for Boss1 (Since the addon only loads in Asylum, this works to determining if you're in the room with Olms, because if you are not, this function returns an empty string)
-               local current, max, effective = GetUnitPower("boss1", - 2)
+               local current, max, effective = GetUnitPower("boss1", POWERTYPE_HEALTH)
                AsylumTracker.olmsHealth = tostring(math.floor(string.format("%.1f", current / max * 100))) -- Format's Olm's health as a percentage
                if not AsylumTracker.olmsJumping then
                     if AsylumTracker.olmsHealth >= "90" and AsylumTracker.olmsHealth <= "95" then
@@ -541,6 +552,14 @@ function AsylumTracker.CombatState(event, isInCombat)
                AsylumTrackerSteam:SetHidden(true)
                AsylumTrackerMaim:SetHidden(true)
                AsylumTrackerCharges:SetHidden(true)
+
+               AsylumTracker.LlothisSpawned = false
+               AsylumTracker.FelmsSpawned = false
+               dbg("Resetting Llothis and Felms spawn status")
+
+               AsylumTracker.unitIds = {}
+               AsylumTracker.dbgunits("Leaving Combat. Clearing Units Table")
+               AsylumTracker.spawnTimes = {}
           end
      end
 end
@@ -616,13 +635,9 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                          AsylumTracker.firstJump = true
                     end, 12000)
                     if AsylumTracker.olmsHealth > "77" then -- Olms' First Jump at 90% (Llothis Spawns)
-                         if AsylumTracker.sv.defiling_blast then AsylumTracker.timers.defiling_blast = 34 end -- Around how long it takes for Llothis to cast the very first defiling blast
-                         if AsylumTracker.sv.oppressive_bolts then
-                              AsylumTracker.timers.oppressive_bolts = 41 -- Defiling Blast timer + 5s for the blast to finish
-                              AsylumTrackerOppressiveBolts:SetHidden(false)
+                         if AsylumTracker.sv.storm_the_heavens then
+                              SetTimer("storm_the_heavens", 15)
                          end
-                    elseif AsylumTracker.olmsHealth > "52" then -- Olms' Second Jump at 75% (Felms Spawns)
-                         if AsylumTracker.sv.teleport_strike then AsylumTracker.timers.teleport_strike = 34 end
                     end
                end
 
@@ -664,6 +679,8 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                     SetTimer("maim")
                     dbgability(abilityId, result, hitValue)
                end
+          elseif abilityId == AsylumTracker.id.boss_event and hitValue == 1 then
+               AsylumTracker.spawnTimes[targetUnitId] = GetGameTimeSeconds();
           end
      end
      if result == ACTION_RESULT_EFFECT_FADED then
@@ -687,6 +704,34 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
 end
 
 function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beginTime, endTime, stackCount, iconName, buffType, effectType, abilityType, statusEffectType, unitName, unitId, abilityId, sourceType)
+     if unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
+          if not AsylumTracker.LlothisSpawned then
+               AsylumTracker.LlothisSpawned = true
+               if AsylumTracker.spawnTimes[unitId] then
+                    local llothis_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
+                    dbg("Llothis Uptime: " .. llothis_uptime)
+                    if AsylumTracker.sv.defiling_blast then
+                         SetTimer("defiling_blast", 12 - llothis_uptime)
+                    end
+                    if AsylumTracker.sv.oppressive_bolts then
+                         SetTimer("oppressive_bolts", 12 - llothis_uptime)
+                         AsylumTrackerOppressiveBolts:SetHidden(false)
+                    end
+               end
+          end
+     elseif unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
+          if not AsylumTracker.FelmsSpawned then
+               AsylumTracker.FelmsSpawned = true
+               dbg("Felms Spawned")
+               if AsylumTracker.spawnTimes[unitId] then
+                    local felms_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
+                    if AsylumTracker.sv.teleport_strike then
+                         SetTimer("teleport_strike", 12 - felms_uptime)
+                    end
+               end
+          end
+     end
+
      if abilityId == AsylumTracker.id["dormant"] then
           if changeType == EFFECT_RESULT_GAINED then
                if unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
@@ -731,7 +776,7 @@ function AsylumTracker.RegisterEvents()
                     abilities[abilityId] = true
                     eventIndex = eventIndex + 1
                     EVENT_MANAGER:RegisterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent) -- Registers all combat events
-                    EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
+--                    EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
                end
           end
 
@@ -757,7 +802,8 @@ function AsylumTracker.RegisterEvents()
 
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name, EVENT_PLAYER_COMBAT_STATE, AsylumTracker.CombatState) -- Used to determine player's combat state
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
-          EVENT_MANAGER:AddFilterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, REGISTER_FILTER_ABILITY_ID, AsylumTracker.id["dormant"]) -- Filters the previous event to the dormant id
+          EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_bossaura", EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent)
+          EVENT_MANAGER:AddFilterForEvent(AsylumTracker.name .. "_bossaura", EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, AsylumTracker.id.boss_event)
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dead", EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent)
           EVENT_MANAGER:AddFilterForEvent(AsylumTracker.name .. "_dead", EVENT_COMBAT_EVENT, REGISTER_FILTER_COMBAT_RESULT, ACTION_RESULT_DIED)
           EVENT_MANAGER:RegisterForUpdate(AsylumTracker.name, AsylumTracker.refreshRate, UpdateTimers) -- Calls this function every half second to update timers and Olm's health
@@ -1016,6 +1062,9 @@ function AsylumTracker.SlashCommand(cmd)
      elseif cmd == "debug timers" then
           AsylumTracker.sv.debug_timers = not AsylumTracker.sv.debug_timers
           d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+     elseif cmd == "debug units" then
+          AsylumTracker.sv.debug_units = not AsylumTracker.sv.debug_units
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
      elseif cmd == "debug all on" then
           AsylumTracker.sv.debug = true
           d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
@@ -1023,6 +1072,8 @@ function AsylumTracker.SlashCommand(cmd)
           d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
           AsylumTracker.sv.debug_timers = true
           d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+          AsylumTracker.sv.debug_units = true
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
      elseif cmd == "debug all off" then
           AsylumTracker.sv.debug = false
           d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
@@ -1030,20 +1081,23 @@ function AsylumTracker.SlashCommand(cmd)
           d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
           AsylumTracker.sv.debug_timers = false
           d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
-     elseif cmd == nil or cmd == "" then
+          AsylumTracker.sv.debug_units = false
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
+     elseif cmd == "menu" then
           AsylumTracker.OpenSettingsPanel()
      else
-          d(" ")
+          d(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
           d("|cff0096AsylumTracker Commands ::|r")
-          d("|cff0096/astracker:|r Opens the AsylumTracker Settings panel")
+          d("|cff0096/astracker menu:|r Opens the AsylumTracker Settings panel")
           d("|cff0096/astracker toggle:|r Makes the notifications movable on the screen")
           d("|cff0096/astracker reset:|r Resets notifications to their default positions")
           d("|cff0096/astracker debug general:|r Toggles general debugging messages")
           d("|cff0096/astracker debug ability:|r Toggles ability debugging messages")
           d("|cff0096/astracker debug timers:|r Toggles timer debugging messages")
+          d("|cff0096/astracker debug units:|r Toggles unit debugging messages")
           d("|cff0096/astracker debug all on:|r Enables all debugging messages")
           d("|cff0096/astracker debug all off:|r Disables all debugging messages")
-          d(" ")
+          d(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
      end
 end
 
