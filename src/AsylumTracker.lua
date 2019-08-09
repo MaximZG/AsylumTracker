@@ -275,7 +275,7 @@ local function SetMaimedStatus()
                local timeRemaining = timeEnding - timeStarted
                AsylumTracker.timers.maim = timeRemaining
                AsylumTracker.endTimes.maim = timeEnding
-               dbgability("Updating Maim timer to " .. timeRemaining .. "seconds.")
+               dbg("Updated Maim timer to " .. timeRemaining .. "seconds.")
           elseif abilityId == nil or abilityId == "" then
                break
           end
