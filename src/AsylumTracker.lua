@@ -405,11 +405,11 @@ local function UpdateTimers()
                     elseif key == "oppressive_bolts" then
                          AsylumTrackerOppressiveBolts:SetHidden(false)
                          if timeRemaining >= 20 then
-                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|cfc8403" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c00e03c" .. math.floor(timeRemaining) .. "|r")
                          elseif timeRemaining >= 10 then
                               AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|cf0d90a" .. math.floor(timeRemaining) .. "|r")
                          elseif timeRemaining >= 1 then
-                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c00e03c" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|cfc8403" .. math.floor(timeRemaining) .. "|r")
                          else
                               AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|cfc8403" .. GetString(AST_SETT_SOON) .. "|r")
                          end
