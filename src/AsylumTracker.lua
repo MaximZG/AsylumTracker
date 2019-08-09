@@ -268,6 +268,20 @@ local function SetTimer(key, override)
      AsylumTracker.endTimes[key] = GetGameTimeSeconds() + duration
 end
 
+local function SetMaimedStatus()
+     for i = 1, 50 do
+          local buffName, timeStarted, timeEnding, buffSlot, stackCount, fileName, buffType, effectType, abilityType, statusEffectType, abilityId, canClickOff, castByPlayer = GetUnitBuffInfo("player", i)
+          if abilityId == AsylumTracker.id.maim then
+               local timeRemaining = timeEnding - timeStarted
+               AsylumTracker.timers.maim = timeRemaining
+               AsylumTracker.endTimes.maim = timeEnding
+               dbgability("Updating Maim timer to " .. timeRemaining .. "seconds.")
+          elseif abilityId == nil or abilityId == "" then
+               break
+          end
+     end
+end
+
 local function CreateNotification(text, duration, category, priority)
      local CSA = CENTER_SCREEN_ANNOUNCE
      local params = CSA:CreateMessageParams(category)
@@ -356,6 +370,7 @@ end
 local function UpdateTimers()
      if AsylumTracker.isInCombat then
           AdjustTimers()
+          if AsylumTracker.sv.maim then SetMaimedStatus() end
           for key, value in pairs(AsylumTracker.timers) do -- The key is the ability and the value is the endTime for the event
                if AsylumTracker.timers[key] > 0 then -- If there is a timer for the specified key event
 --                    AsylumTracker.timers[key] = AsylumTracker.timers[key] - (AsylumTracker.refreshRate / 1000)
@@ -431,7 +446,6 @@ local function UpdateTimers()
                     elseif key == "maim" and timeRemaining <= 0 then
                          AsylumTrackerMaim:SetHidden(true)
                     elseif key == "teleport_strike" then
-                         dbg("Teleport Strike: " .. math.floor(timeRemaining))
                     elseif timeRemaining < 0 then --If the timer has run down completely, set the endTime to 0 to indicate there is not a timer running for the event
                          AsylumTracker.timers[key] = 0
                     end
@@ -672,15 +686,9 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                dbgability(abilityId, result, hitValue)
                AsylumTrackerSphereLabel:SetText(GetString(AST_NOTIF_PROTECTOR))
                AsylumTrackerSphere:SetHidden(false)
-          elseif abilityId == AsylumTracker.id["maim"] then
-               targetName = UnitIdToName(targetUnitId)
-               if targetName:sub(1, 1) == "#" then targetName = zo_strformat("<<C:1>>", AsylumTracker.displayName) end
-               if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) or targetName == GetUnitName("player") then
-                    SetTimer("maim")
-                    dbgability(abilityId, result, hitValue)
-               end
           elseif abilityId == AsylumTracker.id.boss_event and hitValue == 1 then
                AsylumTracker.spawnTimes[targetUnitId] = GetGameTimeSeconds();
+               dbg("Boss Event for [" .. targetUnitId .. "]")
           end
      end
      if result == ACTION_RESULT_EFFECT_FADED then
@@ -691,14 +699,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                AsylumTrackerSphere:SetHidden(true)
           elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
                SetTimer("oppressive_bolts")
-          end
-     end
-     if result == ACTION_RESULT_DIED then
-          targetName = UnitIdToName(targetUnitId)
-          if targetName:sub(1, 1) == "#" then targetName = zo_strformat("<<C:1>>", AsylumTracker.displayName) end
-          if targetName == zo_strformat("<<C:1>>", AsylumTracker.displayName) or targetName == GetUnitName("player") then
-               AsylumTracker.timers["maim"] = 0
-               AsylumTrackerMaim:SetHidden(true)
           end
      end
 end
@@ -776,7 +776,7 @@ function AsylumTracker.RegisterEvents()
                     abilities[abilityId] = true
                     eventIndex = eventIndex + 1
                     EVENT_MANAGER:RegisterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent) -- Registers all combat events
---                    EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
+                    EVENT_MANAGER:AddFilterForEvent(eventName .. eventIndex, EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, abilityId) -- Filters the event to a specific ability
                end
           end
 
@@ -804,8 +804,6 @@ function AsylumTracker.RegisterEvents()
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_bossaura", EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent)
           EVENT_MANAGER:AddFilterForEvent(AsylumTracker.name .. "_bossaura", EVENT_COMBAT_EVENT, REGISTER_FILTER_ABILITY_ID, AsylumTracker.id.boss_event)
-          EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dead", EVENT_COMBAT_EVENT, AsylumTracker.OnCombatEvent)
-          EVENT_MANAGER:AddFilterForEvent(AsylumTracker.name .. "_dead", EVENT_COMBAT_EVENT, REGISTER_FILTER_COMBAT_RESULT, ACTION_RESULT_DIED)
           EVENT_MANAGER:RegisterForUpdate(AsylumTracker.name, AsylumTracker.refreshRate, UpdateTimers) -- Calls this function every half second to update timers and Olm's health
      end
 end
