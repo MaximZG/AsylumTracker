@@ -18,6 +18,8 @@ ZO_CreateStringId("AST_SETT_COLOR_2"                   , "サブカラー")
 ZO_CreateStringId("AST_SETT_FONT_SIZE"                 , "フォントサイズ")
 ZO_CreateStringId("AST_SETT_SCALE"                     , "大きさ")
 ZO_CreateStringId("AST_SETT_SCALE_WARN"                , "この設定を変更すると通知がぼやけてしまうため、フォントサイズを先に設定してください")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR"               , "Timer Color")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR_TOOL"          , "The color for the countdown number displayed on timers")
 
 -- Center Notifications Button
 ZO_CreateStringId("AST_SETT_CENTER_NOTIF"              , "通知を中央に配置") -- Center is a verb here
@@ -63,8 +65,8 @@ ZO_CreateStringId("AST_SETT_PROTECT_SIZE_TOOL"         , "スフィアに関す�
 ZO_CreateStringId("AST_SETT_PROTECT_SCALE_TOOL"        , "スフィアに関する通知の大きさを変更します")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_1_TOOL"      , "スフィアがシールドを付与する際明滅する通知の最初の色")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_2_TOOL"      , "スフィアがシールドを付与する際明滅する通知の２番目の色")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom Sphere Text")
 
 -- Teleport Strike
 ZO_CreateStringId("AST_SETT_JUMP"                      , "テレポートストライク") -- Felms' jumping mechanic
@@ -88,6 +90,13 @@ ZO_CreateStringId("AST_SETT_STEAM_TOOL"                , "オルムスの蒸気�
 ZO_CreateStringId("AST_SETT_STEAM_SIZE_TOOL"           , "スチームブレスの通知のフォントサイズを変更します")
 ZO_CreateStringId("AST_SETT_STEAM_SCALE_TOOL"          , "スチームブレスの通知の大きさを変更します")
 ZO_CreateStringId("AST_SETT_STEAM_COLOR_TOOL"          , "スチームブレスの通知の色を変更します")
+
+-- Exhaustive Charges
+-- ZO_CreateStringId("AST_SETT_CHARGES"                   , "Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_TOOL"              , "Olms' Exhaustive Charges Attack")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SIZE_TOOL"         , "Change the Font Size for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SCALE_TOOL"        , "Change the Scale for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_COLOR_TOOL"        , "Color for Olms' Exhaustive Charges")
 
 -- Trial By Fire
 ZO_CreateStringId("AST_SETT_FIRE"                      , "炎の試練") -- Olms' Fire mechanic below 25% HP
@@ -125,6 +134,7 @@ ZO_CreateStringId("AST_NOTIF_INTERRUPT"                , "バッシュ") -- For 
 ZO_CreateStringId("AST_NOTIF_FIRE"                     , "炎の試練")
 ZO_CreateStringId("AST_NOTIF_STEAM"                    , "スチームブレス: ") -- Referring to Olms' Steam breath
 ZO_CreateStringId("AST_NOTIF_MAIM"                     , "不自由デバフ: ") -- Referring to Felms' Maim
+-- ZO_CreateStringId("AST_NOTIF_CHARGES"                  , "CHARGES: ")
 
 -- Previewing Notifications
 ZO_CreateStringId("AST_PREVIEW_OLMS_HP_1"              , "オルムス")
@@ -139,3 +149,4 @@ ZO_CreateStringId("AST_PREVIEW_BOLTS"                  , "バッシュまで")
 ZO_CreateStringId("AST_PREVIEW_FIRE"                   , "炎の試練")
 ZO_CreateStringId("AST_PREVIEW_STEAM"                  , "スチームブレス")
 ZO_CreateStringId("AST_PREVIEW_MAIM"                   , "不自由デバフ")
+-- ZO_CreateStringId("AST_PREVIEW_CHARGES"                , "CHARGES")

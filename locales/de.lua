@@ -18,6 +18,8 @@ ZO_CreateStringId("AST_SETT_COLOR_2"                   , "Sekundäre Farbe")
 ZO_CreateStringId("AST_SETT_FONT_SIZE"                 , "Schriftgröße")
 ZO_CreateStringId("AST_SETT_SCALE"                     , "Maßstab")
 ZO_CreateStringId("AST_SETT_SCALE_WARN"                , "Die Änderung dieser Einstellung macht diese Benachrichtigung verschwommen. Ändere zuerst die Schriftgröße.")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR"               , "Timer Color")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR_TOOL"          , "The color for the countdown number displayed on timers")
 
 -- Center Notifications Button
 ZO_CreateStringId("AST_SETT_CENTER_NOTIF"              , "Zentrale Benachrichtigung")
@@ -63,8 +65,8 @@ ZO_CreateStringId("AST_SETT_PROTECT_SIZE_TOOL"         , "Schriftgröße für Or
 ZO_CreateStringId("AST_SETT_PROTECT_SCALE_TOOL"        , "Maßstab für Ordinierter Beschützer")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_1_TOOL"      , "Ordinierter Beschützer - Erste Farbe für die Benachrichtigung")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_2_TOOL"      , "Ordinierter Beschützer - Zweite Farbe für die Benachrichtigung")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom Sphere Text")
 
 -- Teleport Strike
 ZO_CreateStringId("AST_SETT_JUMP"                      , "Teleportationsschlag")
@@ -88,6 +90,13 @@ ZO_CreateStringId("AST_SETT_STEAM_TOOL"                , "Olms' Brüllangriff")
 ZO_CreateStringId("AST_SETT_STEAM_SIZE_TOOL"           , "Schriftgröße für Verbrühendes Brüllen")
 ZO_CreateStringId("AST_SETT_STEAM_SCALE_TOOL"          , "Maßstab für Verbrühendes Brüllen")
 ZO_CreateStringId("AST_SETT_STEAM_COLOR_TOOL"          , "Farbeinstellung für Verbrühendes Brüllen")
+
+-- Exhaustive Charges
+-- ZO_CreateStringId("AST_SETT_CHARGES"                   , "Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_TOOL"              , "Olms' Exhaustive Charges Attack")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SIZE_TOOL"         , "Change the Font Size for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SCALE_TOOL"        , "Change the Scale for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_COLOR_TOOL"        , "Color for Olms' Exhaustive Charges")
 
 -- Trial By Fire
 ZO_CreateStringId("AST_SETT_FIRE"                      , "Feuertaufe")
@@ -113,6 +122,7 @@ ZO_CreateStringId("AST_NOTIF_FELMS_IN_5"               , "FELMS IN 5 SEKUNDEN")
 ZO_CreateStringId("AST_NOTIF_FELMS_UP"                 , "FELMS IST ERWACHT")
 ZO_CreateStringId("AST_NOTIF_FELMS_DOWN"               , "FELMS IST RUHEND")
 
+-- On-screen Notifications
 ZO_CreateStringId("AST_NOTIF_OLMS_JUMP"                , "DAMPFSCHWADEN")
 ZO_CreateStringId("AST_NOTIF_PROTECTOR"                , "SPHÄRE")
 ZO_CreateStringId("AST_NOTIF_KITE"                     , "STURM: ")
@@ -124,6 +134,7 @@ ZO_CreateStringId("AST_NOTIF_INTERRUPT"                , "UNTERBRECHEN")
 ZO_CreateStringId("AST_NOTIF_FIRE"                     , "FEUER")
 ZO_CreateStringId("AST_NOTIF_STEAM"                    , "BRÜLLEN: ")
 ZO_CreateStringId("AST_NOTIF_MAIM"                     , "VERKRÜPPELN: ")
+-- ZO_CreateStringId("AST_NOTIF_CHARGES"                  , "CHARGES: ")
 
 -- Previewing Notifications
 ZO_CreateStringId("AST_PREVIEW_OLMS_HP_1"              , "OLMS")
@@ -138,3 +149,4 @@ ZO_CreateStringId("AST_PREVIEW_BOLTS"                  , "STOß")
 ZO_CreateStringId("AST_PREVIEW_FIRE"                   , "FEUER")
 ZO_CreateStringId("AST_PREVIEW_STEAM"                  , "BRÜLLEN")
 ZO_CreateStringId("AST_PREVIEW_MAIM"                   , "VERKRÜPPELN")
+-- ZO_CreateStringId("AST_PREVIEW_CHARGES"                , "CHARGES")

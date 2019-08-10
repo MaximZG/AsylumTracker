@@ -18,6 +18,8 @@ ZO_CreateStringId("AST_SETT_COLOR_2"                   , "Secondary Color")
 ZO_CreateStringId("AST_SETT_FONT_SIZE"                 , "Font Size")
 ZO_CreateStringId("AST_SETT_SCALE"                     , "Scale")
 ZO_CreateStringId("AST_SETT_SCALE_WARN"                , "Adjusting this setting will make the notification blurry, Adjust the font size setting first.")
+ZO_CreateStringId("AST_SETT_TIMER_COLOR"               , "Timer Color")
+ZO_CreateStringId("AST_SETT_TIMER_COLOR_TOOL"          , "The color for the countdown number displayed on timers")
 
 -- Center Notifications Button
 ZO_CreateStringId("AST_SETT_CENTER_NOTIF"              , "Center Notifications") -- Center is a verb here

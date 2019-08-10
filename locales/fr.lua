@@ -18,6 +18,8 @@ ZO_CreateStringId("AST_SETT_COLOR_2"                   , "Couleur Secondaire")
 ZO_CreateStringId("AST_SETT_FONT_SIZE"                 , "Taille du Texte")
 ZO_CreateStringId("AST_SETT_SCALE"                     , "Taille Notification")
 ZO_CreateStringId("AST_SETT_SCALE_WARN"                , "Ajuster ce paramètre rendra la notification floue. Réglez d'abord le paramètre de taille du texte.")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR"               , "Timer Color")
+-- ZO_CreateStringId("AST_SETT_TIMER_COLOR_TOOL"          , "The color for the countdown number displayed on timers")
 
 -- Center Notifications Button
 ZO_CreateStringId("AST_SETT_CENTER_NOTIF"              , "Notifications au Centre") -- Center is a verb here
@@ -63,8 +65,8 @@ ZO_CreateStringId("AST_SETT_PROTECT_SIZE_TOOL"         , "Modifie la taille du t
 ZO_CreateStringId("AST_SETT_PROTECT_SCALE_TOOL"        , "Modifie la taille de la notification pour les Protecteurs.")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_1_TOOL"      , "Première couleur d'un Protecteur immunisant Olms.")
 ZO_CreateStringId("AST_SETT_PROTECT_COLOR_2_TOOL"      , "Seconde couleur d'un Protecteur immunisant Olms.")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
-ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE"           , "Sphere Text")
+-- ZO_CreateStringId("AST_SETT_PROTECT_MESSAGE_TOOL"      , "Set Custom text for the protector")
 
 -- Teleport Strike
 ZO_CreateStringId("AST_SETT_JUMP"                      , "Téléportation") -- Felms' jumping mechanic
@@ -88,6 +90,13 @@ ZO_CreateStringId("AST_SETT_STEAM_TOOL"                , "Attaque Souffle de Vap
 ZO_CreateStringId("AST_SETT_STEAM_SIZE_TOOL"           , "Modifie la taille du texte pour Souffle de Vapeur.")
 ZO_CreateStringId("AST_SETT_STEAM_SCALE_TOOL"          , "Modifie la taille de la notification pour le Souffle de Vapeur.")
 ZO_CreateStringId("AST_SETT_STEAM_COLOR_TOOL"          , "Couleur pour le Souffle d'Olms.")
+
+-- Exhaustive Charges
+-- ZO_CreateStringId("AST_SETT_CHARGES"                   , "Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_TOOL"              , "Olms' Exhaustive Charges Attack")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SIZE_TOOL"         , "Change the Font Size for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_SCALE_TOOL"        , "Change the Scale for Olms' Exhaustive Charges")
+-- ZO_CreateStringId("AST_SETT_CHARGES_COLOR_TOOL"        , "Color for Olms' Exhaustive Charges")
 
 -- Trial By Fire
 ZO_CreateStringId("AST_SETT_FIRE"                      , "Épreuve du Feu") -- Olms' Fire mechanic below 25% HP
@@ -125,6 +134,7 @@ ZO_CreateStringId("AST_NOTIF_INTERRUPT"                , "INTERRUPTION") -- For 
 ZO_CreateStringId("AST_NOTIF_FIRE"                     , "FEU")
 ZO_CreateStringId("AST_NOTIF_STEAM"                    , "SOUFFLE: ") -- Referring to Olms' Steam breath
 ZO_CreateStringId("AST_NOTIF_MAIM"                     , "MUTILER: ") -- Referring to Felms' Maim
+-- ZO_CreateStringId("AST_NOTIF_CHARGES"                  , "CHARGES: ")
 
 -- Previewing Notifications
 ZO_CreateStringId("AST_PREVIEW_OLMS_HP_1"              , "OLMS")
@@ -139,3 +149,4 @@ ZO_CreateStringId("AST_PREVIEW_BOLTS"                  , "RAYONS")
 ZO_CreateStringId("AST_PREVIEW_FIRE"                   , "FEU")
 ZO_CreateStringId("AST_PREVIEW_STEAM"                  , "SOUFFLE")
 ZO_CreateStringId("AST_PREVIEW_MAIM"                   , "MUTILER")
+-- ZO_CreateStringId("AST_PREVIEW_CHARGES"                , "CHARGES")

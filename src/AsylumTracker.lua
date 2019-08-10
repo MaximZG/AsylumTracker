@@ -127,6 +127,7 @@ AsylumTracker.defaults = {
      exhaustive_charges_scale = 1,
 
      -- Colors
+     color_timer = {0.81, .37, .03},
      color_olms_hp = {1, 0.4, 0, 1},
      color_olms_hp2 = {1, 0, 0, 1},
      color_storm = {1, 1, 1, 1},
@@ -178,6 +179,16 @@ local function round(number, decimalPlaces)
      else
           return value .. ".000"
      end
+end
+
+local function RGBToHex(r, g, b, a)
+     r = string.format("%x", r * 255)
+     g = string.format("%x", g * 255)
+     b = string.format("%x", b * 255)
+     if #r < 2 then r = "0" .. r end
+     if #g < 2 then g = "0" .. g end
+     if #b < 2 then b = "0" .. b end
+     return r .. g .. b
 end
 
 local function dbg(text)
@@ -372,9 +383,9 @@ local function UpdateTimers()
                     if key == "storm_the_heavens" and timeRemaining < 6 and AsylumTracker.sv.storm_the_heavens then
                          AsylumTrackerStorm:SetHidden(false)
                          if timeRemaining >= 1 then
-                              AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                          else
-                              AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|ccf5e08" .. GetString(AST_SETT_SOON).. "|r")
+                              AsylumTrackerStormLabel:SetText(GetString(AST_NOTIF_KITE) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON).. "|r")
                          end
                          if timeRemaining > 0 and not AsylumTracker.soundPlayed then
                               if AsylumTracker.sv["sound_enabled"] then
@@ -385,10 +396,10 @@ local function UpdateTimers()
                          end
                     elseif key == "defiling_blast" and timeRemaining < 6 then
                          if timeRemaining >= 1 then
-                              AsylumTrackerBlastLabel:SetText(GetString(AST_NOTIF_BLAST) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerBlastLabel:SetText(GetString(AST_NOTIF_BLAST) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                               AsylumTrackerBlast:SetHidden(false)
                          else
-                              AsylumTrackerBlastLabel:SetText(GetString(AST_NOTIF_BLAST) .. "|ccf5e08" .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerBlastLabel:SetText(GetString(AST_NOTIF_BLAST) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                               AsylumTrackerBlast:SetHidden(false)
                          end
                          if timeRemaining > 0 and not AsylumTracker.soundPlayed then
@@ -400,33 +411,33 @@ local function UpdateTimers()
                          end
                     elseif key == "teleport_strike" and timeRemaining < 6 then
                          if timeRemaining >= 1 then
-                              AsylumTrackerTeleportStrikeLabel:SetText(GetString(AST_NOTIF_JUMP) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerTeleportStrikeLabel:SetText(GetString(AST_NOTIF_JUMP) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                               AsylumTrackerTeleportStrike:SetHidden(false)
                          else
-                              AsylumTrackerTeleportStrikeLabel:SetText(GetString(AST_NOTIF_JUMP) .. "|ccf5e08" .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerTeleportStrikeLabel:SetText(GetString(AST_NOTIF_JUMP) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                               AsylumTrackerTeleportStrike:SetHidden(false)
                          end
                     elseif key == "oppressive_bolts" then
                          AsylumTrackerOppressiveBolts:SetHidden(false)
                          if timeRemaining >= 1 then
-                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                          else
-                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|ccf5e08" .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                          end
                     elseif key == "exhaustive_charges" and timeRemaining < 6 and AsylumTracker.sv.exhaustive_charges then
                          if timeRemaining >= 1 then
-                              AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                               AsylumTrackerCharges:SetHidden(false)
                          else
-                              AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|ccf5e08" .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                               AsylumTrackerCharges:SetHidden(false)
                          end
                     elseif key == "scalding_roar" and timeRemaining < 6 and AsylumTracker.sv.scalding_roar then
                          if timeRemaining >= 1 then
-                              AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                               AsylumTrackerSteam:SetHidden(false)
                          else
-                              AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|ccf5e08" .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                               AsylumTrackerSteam:SetHidden(false)
                          end
                     elseif key == "llothis_dormant" then
@@ -452,7 +463,7 @@ local function UpdateTimers()
                     elseif key == "maim" then
                          if timeRemaining >= 0.5 then
                               if AsylumTracker.sv["maim"] then
-                                   AsylumTrackerMaimLabel:SetText(GetString(AST_NOTIF_MAIM) .. "|ccf5e08" .. math.floor(timeRemaining) .. "|r")
+                                   AsylumTrackerMaimLabel:SetText(GetString(AST_NOTIF_MAIM) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                                    AsylumTrackerMaim:SetHidden(false)
                               else
                                    AsylumTrackerMaim:SetHidden(true)
@@ -832,16 +843,6 @@ function AsylumTracker.UnregisterEvents()
           EVENT_MANAGER:UnregisterForEvent(AsylumTracker.name, EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged)
           EVENT_MANAGER:UnregisterForUpdate(AsylumTracker.name)
      end
-end
-
-local function RGBToHex(r, g, b, a)
-     r = string.format("%x", r * 255)
-     g = string.format("%x", g * 255)
-     b = string.format("%x", b * 255)
-     if #r < 2 then r = "0" .. r end
-     if #g < 2 then g = "0" .. g end
-     if #b < 2 then b = "0" .. b end
-     return r .. g .. b
 end
 
 function AsylumTracker.ToggleMovable()

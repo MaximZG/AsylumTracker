@@ -53,7 +53,6 @@ function AsylumTracker.CreateSettingsWindow()
                getFunc = function() return sv.sound_enabled end,
                setFunc = function(value) sv.sound_enabled = value end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -63,7 +62,6 @@ function AsylumTracker.CreateSettingsWindow()
                getFunc = function() return sv.llothis_notifications end,
                setFunc = function(value) sv.llothis_notifications = value end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -73,7 +71,14 @@ function AsylumTracker.CreateSettingsWindow()
                getFunc = function() return sv.felms_notifications end,
                setFunc = function(value) sv.felms_notifications = value end,
                default = true,
---               requiresReload = true,
+               width = "full",
+          },
+          {
+               type = "colorpicker",
+               name = AST_SETT_TIMER_COLOR,
+               tooltip = AST_SETT_TIMER_COLOR_TOOL,
+               getFunc = function() return unpack(sv.color_timer) end,
+               setFunc = function(r, g, b, a) sv.color_timer = {r, g, b, a} end,
                width = "full",
           },
           {
@@ -144,7 +149,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -248,7 +252,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -340,7 +343,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -406,7 +408,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = true,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -435,7 +436,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -493,7 +493,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -560,7 +559,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -618,7 +616,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -676,7 +673,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
@@ -735,7 +731,6 @@ function AsylumTracker.CreateSettingsWindow()
                     AsylumTracker.ToggleMovable()
                end,
                default = false,
---               requiresReload = true,
                width = "full",
           },
           {
