@@ -865,6 +865,8 @@ function AsylumTracker.ToggleMovable()
           AsylumTrackerMaimLabel:SetText(GetString(AST_PREVIEW_MAIM))
           AsylumTrackerChargesLabel:SetText(GetString(AST_PREVIEW_CHARGES))
 
+          AsylumTracker.SetFontSize()
+
           AsylumTrackerOlmsHP:SetMovable(true)
           if AsylumTracker.sv["storm_the_heavens"] then AsylumTrackerStorm:SetMovable(true) end
           if AsylumTracker.sv["defiling_blast"] then AsylumTrackerBlast:SetMovable(true) end
@@ -911,12 +913,30 @@ function AsylumTracker.ToggleMovable()
      end
 end
 
-function AsylumTracker.SetFontSize(label, size)
-     local label = label
-     local size = size
+function AsylumTracker.SetFontSize()
      local path = "EsoUI/Common/Fonts/univers67.otf"
      local outline = "soft-shadow-thick"
-     label:SetFont(path .. "|" .. size .. "|" .. outline)
+     AsylumTrackerOlmsHPLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_olms_hp .. "|" .. outline)
+     AsylumTrackerStormLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_storm .. "|" .. outline)
+     AsylumTrackerBlastLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_blast .. "|" .. outline)
+     AsylumTrackerSphereLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_sphere .. "|" .. outline)
+     AsylumTrackerTeleportStrikeLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_teleport_strike .. "|" .. outline)
+     AsylumTrackerOppressiveBoltsLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_oppressive_bolts .. "|" .. outline)
+     AsylumTrackerFireLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_fire .. "|" .. outline)
+     AsylumTrackerSteamLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_scalding_roar .. "|" .. outline)
+     AsylumTrackerMaimLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_maim .. "|" .. outline)
+     AsylumTrackerChargesLabel:SetFont(path .. "|" .. AsylumTracker.sv.font_size_exhaustive_charges .. "|" .. outline)
+
+     AsylumTrackerOlmsHP:SetDimensions(AsylumTrackerOlmsHPLabel:GetTextWidth(), AsylumTrackerOlmsHPLabel:GetTextHeight())
+     AsylumTrackerStorm:SetDimensions(AsylumTrackerStormLabel:GetTextWidth(), AsylumTrackerStormLabel:GetTextHeight())
+     AsylumTrackerBlast:SetDimensions(AsylumTrackerBlastLabel:GetTextWidth(), AsylumTrackerBlastLabel:GetTextHeight())
+     AsylumTrackerSphere:SetDimensions(AsylumTrackerSphereLabel:GetTextWidth(), AsylumTrackerSphereLabel:GetTextHeight())
+     AsylumTrackerTeleportStrike:SetDimensions(AsylumTrackerTeleportStrikeLabel:GetTextWidth(), AsylumTrackerTeleportStrikeLabel:GetTextHeight())
+     AsylumTrackerOppressiveBolts:SetDimensions(AsylumTrackerOppressiveBoltsLabel:GetTextWidth(), AsylumTrackerOppressiveBoltsLabel:GetTextHeight())
+     AsylumTrackerFire:SetDimensions(AsylumTrackerFireLabel:GetTextWidth(), AsylumTrackerFireLabel:GetTextHeight())
+     AsylumTrackerSteam:SetDimensions(AsylumTrackerSteamLabel:GetTextWidth(), AsylumTrackerSteamLabel:GetTextHeight())
+     AsylumTrackerMaim:SetDimensions(AsylumTrackerMaimLabel:GetTextWidth(), AsylumTrackerMaimLabel:GetTextHeight())
+     AsylumTrackerCharges:SetDimensions(AsylumTrackerChargesLabel:GetTextWidth(), AsylumTrackerChargesLabel:GetTextHeight())
 end
 
 function AsylumTracker.SetScale(label, scale)
@@ -994,27 +1014,7 @@ function AsylumTracker.ResetToDefaults()
      AsylumTracker.sv["exhaustive_charges_offsetX"] = AsylumTracker.defaults["exhaustive_charges_offsetX"]
      AsylumTracker.sv["exhaustive_charges_offsetY"] = AsylumTracker.defaults["exhaustive_charges_offsetY"]
 
-     AsylumTrackerOlmsHP:ClearAnchors()
-     AsylumTrackerStorm:ClearAnchors()
-     AsylumTrackerBlast:ClearAnchors()
-     AsylumTrackerSphere:ClearAnchors()
-     AsylumTrackerTeleportStrike:ClearAnchors()
-     AsylumTrackerOppressiveBolts:ClearAnchors()
-     AsylumTrackerFire:ClearAnchors()
-     AsylumTrackerSteam:ClearAnchors()
-     AsylumTrackerMaim:ClearAnchors()
-     AsylumTrackerCharges:ClearAnchors()
-
-     AsylumTrackerOlmsHP:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["olms_hp_offsetX"], AsylumTracker.sv["olms_hp_offsetY"])
-     AsylumTrackerStorm:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["storm_offsetX"], AsylumTracker.sv["storm_offsetY"])
-     AsylumTrackerBlast:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["blast_offsetX"], AsylumTracker.sv["blast_offsetY"])
-     AsylumTrackerSphere:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["sphere_offsetX"], AsylumTracker.sv["sphere_offsetY"])
-     AsylumTrackerTeleportStrike:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["teleport_strike_offsetX"], AsylumTracker.sv["teleport_strike_offsetY"])
-     AsylumTrackerOppressiveBolts:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["oppressive_bolts_offsetX"], AsylumTracker.sv["oppressive_bolts_offsetY"])
-     AsylumTrackerFire:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["fire_offsetX"], AsylumTracker.sv["fire_offsetY"])
-     AsylumTrackerSteam:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["steam_offsetX"], AsylumTracker.sv["steam_offsetY"])
-     AsylumTrackerMaim:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["maim_offsetX"], AsylumTracker.sv["maim_offsetY"])
-     AsylumTrackerCharges:SetAnchor(TOPLEFT, GuiRoot, TOPLEFT, AsylumTracker.sv["exhaustive_charges_offsetX"], AsylumTracker.sv["exhaustive_charges_offsetY"])
+     AsylumTracker.ResetAnchors()
 end
 
 -- Initialization function
@@ -1025,16 +1025,7 @@ function AsylumTracker.Initialize()
      AsylumTracker.RegisterUnitIndexing()
      AsylumTracker.ResetAnchors()
 
-     AsylumTracker.SetFontSize(AsylumTrackerOlmsHPLabel, AsylumTracker.sv["font_size_olms_hp"])
-     AsylumTracker.SetFontSize(AsylumTrackerStormLabel, AsylumTracker.sv["font_size_storm"])
-     AsylumTracker.SetFontSize(AsylumTrackerBlastLabel, AsylumTracker.sv["font_size_blast"])
-     AsylumTracker.SetFontSize(AsylumTrackerSphereLabel, AsylumTracker.sv["font_size_sphere"])
-     AsylumTracker.SetFontSize(AsylumTrackerTeleportStrikeLabel, AsylumTracker.sv["font_size_teleport_strike"])
-     AsylumTracker.SetFontSize(AsylumTrackerOppressiveBoltsLabel, AsylumTracker.sv["font_size_oppressive_bolts"])
-     AsylumTracker.SetFontSize(AsylumTrackerFireLabel, AsylumTracker.sv["font_size_fire"])
-     AsylumTracker.SetFontSize(AsylumTrackerSteamLabel, AsylumTracker.sv["font_size_scalding_roar"])
-     AsylumTracker.SetFontSize(AsylumTrackerMaimLabel, AsylumTracker.sv["font_size_maim"])
-     AsylumTracker.SetFontSize(AsylumTrackerChargesLabel, AsylumTracker.sv["font_size_exhaustive_charges"])
+     AsylumTracker.SetFontSize()
 
      AsylumTracker.SetScale(AsylumTrackerOlmsHPLabel, AsylumTracker.sv["olms_hp_scale"])
      AsylumTracker.SetScale(AsylumTrackerStormLabel, AsylumTracker.sv["storm_scale"])
