@@ -732,7 +732,6 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                AsylumTracker.LlothisSpawned = true
                if AsylumTracker.spawnTimes[unitId] then
                     local llothis_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
-                    dbg("Llothis Uptime: " .. llothis_uptime)
                     if AsylumTracker.sv.defiling_blast then
                          SetTimer("defiling_blast", 11 - llothis_uptime)
                     end
@@ -742,7 +741,7 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                     end
                end
           end
-     elseif unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") then
+     elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
           if not AsylumTracker.FelmsSpawned then
                AsylumTracker.FelmsSpawned = true
                dbg("Felms Spawned")
