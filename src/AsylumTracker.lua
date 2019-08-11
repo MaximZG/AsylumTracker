@@ -605,6 +605,7 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
      if result == ACTION_RESULT_INTERRUPT and AsylumTracker.sv.oppressive_bolts then
           AsylumTrackerOppressiveBoltsLabel:SetText(AsylumTracker.sv["interrupt_message"])
           zo_callLater(function() SetTimer("oppressive_bolts") end, 1000)
+          return
      end
      if result == ACTION_RESULT_BEGIN then
           if abilityId == AsylumTracker.id["storm_the_heavens"] then
@@ -719,6 +720,9 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
      if result == ACTION_RESULT_EFFECT_FADED then
           if abilityId == AsylumTracker.id["defiling_blast"] then
                AsylumTrackerBlast:SetHidden(true) -- Hides defiling blast notification when the cone ends
+          elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
+               SetTimer("oppressive_bolts")
+               dbg("Oppressive Bolt Ended")
           elseif abilityId == AsylumTracker.id["static_shield"] then -- All spheres dead, shield goes down.
                AsylumTracker.sphereIsUp = false
                AsylumTrackerSphere:SetHidden(true)
