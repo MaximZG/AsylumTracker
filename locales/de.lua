@@ -2,6 +2,13 @@
 ZO_CreateStringId("AST_SETT_HEADER"                    , "Asylum Tracker Einstellungen")
 ZO_CreateStringId("AST_SETT_INFO"                      , "Asylum Tracker Informationen")
 ZO_CreateStringId("AST_SETT_DESCRIPTION"               , "Zeigt hilfreiche Benachrichtigungen in der Prüfung Die Anstalt Sanctorium an")
+ZO_CreateStringId("AST_SETT_NOTIFICATIONS"             , "Benachrichtigungen")
+
+-- ZO_CreateStringId("AST_SETT_TIMERS"                    , "Timer Settings")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST"               , "Adjust Olms' timers")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST"            , "Adjust Llothis' timers")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST_DESC"          , "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST_DESC"       , "Adjust Oppressive Bolts timer to account for Defiling Blast happening when the oppressive bolts timer reaches 0")
 
 -- Unlock Button
 ZO_CreateStringId("AST_SETT_UNLOCK"                    , "Entsperren")
@@ -50,6 +57,10 @@ ZO_CreateStringId("AST_SETT_STORM_SIZE_TOOL"           , "Schriftgröße für Er
 ZO_CreateStringId("AST_SETT_STORM_SCALE_TOOL"          , "Maßstab für Erstürmung des Himmels")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_1_TOOL"        , "Erstürmung des Himmels - Erste blinkende Farbe")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_2_TOOL"        , "Erstürmung des Himmels - Zweite blinkende Farbe")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Storm the Heavens.")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Storm the Heavens Sound Effect")
 
 -- Defiling Dye Blast
 ZO_CreateStringId("AST_SETT_BLAST"                     , "Entweihende Farbexplosion")
@@ -57,6 +68,10 @@ ZO_CreateStringId("AST_SETT_BLAST_TOOL"                , "Llothis' kegelförmige
 ZO_CreateStringId("AST_SETT_BLAST_SIZE_TOOL"           , "Schriftgröße für Entweihende Farbexplosion")
 ZO_CreateStringId("AST_SETT_BLAST_SCALE_TOOL"          , "Maßstab für Entweihende Farbexplosion")
 ZO_CreateStringId("AST_SETT_BLAST_COLOR_TOOL"          , "Farbeinstellung der Benachrichtigung für Entweihende Farbexplosion")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Defiling Blast.")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Defiling Blast Sound Effect.")
 
 -- Protectors
 ZO_CreateStringId("AST_SETT_PROTECT"                   , "Ordinierter Beschützer")

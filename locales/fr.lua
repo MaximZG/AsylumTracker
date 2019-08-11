@@ -2,6 +2,13 @@
 ZO_CreateStringId("AST_SETT_HEADER"                    , "Asylum Tracker Paramètres")
 ZO_CreateStringId("AST_SETT_INFO"                      , "Asylum Tracker Information")
 ZO_CreateStringId("AST_SETT_DESCRIPTION"               , "Affiche des notifications et des alerts pour vous aider sur l'Asile Sanctuaire")
+ZO_CreateStringId("AST_SETT_NOTIFICATIONS"             , "Notifications")
+
+-- ZO_CreateStringId("AST_SETT_TIMERS"                    , "Timer Settings")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST"               , "Adjust Olms' timers")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST"            , "Adjust Llothis' timers")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST_DESC"          , "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST_DESC"       , "Adjust Oppressive Bolts timer to account for Defiling Blast happening when the oppressive bolts timer reaches 0")
 
 -- Unlock Button
 ZO_CreateStringId("AST_SETT_UNLOCK"                    , "Déverrouiller")
@@ -27,7 +34,7 @@ ZO_CreateStringId("AST_SETT_CENTER_NOTIF_TOOL"         , "Aligne toutes les noti
 
 -- Sound Effects
 ZO_CreateStringId("AST_SETT_SOUND_EFFECT"              , "Effets Sonores")
-ZO_CreateStringId("AST_SETT_SOUND_EFFECT_TOOL"         , "Les effets sonores pour la mécanique Détonation Profanée, et Nuages de Vapeur.") -- I'm not sure what the official Japanese Translations are for Defiling Dye Blast or Storm the Heavens
+ZO_CreateStringId("AST_SETT_SOUND_EFFECT_TOOL"         , "Les effets sonores pour la mécanique Détonation Profanée, et Nuages de Vapeur.")
 
 -- Mini Notifications
 ZO_CreateStringId("AST_SETT_LLOTHIS_NOTIF"             , "Llothis Notifications") -- Notifications for Llothis
@@ -50,6 +57,10 @@ ZO_CreateStringId("AST_SETT_STORM_SIZE_TOOL"           , "Modifie la taille du t
 ZO_CreateStringId("AST_SETT_STORM_SCALE_TOOL"          , "Modifie la taille de la notification pour Assaillir les Cieux.")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_1_TOOL"        , "Première couleur d'Assaillir les Cieux.")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_2_TOOL"        , "Seconde couleur d'Assaillir les Cieux.")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Storm the Heavens.")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Storm the Heavens Sound Effect")
 
 -- Defiling Dye Blast
 ZO_CreateStringId("AST_SETT_BLAST"                     , "Détonation Profanée") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
@@ -57,6 +68,10 @@ ZO_CreateStringId("AST_SETT_BLAST_TOOL"                , "Attaque Détonation Pr
 ZO_CreateStringId("AST_SETT_BLAST_SIZE_TOOL"           , "Modifie la taille du texte pour la Détonation Profanée.")
 ZO_CreateStringId("AST_SETT_BLAST_SCALE_TOOL"          , "Modifie la taille de la notification pour la Détonation Profanée.")
 ZO_CreateStringId("AST_SETT_BLAST_COLOR_TOOL"          , "Couleur pour l'attaque Détonation Profanée.")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Defiling Blast.")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Defiling Blast Sound Effect.")
 
 -- Protectors
 ZO_CreateStringId("AST_SETT_PROTECT"                   , "Protecteurs") -- The little sphere's the shield Olms

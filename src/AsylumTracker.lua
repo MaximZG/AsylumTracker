@@ -7,7 +7,7 @@ local MED_PRIORITY = 3
 local LOW_PRIORITY = 1
 
 AsylumTracker.name = "AsylumTracker"
-AsylumTracker.author = "init3"
+AsylumTracker.author = "init3 [NA]"
 AsylumTracker.version = "1.9"
 AsylumTracker.variableVersion = 1
 AsylumTracker.fontSize = 48
@@ -42,6 +42,7 @@ AsylumTracker.id = {
      trial_by_fire = 98582, -- Olms' fire below 25% HP
      scalding_roar = 98683,
      exhaustive_charges = 95482,
+     pernicious_transmission = 99819,
      maim = 95657, -- Felms' Maim
      dormant = 99990, -- Used to tell if Felms/Llothis have been taken down in HM
      boss_event = 10298, -- Used to tell when Llothis/Felms spawn
@@ -64,6 +65,8 @@ AsylumTracker.defaults = {
      sound_enabled = true,
      llothis_notifications = true,
      felms_notifications = true,
+     adjust_timers_olms = false,
+     adjust_timers_llothis = false,
 
      -- Abilities
      interrupt_message = "Toxic",
@@ -268,7 +271,7 @@ local function SetTimer(key, timer_override, endtime_override)
      elseif key == "exhaustive_charges" then
           duration = timer_override or 12
      elseif key == "scalding_roar" then
-          duration = timer_override or 28
+          duration = timer_override or 27
      elseif key == "llothis_dormant" then
           duration = timer_override or 45
      elseif key == "felms_dormant" then
@@ -318,7 +321,7 @@ function AsylumTracker.GetSounds()
      return sounds
 end
 
-local function AdjustTimers()
+local function AdjustTimersOlms()
      local sh, sr, ec = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges
      local sh_end, sr_end, ec_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges
      if (sh > sr) and (sr > ec) then
@@ -370,9 +373,21 @@ local function AdjustTimers()
      end
 end
 
+local function AdjustTimersLlothis()
+     local db, ob = AsylumTracker.timers.defiling_blast, AsylumTracker.timers.oppressive_bolts
+     local db_end, ob_end, ec_end = AsylumTracker.endTimes.defiling_blast, AsylumTracker.endTimes.oppressive_bolts
+     if (ob > db) then
+          if (ob - db < 7) and (ob - db >= 2) and (db > 0) then
+               SetTimer("oppressive_bolts", ob + (7 - (ob - db)), ob_end + (7 - (ob_end - db_end)))
+               dbg("[ob > db]: Updated Oppressive Bolts timer to: " .. AsylumTracker.timers.oppressive_bolts)
+          end
+     end
+end
+
 local function UpdateTimers()
      if AsylumTracker.isInCombat then
-          AdjustTimers()
+          if AsylumTracker.sv.adjust_timers_olms then AdjustTimersOlms() end
+          if AsylumTracker.sv.adjust_timers_llothis then AdjustTimersLlothis() end
           if AsylumTracker.sv.maim then SetMaimedStatus() end
           for key, value in pairs(AsylumTracker.timers) do -- The key is the ability and the value is the endTime for the event
                if AsylumTracker.timers[key] > 0 then -- If there is a timer for the specified key event
@@ -722,7 +737,6 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                AsylumTrackerBlast:SetHidden(true) -- Hides defiling blast notification when the cone ends
           elseif abilityId == AsylumTracker.id["oppressive_bolts"] then
                SetTimer("oppressive_bolts")
-               dbg("Oppressive Bolt Ended")
           elseif abilityId == AsylumTracker.id["static_shield"] then -- All spheres dead, shield goes down.
                AsylumTracker.sphereIsUp = false
                AsylumTrackerSphere:SetHidden(true)
@@ -748,7 +762,6 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
      elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
           if not AsylumTracker.FelmsSpawned then
                AsylumTracker.FelmsSpawned = true
-               dbg("Felms Spawned")
                if AsylumTracker.spawnTimes[unitId] then
                     local felms_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
                     if AsylumTracker.sv.teleport_strike then

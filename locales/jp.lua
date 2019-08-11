@@ -2,6 +2,13 @@
 ZO_CreateStringId("AST_SETT_HEADER"                    , "Asylum Tracker 設定")
 ZO_CreateStringId("AST_SETT_INFO"                      , "Asylum Tracker 情報")
 ZO_CreateStringId("AST_SETT_DESCRIPTION"               , "聖者の隔離所に役立つ通知や警告を行います")
+ZO_CreateStringId("AST_SETT_NOTIFICATIONS"             , "通知")
+
+-- ZO_CreateStringId("AST_SETT_TIMERS"                    , "Timer Settings")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST"               , "Adjust Olms' timers")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST"            , "Adjust Llothis' timers")
+-- ZO_CreateStringId("AST_SETT_OLMS_ADJUST_DESC"          , "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0")
+-- ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST_DESC"       , "Adjust Oppressive Bolts timer to account for Defiling Blast happening when the oppressive bolts timer reaches 0")
 
 -- Unlock Button
 ZO_CreateStringId("AST_SETT_UNLOCK"                    , "アンロック")
@@ -50,6 +57,10 @@ ZO_CreateStringId("AST_SETT_STORM_SIZE_TOOL"           , "天への嵐の通知�
 ZO_CreateStringId("AST_SETT_STORM_SCALE_TOOL"          , "天への嵐の通知の大きさを変更します")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_1_TOOL"        , "天への嵐の通知の最初の明滅の色")
 ZO_CreateStringId("AST_SETT_STORM_COLOR_2_TOOL"        , "天への嵐の通知の２回目の明滅の色")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Storm the Heavens.")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Storm the Heavens Sound Effect")
 
 -- Defiling Dye Blast
 ZO_CreateStringId("AST_SETT_BLAST"                     , "ロシスのブラスト") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
@@ -57,6 +68,10 @@ ZO_CreateStringId("AST_SETT_BLAST_TOOL"                , "ロシスが放つ毒�
 ZO_CreateStringId("AST_SETT_BLAST_SIZE_TOOL"           , "ブラストの通知のフォントサイズを変更します")
 ZO_CreateStringId("AST_SETT_BLAST_SCALE_TOOL"          , "ブラストの通知の大きさを変更します")
 ZO_CreateStringId("AST_SETT_BLAST_COLOR_TOOL"          , "ブラストの通知の色を変更します")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT"                  , "Sound Effect")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Defiling Blast.")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+-- ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Defiling Blast Sound Effect.")
 
 -- Protectors
 ZO_CreateStringId("AST_SETT_PROTECT"                   , "スフィア") -- The little sphere's the shield Olms

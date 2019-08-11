@@ -2,6 +2,13 @@
 ZO_CreateStringId("AST_SETT_HEADER"                    , "Asylum Tracker Settings")
 ZO_CreateStringId("AST_SETT_INFO"                      , "Asylum Tracker Information")
 ZO_CreateStringId("AST_SETT_DESCRIPTION"               , "Provides Notifications and alerts to help with Asylum Sanctorium")
+ZO_CreateStringId("AST_SETT_NOTIFICATIONS"             , "Notifications")
+
+ZO_CreateStringId("AST_SETT_TIMERS"                    , "Timer Settings")
+ZO_CreateStringId("AST_SETT_OLMS_ADJUST"               , "Adjust Olms' timers")
+ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST"            , "Adjust Llothis' timers")
+ZO_CreateStringId("AST_SETT_OLMS_ADJUST_DESC"          , "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0")
+ZO_CreateStringId("AST_SETT_LLOTHIS_ADJUST_DESC"       , "Adjust Oppressive Bolts timer to account for Defiling Blast happening when the oppressive bolts timer reaches 0")
 
 -- Unlock Button
 ZO_CreateStringId("AST_SETT_UNLOCK"                    , "Unlock")
@@ -27,7 +34,7 @@ ZO_CreateStringId("AST_SETT_CENTER_NOTIF_TOOL"         , "Aligns all notificatio
 
 -- Sound Effects
 ZO_CreateStringId("AST_SETT_SOUND_EFFECT"              , "Sound Effects")
-ZO_CreateStringId("AST_SETT_SOUND_EFFECT_TOOL"         , "Sound Effects for the Defiling Blast and Storm the Heavens mechanics") -- I'm not sure what the official Japanese Translations are for Defiling Dye Blast or Storm the Heavens
+ZO_CreateStringId("AST_SETT_SOUND_EFFECT_TOOL"         , "Sound Effects for the Defiling Blast and Storm the Heavens mechanics")
 
 -- Mini Notifications
 ZO_CreateStringId("AST_SETT_LLOTHIS_NOTIF"             , "Llothis Notifications") -- Notifications for Llothis
@@ -44,19 +51,27 @@ ZO_CreateStringId("AST_SETT_OLMS_HP_COLOR_1_TOOL"      , "Color while Olms' HP i
 ZO_CreateStringId("AST_SETT_OLMS_HP_COLOR_2_TOOL"      , "Color while Olms' HP is less than 2% until jump")
 
 -- Storm the Heavens
-ZO_CreateStringId("AST_SETT_STORM"                     , "Storm the Heavens") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
-ZO_CreateStringId("AST_SETT_STORM_TOOL"                , "Olms' kiting phase")
-ZO_CreateStringId("AST_SETT_STORM_SIZE_TOOL"           , "Change the Font Size for Storm the Heavens")
-ZO_CreateStringId("AST_SETT_STORM_SCALE_TOOL"          , "Change the Scale for Storm the Heavens")
-ZO_CreateStringId("AST_SETT_STORM_COLOR_1_TOOL"        , "Storm the Heavens first flashing color")
-ZO_CreateStringId("AST_SETT_STORM_COLOR_2_TOOL"        , "Storm the Heavens second flashing color")
+ZO_CreateStringId("AST_SETT_STORM"                               , "Storm the Heavens") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
+ZO_CreateStringId("AST_SETT_STORM_TOOL"                          , "Olms' kiting phase")
+ZO_CreateStringId("AST_SETT_STORM_SIZE_TOOL"                     , "Change the Font Size for Storm the Heavens")
+ZO_CreateStringId("AST_SETT_STORM_SCALE_TOOL"                    , "Change the Scale for Storm the Heavens")
+ZO_CreateStringId("AST_SETT_STORM_COLOR_1_TOOL"                  , "Storm the Heavens first flashing color")
+ZO_CreateStringId("AST_SETT_STORM_COLOR_2_TOOL"                  , "Storm the Heavens second flashing color")
+ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT"                  , "Sound Effect")
+ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Storm the Heavens.")
+ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+ZO_CreateStringId("AST_SETT_STORM_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Storm the Heavens Sound Effect")
 
 -- Defiling Dye Blast
-ZO_CreateStringId("AST_SETT_BLAST"                     , "Defiling Blast") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
-ZO_CreateStringId("AST_SETT_BLAST_TOOL"                , "Llothis' Defiling Dye Blast attack")
-ZO_CreateStringId("AST_SETT_BLAST_SIZE_TOOL"           , "Change the Font Size for Defiling Dye Blast")
-ZO_CreateStringId("AST_SETT_BLAST_SCALE_TOOL"          , "Change the Scale for Defiling Dye Blast")
-ZO_CreateStringId("AST_SETT_BLAST_COLOR_TOOL"          , "Color for Llothis' Defiling Dye Blast attack")
+ZO_CreateStringId("AST_SETT_BLAST"                               , "Defiling Blast") -- I'm sure there's an official translation for the ability, but I'm not sure what it is.
+ZO_CreateStringId("AST_SETT_BLAST_TOOL"                          , "Llothis' Defiling Dye Blast attack")
+ZO_CreateStringId("AST_SETT_BLAST_SIZE_TOOL"                     , "Change the Font Size for Defiling Dye Blast")
+ZO_CreateStringId("AST_SETT_BLAST_SCALE_TOOL"                    , "Change the Scale for Defiling Dye Blast")
+ZO_CreateStringId("AST_SETT_BLAST_COLOR_TOOL"                    , "Color for Llothis' Defiling Dye Blast attack")
+ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT"                  , "Sound Effect")
+ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_TOOL"             , "Sound Effect that will be used for Defiling Blast.")
+ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME"           , "Sound Effect Volume")
+ZO_CreateStringId("AST_SETT_BLAST_SOUND_EFFECT_VOLUME_TOOL"      , "Volume of Defiling Blast Sound Effect.")
 
 -- Protectors
 ZO_CreateStringId("AST_SETT_PROTECT"                   , "Protectors") -- The little sphere's the shield Olms
