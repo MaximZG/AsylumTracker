@@ -160,6 +160,7 @@ AsylumTracker.timers = {
      scalding_roar = 0,
      maim = 0,
      exhaustive_charges = 0,
+     trial_by_fire = 0,
      felms_dormant = 0,
      llothis_dormant = 0,
 }
@@ -272,6 +273,8 @@ local function SetTimer(key, timer_override, endtime_override)
           duration = timer_override or 12
      elseif key == "scalding_roar" then
           duration = timer_override or 27
+     elseif key == "trial_by_fire" then
+          duration = timer_override or 28
      elseif key == "llothis_dormant" then
           duration = timer_override or 45
      elseif key == "felms_dormant" then
@@ -322,8 +325,8 @@ function AsylumTracker.GetSounds()
 end
 
 local function AdjustTimersOlms()
-     local sh, sr, ec = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges
-     local sh_end, sr_end, ec_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges
+     local sh, sr, ec, tbf = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges, AsylumTracker.timers.trial_by_fire
+     local sh_end, sr_end, ec_end, tbf_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges, AsylumTracker.endTimes.trial_by_fire
      if (sh > sr) and (sr > ec) then
           if (sr - ec < 2) and (sr - ec >= 1) and (ec > 0) then
                SetTimer("scalding_roar", sr + (2 - (sr - ec)), sr_end + (2 - (sr_end - ec_end)))
@@ -433,12 +436,12 @@ local function UpdateTimers()
                               AsylumTrackerTeleportStrike:SetHidden(false)
                          end
                     elseif key == "oppressive_bolts" then
-                         AsylumTrackerOppressiveBolts:SetHidden(false)
                          if timeRemaining >= 1 then
                               AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
                          else
                               AsylumTrackerOppressiveBoltsLabel:SetText(GetString(AST_NOTIF_BOLTS) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                          end
+                         AsylumTrackerOppressiveBolts:SetHidden(false)
                     elseif key == "exhaustive_charges" and timeRemaining < 6 and AsylumTracker.sv.exhaustive_charges then
                          if timeRemaining >= 1 then
                               AsylumTrackerChargesLabel:SetText(GetString(AST_NOTIF_CHARGES) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
@@ -455,6 +458,15 @@ local function UpdateTimers()
                               AsylumTrackerSteamLabel:SetText(GetString(AST_NOTIF_STEAM) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
                               AsylumTrackerSteam:SetHidden(false)
                          end
+                    elseif key == "trial_by_fire" and timeRemaining < 6 and AsylumTracker.sv.trial_by_fire then
+                         if timeRemaining >= 1 then
+                              AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. math.floor(timeRemaining) .. "|r")
+                              AsylumTrackerFire:SetHidden(false)
+                         else
+                              AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE) .. "|c" .. RGBToHex(unpack(AsylumTracker.sv.color_timer)) .. GetString(AST_SETT_SOON) .. "|r")
+                              AsylumTrackerFire:SetHidden(false)
+                         end
+                         AsylumTrackerFire:SetHidden(false)
                     elseif key == "llothis_dormant" then
                          if timeRemaining == 10 then
                               if AsylumTracker.sv["llothis_notifications"] then
@@ -697,10 +709,13 @@ function AsylumTracker.OnCombatEvent(_, result, isError, abilityName, abilityGra
                end
 
           elseif abilityId == AsylumTracker.id["trial_by_fire"] then
-               AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE))
-               dbgability(abilityId, result, hitValue)
-               AsylumTrackerFire:SetHidden(false)
-               zo_callLater(function() AsylumTrackerFire:SetHidden(true) end, 8000)
+               SetTimer("trial_by_fire")
+               if AsylumTracker.sv.trial_by_fire then
+                    dbgability(abilityId, result, hitValue)
+                    AsylumTrackerFireLabel:SetText(GetString(AST_NOTIF_FIRE) .. "|cff0000" .. GetString(AST_SETT_NOW) .. "|r")
+                    AsylumTrackerFire:SetHidden(false)
+                    zo_callLater(function() AsylumTrackerFire:SetHidden(true) end, 7000)
+               end
 
           elseif abilityId == AsylumTracker.id["scalding_roar"] and hitValue == 2300 then
                SetTimer("scalding_roar")
@@ -755,7 +770,6 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                     end
                     if AsylumTracker.sv.oppressive_bolts then
                          SetTimer("oppressive_bolts", 12 - llothis_uptime)
-                         AsylumTrackerOppressiveBolts:SetHidden(false)
                     end
                end
           end
@@ -839,6 +853,7 @@ function AsylumTracker.RegisterEvents()
           if not AsylumTracker.sv.scalding_roar then RegisterForAbility(AsylumTracker.id["scalding_roar"]) end
           if not AsylumTracker.sv.storm_the_heavens then RegisterForAbility(AsylumTracker.id["storm_the_heavens"]) end
           if not AsylumTracker.sv.exhaustive_charges then RegisterForAbility(AsylumTracker.id["exhaustive_charges"]) end
+--          if not AsylumTracker.sv.trial_by_fire then RegisterForAbility(AsylumTracker.id["trial_by_fire"]) end
 
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name, EVENT_PLAYER_COMBAT_STATE, AsylumTracker.CombatState) -- Used to determine player's combat state
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
