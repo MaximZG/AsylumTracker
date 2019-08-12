@@ -8,11 +8,11 @@
 
 ## Title: |cff0096Asylum Tracker|r
 ## Description: The Asylum Sanctorium Raid Tracker
-## APIVersion: 100027 100028
+## APIVersion: 100028
 ## Author: |cff0096@init3 [NA]|r
-## Version: 1.9
+## Version: 2.0
 ## SavedVariables: AsylumTrackerVars
-## DependsOn: LibAddonMenu-2.0
+## DependsOn: LibAddonMenu-2.0>=29
 
 locales/en.lua
 locales/$(language).lua

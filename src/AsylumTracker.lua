@@ -8,7 +8,7 @@ local LOW_PRIORITY = 1
 
 AsylumTracker.name = "AsylumTracker"
 AsylumTracker.author = "init3 [NA]"
-AsylumTracker.version = "1.9"
+AsylumTracker.version = "2.0"
 AsylumTracker.variableVersion = 1
 AsylumTracker.fontSize = 48
 AsylumTracker.isMovable = false
