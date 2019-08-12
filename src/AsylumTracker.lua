@@ -751,10 +751,10 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                if AsylumTracker.spawnTimes[unitId] then
                     local llothis_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
                     if AsylumTracker.sv.defiling_blast then
-                         SetTimer("defiling_blast", 11 - llothis_uptime)
+                         SetTimer("defiling_blast", 12 - llothis_uptime)
                     end
                     if AsylumTracker.sv.oppressive_bolts then
-                         SetTimer("oppressive_bolts", 11 - llothis_uptime)
+                         SetTimer("oppressive_bolts", 12 - llothis_uptime)
                          AsylumTrackerOppressiveBolts:SetHidden(false)
                     end
                end
@@ -765,7 +765,7 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                if AsylumTracker.spawnTimes[unitId] then
                     local felms_uptime = GetGameTimeSeconds() - AsylumTracker.spawnTimes[unitId]
                     if AsylumTracker.sv.teleport_strike then
-                         SetTimer("teleport_strike", 11 - felms_uptime)
+                         SetTimer("teleport_strike", 12 - felms_uptime)
                     end
                end
           end
@@ -781,7 +781,10 @@ function AsylumTracker.OnEffectChanged(_, changeType, effectSlot, effectName, un
                          CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_DOWN) .. "|r", 3000, 5, MED_PRIORITY)
                     end
                elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
-                    if AsylumTracker.sv.teleport_strike then SetTimer("teleport_strike", 45) end
+                    if AsylumTracker.sv.teleport_strike then
+                         SetTimer("teleport_strike", 45)
+                         AsylumTrackerTeleportStrike:SetHidden(true)
+                    end
                     SetTimer("felms_dormant")
                     if AsylumTracker.sv["felms_notifications"] then
                          CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_DOWN) .. "|r", 3000, 5, MED_PRIORITY)
