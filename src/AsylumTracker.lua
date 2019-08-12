@@ -272,7 +272,7 @@ local function SetTimer(key, timer_override, endtime_override)
      elseif key == "exhaustive_charges" then
           duration = timer_override or 12
      elseif key == "scalding_roar" then
-          duration = timer_override or 27
+          duration = timer_override or 28
      elseif key == "trial_by_fire" then
           duration = timer_override or 28
      elseif key == "llothis_dormant" then
@@ -324,59 +324,55 @@ function AsylumTracker.GetSounds()
      return sounds
 end
 
-local function AdjustTimersOlms()
-     local sh, sr, ec, tbf = AsylumTracker.timers.storm_the_heavens, AsylumTracker.timers.scalding_roar, AsylumTracker.timers.exhaustive_charges, AsylumTracker.timers.trial_by_fire
-     local sh_end, sr_end, ec_end, tbf_end = AsylumTracker.endTimes.storm_the_heavens, AsylumTracker.endTimes.scalding_roar, AsylumTracker.endTimes.exhaustive_charges, AsylumTracker.endTimes.trial_by_fire
-     if (sh > sr) and (sr > ec) then
-          if (sr - ec < 2) and (sr - ec >= 1) and (ec > 0) then
-               SetTimer("scalding_roar", sr + (2 - (sr - ec)), sr_end + (2 - (sr_end - ec_end)))
-               sr = AsylumTracker.timers.scalding_roar
-               sr_end = AsylumTracker.endTimes.scalding_roar
-               dbg("[sh > sr > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
-          end
-     elseif (sr > sh) and (sh > ec) then
-          if (sr - sh < 7) and (sr - sh >= 1) and (sh > 0) then
-               SetTimer("scalding_roar", sr + (7 - (sr - sh)), sr_end + (7 - (sr_end - sh_end)))
-               dbg("[sr > sh > ec]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
-          end
-     elseif (sh > ec) and (ec > sr) then
-          if (ec - sr < 6) and (ec - sr >= 1) and (sr > 0) then
-               SetTimer("exhaustive_charges", ec + (6 - (ec - sr)), ec_end + (6 - (ec_end - sr_end)))
-               ec = AsylumTracker.timers.exhaustive_charges
-               ec_end = AsylumTracker.endTimes.exhaustive_charges
-               dbg("[sh > ec > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
-          end
-     elseif (sr > ec) and (ec > sh) then
-          if (ec - sh < 7) and (ec - sh >= 1) and (sh > 0) then
-               SetTimer("exhaustive_charges", ec + (7 - (ec - sh)), ec_end + (7 - (ec_end - sh_end)))
-               ec = AsylumTracker.timers.exhaustive_charges
-               ec_end = AsylumTracker.endTimes.exhaustive_charges
-               dbg("[sr > ec > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
-          end
-          if (sr - ec < 2) and (sr - ec >= 1) and (ec > 0) then
-               SetTimer("scalding_roar", sr + (2 - (sr - ec)), sr_end + (2 - (sr_end - ec_end)))
-               dbg("[sr > ec > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
-          end
-     elseif (ec > sh) and (sh > sr) then
-          if (ec - sh < 7) and (ec - sh >= 1) and (sh > 0) then
-               SetTimer("exhaustive_charges", ec + (7 - (ec - sh)), ec_end + (7 - (ec_end - sh_end)))
-               dbg("[ec > sh > sr]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
-          end
-     elseif (ec > sr) and (sr > sh) then
-          if (sr - sh < 7) and (sr - sh >= 1) and (sh > 0) then
-               SetTimer("scalding_roar", sr + (7 - (sr - sh)), sr_end + (7 - (sr_end - sh_end)))
-               sr = AsylumTracker.timers.scalding_roar
-               sr_end = AsylumTracker.timers.scalding_roar
-               dbg("[ec > sr > sh]: Updated Scalding Roar timer to: " .. AsylumTracker.timers.scalding_roar)
-          end
-          if (ec - sr < 6) and (ec - sr >= 1) and (sr > 0) then
-               SetTimer("exhaustive_charges", ec + (6 - (ec - sr)), ec_end + (6 - (ec_end - sr_end)))
-               dbg("[ec > sr > sh]: Updated Exhaustive Charges timer to: " .. AsylumTracker.timers.exhaustive_charges)
+local function SortTimers(tbl, sortFunction)
+     local keys = {}
+     for key in pairs(tbl) do
+          table.insert(keys, key)
+     end
+
+     table.sort(keys, function(a, b)
+          return sortFunction(tbl[a], tbl[b])
+     end)
+     return keys
+end
+
+function AsylumTracker.AdjustTimersOlms()
+     local unsorted_timers = {}
+     local durations = {
+          trial_by_fire = 8,
+          storm_the_heavens = 7,
+          scalding_roar = 6,
+          exhaustive_charges = 2,
+     }
+
+     if AsylumTracker.timers.storm_the_heavens > 0 then unsorted_timers["storm_the_heavens"] = AsylumTracker.timers.storm_the_heavens end
+     if AsylumTracker.timers.trial_by_fire > 0 then unsorted_timers["trial_by_fire"] = AsylumTracker.timers.trial_by_fire end
+     if AsylumTracker.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AsylumTracker.timers.exhaustive_charges end
+     if AsylumTracker.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AsylumTracker.timers.scalding_roar end
+
+     local sorted_timers = SortTimers(unsorted_timers, function(a, b) return a < b end)
+
+     if #sorted_timers >= 2 then
+          for i = 1, #sorted_timers - 1 do
+               local timer1, timer2 = AsylumTracker.timers[sorted_timers[i]], AsylumTracker.timers[sorted_timers[i + 1]]
+               local endTime1, endTime2 = AsylumTracker.endTimes[sorted_timers[i]], AsylumTracker.endTimes[sorted_timers[i + 1]]
+               local duration1 = durations[sorted_timers[i]]
+               if (timer2 - timer1) < duration1 then
+                    if (timer2 - timer1) >= 1 then
+                         local old_timeRemaining = timer2
+                         local new_timeRemaining = timer2 + (duration1 - (timer2 - timer1))
+                         local new_endTime = endTime2 + (duration1 - (endTime2 - endTime1))
+                         if math.abs(new_timeRemaining - old_timeRemaining) > 0.15 then
+                              SetTimer(sorted_timers[i + 1], new_timeRemaining, new_endTime)
+                              dbg("Updated timer for " .. sorted_timers[i + 1] .. " to " .. AsylumTracker.timers[sorted_timers[i + 1]])
+                         end
+                    end
+               end
           end
      end
 end
 
-local function AdjustTimersLlothis()
+function AsylumTracker.AdjustTimersLlothis()
      local db, ob = AsylumTracker.timers.defiling_blast, AsylumTracker.timers.oppressive_bolts
      local db_end, ob_end, ec_end = AsylumTracker.endTimes.defiling_blast, AsylumTracker.endTimes.oppressive_bolts
      if (ob > db) then
@@ -389,8 +385,8 @@ end
 
 local function UpdateTimers()
      if AsylumTracker.isInCombat then
-          if AsylumTracker.sv.adjust_timers_olms then AdjustTimersOlms() end
-          if AsylumTracker.sv.adjust_timers_llothis then AdjustTimersLlothis() end
+          if AsylumTracker.sv.adjust_timers_olms then AsylumTracker.AdjustTimersOlms() end
+          if AsylumTracker.sv.adjust_timers_llothis then AsylumTracker.AdjustTimersLlothis() end
           if AsylumTracker.sv.maim then SetMaimedStatus() end
           for key, value in pairs(AsylumTracker.timers) do -- The key is the ability and the value is the endTime for the event
                if AsylumTracker.timers[key] > 0 then -- If there is a timer for the specified key event
@@ -853,7 +849,7 @@ function AsylumTracker.RegisterEvents()
           if not AsylumTracker.sv.scalding_roar then RegisterForAbility(AsylumTracker.id["scalding_roar"]) end
           if not AsylumTracker.sv.storm_the_heavens then RegisterForAbility(AsylumTracker.id["storm_the_heavens"]) end
           if not AsylumTracker.sv.exhaustive_charges then RegisterForAbility(AsylumTracker.id["exhaustive_charges"]) end
---          if not AsylumTracker.sv.trial_by_fire then RegisterForAbility(AsylumTracker.id["trial_by_fire"]) end
+          if not AsylumTracker.sv.trial_by_fire then RegisterForAbility(AsylumTracker.id["trial_by_fire"]) end
 
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name, EVENT_PLAYER_COMBAT_STATE, AsylumTracker.CombatState) -- Used to determine player's combat state
           EVENT_MANAGER:RegisterForEvent(AsylumTracker.name .. "_dormant", EVENT_EFFECT_CHANGED, AsylumTracker.OnEffectChanged) -- Used to determine if Llothis/Felms go down
