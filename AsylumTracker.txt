@@ -17,7 +17,11 @@
 locales/en.lua
 locales/$(language).lua
 
-src/AsylumTracker.lua
+src/Core.lua
+src/EventHandling.lua
+src/CombatEvents.lua
 src/Settings.lua
 src/Units.lua
+src/UI.lua
+src/SlashCommand.lua
 src/AsylumTracker.xml
