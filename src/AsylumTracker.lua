@@ -1000,27 +1000,23 @@ function AsylumTracker.ResetAnchors()
      AsylumTrackerCharges:SetAnchor(CENTER, GuiRoot, TOPLEFT, AsylumTracker.sv["exhaustive_charges_offsetX"], AsylumTracker.sv["exhaustive_charges_offsetY"])
 end
 
-function AsylumTracker.SavePosition()
-     AsylumTracker.sv["olms_hp_offsetX"] = AsylumTrackerOlmsHP:GetLeft()
-     AsylumTracker.sv["olms_hp_offsetY"] = AsylumTrackerOlmsHP:GetTop()
-     AsylumTracker.sv["storm_offsetX"] = AsylumTrackerStorm:GetLeft()
-     AsylumTracker.sv["storm_offsetY"] = AsylumTrackerStorm:GetTop()
-     AsylumTracker.sv["blast_offsetX"] = AsylumTrackerBlast:GetLeft()
-     AsylumTracker.sv["blast_offsetY"] = AsylumTrackerBlast:GetTop()
-     AsylumTracker.sv["sphere_offsetX"] = AsylumTrackerSphere:GetLeft()
-     AsylumTracker.sv["sphere_offsetY"] = AsylumTrackerSphere:GetTop()
-     AsylumTracker.sv["teleport_strike_offsetX"] = AsylumTrackerTeleportStrike:GetLeft()
-     AsylumTracker.sv["teleport_strike_offsetY"] = AsylumTrackerTeleportStrike:GetTop()
-     AsylumTracker.sv["oppressive_bolts_offsetX"] = AsylumTrackerOppressiveBolts:GetLeft()
-     AsylumTracker.sv["oppressive_bolts_offsetY"] = AsylumTrackerOppressiveBolts:GetTop()
-     AsylumTracker.sv["fire_offsetX"] = AsylumTrackerFire:GetLeft()
-     AsylumTracker.sv["fire_offsetY"] = AsylumTrackerFire:GetTop()
-     AsylumTracker.sv["steam_offsetX"] = AsylumTrackerSteam:GetLeft()
-     AsylumTracker.sv["steam_offsetY"] = AsylumTrackerSteam:GetTop()
-     AsylumTracker.sv["maim_offsetX"] = AsylumTrackerMaim:GetLeft()
-     AsylumTracker.sv["maim_offsetY"] = AsylumTrackerMaim:GetTop()
-     AsylumTracker.sv["exhaustive_charges_offsetX"] = AsylumTrackerCharges:GetLeft()
-     AsylumTracker.sv["exhaustive_charges_offsetY"] = AsylumTrackerCharges:GetTop()
+function AsylumTracker.SavePosition(control, controlAsString)
+     local offsets = {
+          ["AsylumTrackerOlmsHP"] = {"olms_hp_offsetX", "olms_hp_offsetY"},
+          ["AsylumTrackerStorm"] = {"storm_offsetX", "storm_offsetY"},
+          ["AsylumTrackerBlast"] = {"blast_offsetX", "blast_offsetY"},
+          ["AsylumTrackerSphere"] = {"sphere_offsetX", "sphere_offsetY"},
+          ["AsylumTrackerTeleportStrike"] = {"teleport_strike_offsetX", "teleport_strike_offsetY"},
+          ["AsylumTrackerOppressiveBolts"] = {"oppressive_bolts_offsetX", "oppressive_bolts_offsetY"},
+          ["AsylumTrackerFire"] = {"fire_offsetX", "fire_offsetY"},
+          ["AsylumTrackerSteam"] = {"steam_offsetX", "steam_offsetY"},
+          ["AsylumTrackerMaim"] = {"maim_offsetX", "maim_offsetY"},
+          ["AsylumTrackerCharges"] = {"exhaustive_charges_offsetX", "exhaustive_charges_offsetY"},
+     }
+
+     local centerX, centerY = control:GetCenter()
+     AsylumTracker.sv[offsets[controlAsString][1]] = centerX
+     AsylumTracker.sv[offsets[controlAsString][2]] = centerY
 end
 
 function AsylumTracker.ResetToDefaults()

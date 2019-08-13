@@ -2,12 +2,12 @@
      <Controls>
           <TopLevelControl name="AsylumTrackerOlmsHP" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="330"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="330"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerOlmsHP, "AsylumTrackerOlmsHP")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -19,12 +19,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerStorm" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="380"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="380"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerStorm, "AsylumTrackerStorm")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -36,12 +36,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerBlast" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="430"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="430"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerBlast, "AsylumTrackerBlast")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -53,12 +53,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerSphere" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="480"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="480"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerSphere, "AsylumTrackerSphere")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -70,12 +70,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerTeleportStrike" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="530"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="530"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerTeleportStrike, "AsylumTrackerTeleportStrike")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -87,12 +87,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerOppressiveBolts" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="580"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="580"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerOppressiveBolts, "AsylumTrackerOppressiveBolts")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -104,12 +104,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerFire" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="630"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="630"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerFire, "AsylumTrackerFire")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -121,12 +121,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerSteam" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="680"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="680"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerSteam, "AsylumTrackerSteam")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -138,12 +138,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerMaim" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="730"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="730"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerMaim, "AsylumTrackerMaim")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -155,12 +155,12 @@
           </TopLevelControl>
           <TopLevelControl name="AsylumTrackerCharges" clampedToScreen="true" mouseEnabled="true" movable="false" hidden="true">
                <Dimensions x="100" y="50"/>
-               <Anchor point="TOPLEFT" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="780"/>
+               <Anchor point="CENTER" relativeTo="GuiRoot" relativePoint="TOPLEFT" offsetX="250" offsetY="780"/>
                <OnMoveStop>
-                    AsylumTracker.SavePosition()
+                    AsylumTracker.SavePosition(AsylumTrackerCharges, "AsylumTrackerCharges")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="FFFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>

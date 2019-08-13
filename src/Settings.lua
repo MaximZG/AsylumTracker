@@ -7,9 +7,12 @@ function AsylumTracker.CreateSettingsWindow()
      local panelData = {
           type = "panel",
           name = "Asylum Tracker",
-          displayName = AST_SETT_HEADER,
-          author = "|c513DEB" .. AsylumTracker.author .. "|r",
-          version = "|c513DEB" .. AsylumTracker.version .. "|r",
+          displayName = "|cAD601C" .. GetString(AST_SETT_HEADER) .. "|r",
+          author = "|cAD601C" .. AsylumTracker.author .. "|r",
+          version = "|cAD601C"  .. AsylumTracker.version .. "|r",
+          website = "https://www.esoui.com/downloads/info2111-AsylumTracker.html",
+          feedback = "https://www.esoui.com/downloads/info2111-AsylumTracker.html#comments",
+          translation = "https://github.com/3tini/AsylumTracker/tree/dev/locales",
           registerForRefresh = true,
      }
      local panel = LAM2:RegisterAddonPanel(AsylumTracker.name .. "Settings", panelData)
