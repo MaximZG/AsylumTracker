@@ -1,6 +1,6 @@
-local AsylumTracker = AsylumTracker
+local AST = AsylumTracker
 
-function AsylumTracker.CreateSettingsWindow()
+function AST.CreateSettingsWindow()
      local LAM2 = LibAddonMenu2
      local sv = AsylumTrackerVars["Default"][GetDisplayName()][GetCurrentCharacterId()]
 
@@ -8,14 +8,14 @@ function AsylumTracker.CreateSettingsWindow()
           type = "panel",
           name = "Asylum Tracker",
           displayName = "|cAD601C" .. GetString(AST_SETT_HEADER) .. "|r",
-          author = "|cAD601C" .. AsylumTracker.author .. "|r",
-          version = "|cAD601C"  .. AsylumTracker.version .. "|r",
-          website = "https://www.esoui.com/downloads/info2111-AsylumTracker.html",
-          feedback = "https://www.esoui.com/downloads/info2111-AsylumTracker.html#comments",
+          author = "|cAD601C" .. AST.author .. "|r",
+          version = "|cAD601C"  .. AST.version .. "|r",
+          website = "https://www.esoui.com/downloads/info2111-AST.html",
+          feedback = "https://www.esoui.com/downloads/info2111-AST.html#comments",
           translation = "https://github.com/3tini/AsylumTracker/tree/dev/locales",
           registerForRefresh = true,
      }
-     local panel = LAM2:RegisterAddonPanel(AsylumTracker.name .. "Settings", panelData)
+     local panel = LAM2:RegisterAddonPanel(AST.name .. "Settings", panelData)
 
      local Settings = {
           {
@@ -33,8 +33,8 @@ function AsylumTracker.CreateSettingsWindow()
                name = AST_SETT_UNLOCK,
                tooltip = AST_SETT_UNLOCK_TOOL,
                func = function(value)
-                    AsylumTracker.ToggleMovable()
-                    if not AsylumTracker.isMovable then
+                    AST.ToggleMovable()
+                    if not AST.isMovable then
                          value:SetText(GetString(AST_SETT_UNLOCK))
                     else
                          value:SetText(GetString(AST_SETT_LOCK))
@@ -46,7 +46,7 @@ function AsylumTracker.CreateSettingsWindow()
                type = "button",
                name = AST_SETT_CENTER_NOTIF,
                tooltip = AST_SETT_CENTER_NOTIF_TOOL,
-               func = function() AsylumTracker.ResetToDefaults() end,
+               func = function() AST.ResetToDefaults() end,
                width = "half",
           },
           {
@@ -93,7 +93,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_OLMS_HP_SIZE,
                          tooltip = AST_SETT_OLMS_HP_SIZE_TOOL,
                          getFunc = function() return sv.font_size_olms_hp end,
-                         setFunc = function(value) sv.font_size_olms_hp = value AsylumTracker.SetFontSize(AsylumTrackerOlmsHP, AsylumTrackerOlmsHPLabel, value) end,
+                         setFunc = function(value) sv.font_size_olms_hp = value AST.SetFontSize(AsylumTrackerOlmsHP, AsylumTrackerOlmsHPLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -106,7 +106,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_OLMS_HP_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.olms_hp_scale end,
-                         setFunc = function(value) sv.olms_hp_scale = value AsylumTracker.SetScale(AsylumTrackerOlmsHPLabel, value) end,
+                         setFunc = function(value) sv.olms_hp_scale = value AST.SetScale(AsylumTrackerOlmsHPLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -120,7 +120,7 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return unpack(sv.color_olms_hp) end,
                          setFunc = function(r, g, b, a)
                               sv.color_olms_hp = {r, g, b, a}
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                     },
@@ -132,7 +132,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_olms_hp2 = {r, g, b, a}
                               AsylumTrackerOlmsHPLabel:SetColor(unpack(sv.color_olms_hp2))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                     },
@@ -148,8 +148,8 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc =
                          function(value)
                               sv.storm_the_heavens = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = true,
                          width = "full",
@@ -159,7 +159,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_STORM_SIZE_TOOL,
                          getFunc = function() return sv.font_size_storm end,
-                         setFunc = function(value) sv.font_size_storm = value AsylumTracker.SetFontSize(AsylumTrackerStorm, AsylumTrackerStormLabel, value) end,
+                         setFunc = function(value) sv.font_size_storm = value AST.SetFontSize(AsylumTrackerStorm, AsylumTrackerStormLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -173,7 +173,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_STORM_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.storm_scale end,
-                         setFunc = function(value) sv.storm_scale = value AsylumTracker.SetScale(AsylumTrackerStormLabel, value) end,
+                         setFunc = function(value) sv.storm_scale = value AST.SetScale(AsylumTrackerStormLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -189,7 +189,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_storm = {r, g, b, a}
                               AsylumTrackerStormLabel:SetColor(unpack(sv.color_storm))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.storm_the_heavens end,
@@ -201,7 +201,7 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return unpack(sv.color_storm2) end,
                          setFunc = function(r, g, b, a)
                               sv.color_storm2 = {r, g, b, a}
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.storm_the_heavens end,
@@ -211,7 +211,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_STORM_SOUND_EFFECT,
                          tooltip = AST_SETT_STORM_SOUND_EFFECT_TOOL,
                          scrollable = true,
-                         choices = AsylumTracker.GetSounds(),
+                         choices = AST.GetSounds(),
                          getFunc = function() return sv.storm_the_heavens_sound end,
                          setFunc = function(value) sv.storm_the_heavens_sound = value end,
                          width = "full",
@@ -235,7 +235,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = "Test",
                          tooltip = "Test Sound Effect",
                          func = function(value)
-                              AsylumTracker.LoopSound(sv.storm_the_heavens_volume, sv.storm_the_heavens_sound)
+                              AST.LoopSound(sv.storm_the_heavens_volume, sv.storm_the_heavens_sound)
                          end,
                          width = "full",
                          disabled = function() return not sv.storm_the_heavens or not sv.sound_enabled end
@@ -251,8 +251,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.defiling_blast end,
                          setFunc = function(value)
                               sv.defiling_blast = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = true,
                          width = "full",
@@ -262,7 +262,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_BLAST_SIZE_TOOL,
                          getFunc = function() return sv.font_size_blast end,
-                         setFunc = function(value) sv.font_size_blast = value AsylumTracker.SetFontSize(AsylumTrackerBlast, AsylumTrackerBlastLabel, value) end,
+                         setFunc = function(value) sv.font_size_blast = value AST.SetFontSize(AsylumTrackerBlast, AsylumTrackerBlastLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -276,7 +276,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_BLAST_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.blast_scale end,
-                         setFunc = function(value) sv.blast_scale = value AsylumTracker.SetScale(AsylumTrackerBlastLabel, value) end,
+                         setFunc = function(value) sv.blast_scale = value AST.SetScale(AsylumTrackerBlastLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -292,7 +292,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_blast = {r, g, b, a}
                               AsylumTrackerBlastLabel:SetColor(unpack(sv.color_blast))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.defiling_blast end,
@@ -302,7 +302,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_BLAST_SOUND_EFFECT,
                          tooltip = AST_SETT_BLAST_SOUND_EFFECT_TOOL,
                          scrollable = true,
-                         choices = AsylumTracker.GetSounds(),
+                         choices = AST.GetSounds(),
                          getFunc = function() return sv.defiling_blast_sound end,
                          setFunc = function(value) sv.defiling_blast_sound = value end,
                          width = "full",
@@ -326,7 +326,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = "Test",
                          tooltip = "Test Sound Effect",
                          func = function(value)
-                              AsylumTracker.LoopSound(sv.defiling_blast_volume, sv.defiling_blast_sound)
+                              AST.LoopSound(sv.defiling_blast_volume, sv.defiling_blast_sound)
                          end,
                          width = "full",
                          disabled = function() return not sv.defiling_blast or not sv.sound_enabled end
@@ -342,8 +342,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.static_shield end,
                          setFunc = function(value)
                               sv.static_shield = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = true,
                          width = "full",
@@ -353,7 +353,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_PROTECT_SIZE_TOOL,
                          getFunc = function() return sv.font_size_sphere end,
-                         setFunc = function(value) sv.font_size_sphere = value AsylumTracker.SetFontSize(AsylumTrackerSphere, AsylumTrackerSphereLabel, value) end,
+                         setFunc = function(value) sv.font_size_sphere = value AST.SetFontSize(AsylumTrackerSphere, AsylumTrackerSphereLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -367,7 +367,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_PROTECT_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.sphere_scale end,
-                         setFunc = function(value) sv.sphere_scale = value AsylumTracker.SetScale(AsylumTrackerSphereLabel, value) end,
+                         setFunc = function(value) sv.sphere_scale = value AST.SetScale(AsylumTrackerSphereLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -383,7 +383,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_sphere = {r, g, b, a}
                               AsylumTrackerSphereLabel:SetColor(unpack(sv.color_sphere))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.static_shield end,
@@ -395,7 +395,7 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return unpack(sv.color_sphere2) end,
                          setFunc = function(r, g, b, a)
                               sv.color_sphere2 = {r, g, b, a}
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.static_shield end,
@@ -407,8 +407,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.sphere_message_toggle end,
                          setFunc = function(value)
                               sv.sphere_message_toggle = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = true,
                          width = "full",
@@ -435,8 +435,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.teleport_strike end,
                          setFunc = function(value)
                               sv.teleport_strike = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -446,7 +446,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_JUMP_SIZE_TOOL,
                          getFunc = function() return sv.font_size_teleport_strike end,
-                         setFunc = function(value) sv.font_size_teleport_strike = value AsylumTracker.SetFontSize(AsylumTrackerTeleportStrike, AsylumTrackerTeleportStrikeLabel, value) end,
+                         setFunc = function(value) sv.font_size_teleport_strike = value AST.SetFontSize(AsylumTrackerTeleportStrike, AsylumTrackerTeleportStrikeLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -460,7 +460,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_JUMP_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.teleport_strike_scale end,
-                         setFunc = function(value) sv.teleport_strike_scale = value AsylumTracker.SetScale(AsylumTrackerTeleportStrikeLabel, value) end,
+                         setFunc = function(value) sv.teleport_strike_scale = value AST.SetScale(AsylumTrackerTeleportStrikeLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -476,7 +476,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_teleport_strike = {r, g, b, a}
                               AsylumTrackerTeleportStrikeLabel:SetColor(unpack(sv.color_teleport_strike))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.teleport_strike end,
@@ -492,8 +492,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.oppressive_bolts end,
                          setFunc = function(value)
                               sv.oppressive_bolts = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -503,7 +503,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_BOLTS_SIZE_TOOL,
                          getFunc = function() return sv.font_size_oppressive_bolts end,
-                         setFunc = function(value) sv.font_size_oppressive_bolts = value AsylumTracker.SetFontSize(AsylumTrackerOppressiveBolts, AsylumTrackerOppressiveBoltsLabel, value) end,
+                         setFunc = function(value) sv.font_size_oppressive_bolts = value AST.SetFontSize(AsylumTrackerOppressiveBolts, AsylumTrackerOppressiveBoltsLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -517,7 +517,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_BOLTS_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.oppressive_bolts_scale end,
-                         setFunc = function(value) sv.oppressive_bolts_scale = value AsylumTracker.SetScale(AsylumTrackerOppressiveBoltsLabel, value) end,
+                         setFunc = function(value) sv.oppressive_bolts_scale = value AST.SetScale(AsylumTrackerOppressiveBoltsLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -533,7 +533,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_oppressive_bolts = {r, g, b, a}
                               AsylumTrackerOppressiveBoltsLabel:SetColor(unpack(sv.color_oppressive_bolts))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.oppressive_bolts end,
@@ -558,8 +558,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.scalding_roar end,
                          setFunc = function(value)
                               sv.scalding_roar = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -569,7 +569,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_STEAM_SIZE_TOOL,
                          getFunc = function() return sv.font_size_scalding_roar end,
-                         setFunc = function(value) sv.font_size_scalding_roar = value AsylumTracker.SetFontSize(AsylumTrackerSteam, AsylumTrackerSteamLabel, value) end,
+                         setFunc = function(value) sv.font_size_scalding_roar = value AST.SetFontSize(AsylumTrackerSteam, AsylumTrackerSteamLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -583,7 +583,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_STEAM_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.scalding_roar_scale end,
-                         setFunc = function(value) sv.scalding_roar_scale = value AsylumTracker.SetScale(AsylumTrackerSteamLabel, value) end,
+                         setFunc = function(value) sv.scalding_roar_scale = value AST.SetScale(AsylumTrackerSteamLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -599,7 +599,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_scalding_roar = {r, g, b, a}
                               AsylumTrackerSteamLabel:SetColor(unpack(sv.color_scalding_roar))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.scalding_roar end,
@@ -615,8 +615,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.exhaustive_charges end,
                          setFunc = function(value)
                               sv.exhaustive_charges = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -626,7 +626,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_CHARGES_SIZE_TOOL,
                          getFunc = function() return sv.font_size_exhaustive_charges end,
-                         setFunc = function(value) sv.font_size_exhaustive_charges = value AsylumTracker.SetFontSize(AsylumTrackerCharges, AsylumTrackerChargesLabel, value) end,
+                         setFunc = function(value) sv.font_size_exhaustive_charges = value AST.SetFontSize(AsylumTrackerCharges, AsylumTrackerChargesLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -640,7 +640,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_CHARGES_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.exhaustive_charges_scale end,
-                         setFunc = function(value) sv.exhaustive_charges_scale = value AsylumTracker.SetScale(AsylumTrackerChargesLabel, value) end,
+                         setFunc = function(value) sv.exhaustive_charges_scale = value AST.SetScale(AsylumTrackerChargesLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -656,7 +656,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_exhaustive_charges = {r, g, b, a}
                               AsylumTrackerChargesLabel:SetColor(unpack(sv.color_exhaustive_charges))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.exhaustive_charges end,
@@ -672,8 +672,8 @@ function AsylumTracker.CreateSettingsWindow()
                          getFunc = function() return sv.trial_by_fire end,
                          setFunc = function(value)
                               sv.trial_by_fire = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -683,7 +683,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_FIRE_SIZE_TOOL,
                          getFunc = function() return sv.font_size_fire end,
-                         setFunc = function(value) sv.font_size_fire = value AsylumTracker.SetFontSize(AsylumTrackerFire, AsylumTrackerFireLabel, value) end,
+                         setFunc = function(value) sv.font_size_fire = value AST.SetFontSize(AsylumTrackerFire, AsylumTrackerFireLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -697,7 +697,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_FIRE_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.fire_scale end,
-                         setFunc = function(value) sv.fire_scale = value AsylumTracker.SetScale(AsylumTrackerFireLabel, value) end,
+                         setFunc = function(value) sv.fire_scale = value AST.SetScale(AsylumTrackerFireLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -713,7 +713,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_fire = {r, g, b, a}
                               AsylumTrackerFireLabel:SetColor(unpack(sv.color_fire))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.trial_by_fire end,
@@ -730,8 +730,8 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc =
                          function(value)
                               sv.maim = value
-                              AsylumTracker.ToggleMovable()
-                              AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable()
+                              AST.ToggleMovable()
                          end,
                          default = false,
                          width = "full",
@@ -741,7 +741,7 @@ function AsylumTracker.CreateSettingsWindow()
                          name = AST_SETT_FONT_SIZE,
                          tooltip = AST_SETT_MAIM_SIZE_TOOL,
                          getFunc = function() return sv.font_size_maim end,
-                         setFunc = function(value) sv.font_size_maim = value AsylumTracker.SetFontSize(AsylumTrackerMaim, AsylumTrackerMaimLabel, value) end,
+                         setFunc = function(value) sv.font_size_maim = value AST.SetFontSize(AsylumTrackerMaim, AsylumTrackerMaimLabel, value) end,
                          min = 38,
                          max = 72,
                          step = 2,
@@ -755,7 +755,7 @@ function AsylumTracker.CreateSettingsWindow()
                          tooltip = AST_SETT_MAIM_SCALE_TOOL,
                          warning = AST_SETT_SCALE_WARN,
                          getFunc = function() return sv.maim_scale end,
-                         setFunc = function(value) sv.maim_scale = value AsylumTracker.SetScale(AsylumTrackerMaimLabel, value) end,
+                         setFunc = function(value) sv.maim_scale = value AST.SetScale(AsylumTrackerMaimLabel, value) end,
                          min = 0.5,
                          max = 2,
                          step = 0.1,
@@ -771,7 +771,7 @@ function AsylumTracker.CreateSettingsWindow()
                          setFunc = function(r, g, b, a)
                               sv.color_maim = {r, g, b, a}
                               AsylumTrackerMaimLabel:SetColor(unpack(sv.color_maim))
-                              AsylumTracker.ToggleMovable() AsylumTracker.ToggleMovable()
+                              AST.ToggleMovable() AST.ToggleMovable()
                          end,
                          width = "full",
                          disabled = function() return not sv.maim end,
@@ -803,9 +803,9 @@ function AsylumTracker.CreateSettingsWindow()
                }
           }
      }
-     LAM2:RegisterOptionControls(AsylumTracker.name .. "Settings", Settings)
+     LAM2:RegisterOptionControls(AST.name .. "Settings", Settings)
 
-     AsylumTracker.OpenSettingsPanel = function()
+     AST.OpenSettingsPanel = function()
           LAM2:OpenToPanel(panel)
      end
 end

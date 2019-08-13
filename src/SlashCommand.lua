@@ -1,102 +1,102 @@
-local AsylumTracker = AsylumTracker
+local AST = AsylumTracker
 
-function AsylumTracker.SlashCommand(cmd)
+function AST.SlashCommand(cmd)
      cmd = string.lower(cmd)
      if cmd == "menu" then
-          AsylumTracker.OpenSettingsPanel()
+          AST.OpenSettingsPanel()
      elseif cmd == "toggle" then
-          AsylumTracker.ToggleMovable()
+          AST.ToggleMovable()
      elseif cmd == "reset" then
-          AsylumTracker.ResetToDefaults()
+          AST.ResetToDefaults()
      elseif cmd == "debug status" then
-          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
-          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
-          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
-          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AST.sv.debug) .. "|r")
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AST.sv.debug_ability) .. "|r")
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AST.sv.debug_timers) .. "|r")
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
      elseif cmd == "debug general" then
-          AsylumTracker.sv.debug = not AsylumTracker.sv.debug
-          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
+          AST.sv.debug = not AST.sv.debug
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AST.sv.debug) .. "|r")
      elseif cmd == "debug ability" then
-          AsylumTracker.sv.debug_ability = not AsylumTracker.sv.debug_ability
-          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
+          AST.sv.debug_ability = not AST.sv.debug_ability
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AST.sv.debug_ability) .. "|r")
      elseif cmd == "debug timers" then
-          AsylumTracker.sv.debug_timers = not AsylumTracker.sv.debug_timers
-          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
+          AST.sv.debug_timers = not AST.sv.debug_timers
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AST.sv.debug_timers) .. "|r")
      elseif cmd == "debug units" then
-          AsylumTracker.sv.debug_units = not AsylumTracker.sv.debug_units
-          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
+          AST.sv.debug_units = not AST.sv.debug_units
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
      elseif cmd == "debug all on" then
-          AsylumTracker.sv.debug = true
-          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
-          AsylumTracker.sv.debug_ability = true
-          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
-          AsylumTracker.sv.debug_timers = true
-          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
-          AsylumTracker.sv.debug_units = true
-          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
+          AST.sv.debug = true
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AST.sv.debug) .. "|r")
+          AST.sv.debug_ability = true
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AST.sv.debug_ability) .. "|r")
+          AST.sv.debug_timers = true
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AST.sv.debug_timers) .. "|r")
+          AST.sv.debug_units = true
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
      elseif cmd == "debug all off" then
-          AsylumTracker.sv.debug = false
-          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AsylumTracker.sv.debug) .. "|r")
-          AsylumTracker.sv.debug_ability = false
-          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_ability) .. "|r")
-          AsylumTracker.sv.debug_timers = false
-          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_timers) .. "|r")
-          AsylumTracker.sv.debug_units = false
-          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AsylumTracker.sv.debug_units) .. "|r")
+          AST.sv.debug = false
+          d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AST.sv.debug) .. "|r")
+          AST.sv.debug_ability = false
+          d("|cff0096AsylumTracker ::|r Ability Debugging: |cff0096" .. tostring(AST.sv.debug_ability) .. "|r")
+          AST.sv.debug_timers = false
+          d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AST.sv.debug_timers) .. "|r")
+          AST.sv.debug_units = false
+          d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
      elseif cmd == "storm on" then
-          AsylumTracker.sv.storm_the_heavens = true
-          d("|cff0096AsylumTracker ::|r Storm the Heavens:  |cff0096" .. tostring(AsylumTracker.sv.storm_the_heavens) .. "|r")
+          AST.sv.storm_the_heavens = true
+          d("|cff0096AsylumTracker ::|r Storm the Heavens:  |cff0096" .. tostring(AST.sv.storm_the_heavens) .. "|r")
      elseif cmd == "storm off" then
-          AsylumTracker.sv.storm_the_heavens = false
-          d("|cff0096AsylumTracker ::|r Storm the Heavens:  |cff0096" .. tostring(AsylumTracker.sv.storm_the_heavens) .. "|r")
+          AST.sv.storm_the_heavens = false
+          d("|cff0096AsylumTracker ::|r Storm the Heavens:  |cff0096" .. tostring(AST.sv.storm_the_heavens) .. "|r")
      elseif cmd == "blast on" then
-          AsylumTracker.sv.defiling_blast = true
-          d("|cff0096AsylumTracker ::|r Defiling Blast:  |cff0096" .. tostring(AsylumTracker.sv.defiling_blast) .. "|r")
+          AST.sv.defiling_blast = true
+          d("|cff0096AsylumTracker ::|r Defiling Blast:  |cff0096" .. tostring(AST.sv.defiling_blast) .. "|r")
      elseif cmd == "blast off" then
-          AsylumTracker.sv.defiling_blast = false
-          d("|cff0096AsylumTracker ::|r Defiling Blast:  |cff0096" .. tostring(AsylumTracker.sv.defiling_blast) .. "|r")
+          AST.sv.defiling_blast = false
+          d("|cff0096AsylumTracker ::|r Defiling Blast:  |cff0096" .. tostring(AST.sv.defiling_blast) .. "|r")
      elseif cmd == "protector on" then
-          AsylumTracker.sv.static_shield = true
-          d("|cff0096AsylumTracker ::|r Protector:  |cff0096" .. tostring(AsylumTracker.sv.static_shield) .. "|r")
+          AST.sv.static_shield = true
+          d("|cff0096AsylumTracker ::|r Protector:  |cff0096" .. tostring(AST.sv.static_shield) .. "|r")
      elseif cmd == "protector off" then
-          AsylumTracker.sv.static_shield = false
-          d("|cff0096AsylumTracker ::|r Protector:  |cff0096" .. tostring(AsylumTracker.sv.static_shield) .. "|r")
+          AST.sv.static_shield = false
+          d("|cff0096AsylumTracker ::|r Protector:  |cff0096" .. tostring(AST.sv.static_shield) .. "|r")
      elseif cmd == "teleport on" then
-          AsylumTracker.sv.teleport_strike = true
-          d("|cff0096AsylumTracker ::|r Teleport Strike:  |cff0096" .. tostring(AsylumTracker.sv.teleport_strike) .. "|r")
+          AST.sv.teleport_strike = true
+          d("|cff0096AsylumTracker ::|r Teleport Strike:  |cff0096" .. tostring(AST.sv.teleport_strike) .. "|r")
      elseif cmd == "teleport off" then
-          AsylumTracker.sv.teleport_strike = false
-          d("|cff0096AsylumTracker ::|r Teleport Strike:  |cff0096" .. tostring(AsylumTracker.sv.teleport_strike) .. "|r")
+          AST.sv.teleport_strike = false
+          d("|cff0096AsylumTracker ::|r Teleport Strike:  |cff0096" .. tostring(AST.sv.teleport_strike) .. "|r")
      elseif cmd == "bolts on" then
-          AsylumTracker.sv.oppressive_bolts = true
-          d("|cff0096AsylumTracker ::|r Oppressive Bolts:  |cff0096" .. tostring(AsylumTracker.sv.oppressive_bolts) .. "|r")
+          AST.sv.oppressive_bolts = true
+          d("|cff0096AsylumTracker ::|r Oppressive Bolts:  |cff0096" .. tostring(AST.sv.oppressive_bolts) .. "|r")
      elseif cmd == "bolts off" then
-          AsylumTracker.sv.oppressive_bolts = false
-          d("|cff0096AsylumTracker ::|r Oppressive Bolts:  |cff0096" .. tostring(AsylumTracker.sv.oppressive_bolts) .. "|r")
+          AST.sv.oppressive_bolts = false
+          d("|cff0096AsylumTracker ::|r Oppressive Bolts:  |cff0096" .. tostring(AST.sv.oppressive_bolts) .. "|r")
      elseif cmd == "steam on" then
-          AsylumTracker.sv.scalding_roar = true
-          d("|cff0096AsylumTracker ::|r Scalding Roar:  |cff0096" .. tostring(AsylumTracker.sv.scalding_roar) .. "|r")
+          AST.sv.scalding_roar = true
+          d("|cff0096AsylumTracker ::|r Scalding Roar:  |cff0096" .. tostring(AST.sv.scalding_roar) .. "|r")
      elseif cmd == "steam off" then
-          AsylumTracker.sv.scalding_roar = false
-          d("|cff0096AsylumTracker ::|r Scalding Roar:  |cff0096" .. tostring(AsylumTracker.sv.scalding_roar) .. "|r")
+          AST.sv.scalding_roar = false
+          d("|cff0096AsylumTracker ::|r Scalding Roar:  |cff0096" .. tostring(AST.sv.scalding_roar) .. "|r")
      elseif cmd == "charges on" then
-          AsylumTracker.sv.exhaustive_charges = true
-          d("|cff0096AsylumTracker ::|r Exhaustive Charges:  |cff0096" .. tostring(AsylumTracker.sv.exhaustive_charges) .. "|r")
+          AST.sv.exhaustive_charges = true
+          d("|cff0096AsylumTracker ::|r Exhaustive Charges:  |cff0096" .. tostring(AST.sv.exhaustive_charges) .. "|r")
      elseif cmd == "charges off" then
-          AsylumTracker.sv.exhaustive_charges = false
-          d("|cff0096AsylumTracker ::|r Exhaustive Charges:  |cff0096" .. tostring(AsylumTracker.sv.exhaustive_charges) .. "|r")
+          AST.sv.exhaustive_charges = false
+          d("|cff0096AsylumTracker ::|r Exhaustive Charges:  |cff0096" .. tostring(AST.sv.exhaustive_charges) .. "|r")
      elseif cmd == "fire on" then
-          AsylumTracker.sv.trial_by_fire = true
-          d("|cff0096AsylumTracker ::|r Trial by Fire:  |cff0096" .. tostring(AsylumTracker.sv.trial_by_fire) .. "|r")
+          AST.sv.trial_by_fire = true
+          d("|cff0096AsylumTracker ::|r Trial by Fire:  |cff0096" .. tostring(AST.sv.trial_by_fire) .. "|r")
      elseif cmd == "fire off" then
-          AsylumTracker.sv.trial_by_fire = false
-          d("|cff0096AsylumTracker ::|r Trial by Fire:  |cff0096" .. tostring(AsylumTracker.sv.trial_by_fire) .. "|r")
+          AST.sv.trial_by_fire = false
+          d("|cff0096AsylumTracker ::|r Trial by Fire:  |cff0096" .. tostring(AST.sv.trial_by_fire) .. "|r")
      elseif cmd == "maim on" then
-          AsylumTracker.sv.maim = true
-          d("|cff0096AsylumTracker ::|r Maim:  |cff0096" .. tostring(AsylumTracker.sv.maim) .. "|r")
+          AST.sv.maim = true
+          d("|cff0096AsylumTracker ::|r Maim:  |cff0096" .. tostring(AST.sv.maim) .. "|r")
      elseif cmd == "maim off" then
-          AsylumTracker.sv.maim = false
-          d("|cff0096AsylumTracker ::|r Maim:  |cff0096" .. tostring(AsylumTracker.sv.maim) .. "|r")
+          AST.sv.maim = false
+          d("|cff0096AsylumTracker ::|r Maim:  |cff0096" .. tostring(AST.sv.maim) .. "|r")
      elseif cmd == "help" then
           d(":::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::::")
           d("|cff0096AsylumTracker Commands ::|r")
