@@ -112,12 +112,6 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
                          AST.olmsJumping = false
                          AST.firstJump = true
                     end, 12000)
-
-                    if AST.olmsHealth > "77" then -- Olms' First Jump at 90% (Llothis Spawns)
-                         if AST.sv.storm_the_heavens then
-                              AST.SetTimer("storm_the_heavens", 15)
-                         end
-                    end
                end
 
           elseif abilityId == AST.id["trial_by_fire"] then

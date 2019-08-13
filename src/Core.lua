@@ -1,7 +1,6 @@
 AsylumTracker = AsylumTracker or {}
 local AST = AsylumTracker
 local EM = EVENT_MANAGER
-local ast_strformat = string.format
 
 local ASYLUM_SANCTORIUM = 1000
 local HIGH_PRIORITY = 5
@@ -91,39 +90,39 @@ AST.defaults = {
      maim = false,
 
      -- XML Offsets
-     olms_hp_offsetX = AST.displayResolution["width"] / 2,
+     olms_hp_offsetX = AST.displayResolution["width"] / 1.7,
      olms_hp_offsetY = 330,
-     storm_offsetX = AST.displayResolution["width"] / 2,
+     storm_offsetX = AST.displayResolution["width"] / 1.7,
      storm_offsetY = 380,
-     blast_offsetX = AST.displayResolution["width"] / 2,
+     blast_offsetX = AST.displayResolution["width"] / 1.7,
      blast_offsetY = 430,
-     sphere_offsetX = AST.displayResolution["width"] / 2,
+     sphere_offsetX = AST.displayResolution["width"] / 1.7,
      sphere_offsetY = 480,
-     teleport_strike_offsetX = AST.displayResolution["width"] / 2,
+     teleport_strike_offsetX = AST.displayResolution["width"] / 1.7,
      teleport_strike_offsetY = 530,
-     oppressive_bolts_offsetX = AST.displayResolution["width"] / 2,
+     oppressive_bolts_offsetX = AST.displayResolution["width"] / 1.7,
      oppressive_bolts_offsetY = 580,
-     fire_offsetX = AST.displayResolution["width"] / 2,
+     fire_offsetX = AST.displayResolution["width"] / 1.7,
      fire_offsetY = 630,
-     steam_offsetX = AST.displayResolution["width"] / 2,
+     steam_offsetX = AST.displayResolution["width"] / 1.7,
      steam_offsetY = 680,
-     maim_offsetX = AST.displayResolution["width"] / 2,
+     maim_offsetX = AST.displayResolution["width"] / 1.7,
      maim_offsetY = 730,
-     exhaustive_charges_offsetX = AST.displayResolution["width"] / 2,
+     exhaustive_charges_offsetX = AST.displayResolution["width"] / 1.7,
      exhaustive_charges_offsetY = 780,
 
      -- Font Sizes
-     font_size = 42,
-     font_size_olms_hp = 42,
-     font_size_storm = 42,
-     font_size_blast = 42,
-     font_size_sphere = 42,
-     font_size_teleport_strike = 42,
-     font_size_oppressive_bolts = 42,
-     font_size_fire = 42,
-     font_size_scalding_roar = 42,
-     font_size_maim = 42,
-     font_size_exhaustive_charges = 42,
+     font_size = 38,
+     font_size_olms_hp = 38,
+     font_size_storm = 38,
+     font_size_blast = 38,
+     font_size_sphere = 38,
+     font_size_teleport_strike = 38,
+     font_size_oppressive_bolts = 38,
+     font_size_fire = 38,
+     font_size_scalding_roar = 38,
+     font_size_maim = 38,
+     font_size_exhaustive_charges = 38,
 
      -- Notification Scale
      olms_hp_scale = 1,
@@ -138,7 +137,7 @@ AST.defaults = {
      exhaustive_charges_scale = 1,
 
      -- Colors
-     color_timer = {0.81, .37, .03, 1},
+     color_timer = {0.81, .37, .03},
      color_olms_hp = {1, 0.4, 0, 1},
      color_olms_hp2 = {1, 0, 0, 1},
      color_storm = {1, 1, 1, 1},
@@ -208,10 +207,10 @@ local function round(number, decimalPlaces)
 end
 
 -- The colors for mechanics are stored in rgb format. For use in strings it needs to be converted to hex. This will drop any alpha value for the saved color
-function AST.RGBToHex(r, g, b, a)
-     r = ast_strformat("%x", r * 255)
-     g = ast_strformat("%x", g * 255)
-     b = ast_strformat("%x", b * 255)
+function AST.RGBToHex(r, g, b)
+     r = string.format("%x", r * 255)
+     g = string.format("%x", g * 255)
+     b = string.format("%x", b * 255)
      if #r < 2 then r = "0" .. r end
      if #g < 2 then g = "0" .. g end
      if #b < 2 then b = "0" .. b end
@@ -374,7 +373,8 @@ function AST.AdjustTimersOlms()
      if AST.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AST.timers.exhaustive_charges end
      if AST.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AST.timers.scalding_roar end
 
-     local sorted_timers = SortTimers(unsorted_timers, function(a, b) return a < b end)
+     local sortFunction = function(a,b) return a < b end
+     local sorted_timers = SortTimers(unsorted_timers, sortFunction)
 
      if #sorted_timers >= 2 then
           for i = 1, #sorted_timers - 1 do
@@ -602,12 +602,12 @@ function AST.AlternateNotificationColors()
      if AST.sphereIsUp then
           r, g, b, a = AsylumTrackerSphereLabel:GetColor()
           local firstColor = AST.sv["color_sphere"]
-          r = ast_strformat("%.2f", r)
-          g = ast_strformat("%.2f", g)
-          b = ast_strformat("%.2f", b)
-          firstColor[1] = ast_strformat("%.2f", firstColor[1])
-          firstColor[2] = ast_strformat("%.2f", firstColor[2])
-          firstColor[3] = ast_strformat("%.2f", firstColor[3])
+          r = string.format("%.2f", r)
+          g = string.format("%.2f", g)
+          b = string.format("%.2f", b)
+          firstColor[1] = string.format("%.2f", firstColor[1])
+          firstColor[2] = string.format("%.2f", firstColor[2])
+          firstColor[3] = string.format("%.2f", firstColor[3])
           if r == firstColor[1] and g == firstColor[2] and b == firstColor[3] then
                AsylumTrackerSphereLabel:SetColor(AST.sv.color_sphere2[1], AST.sv.color_sphere2[2], AST.sv.color_sphere2[3], AST.sv.color_sphere2[4])
           else
@@ -617,12 +617,12 @@ function AST.AlternateNotificationColors()
      if AST.stormIsActive then
           r, g, b, a = AsylumTrackerStormLabel:GetColor()
           local firstColor = AST.sv["color_storm"]
-          r = ast_strformat("%.2f", r)
-          g = ast_strformat("%.2f", g)
-          b = ast_strformat("%.2f", b)
-          firstColor[1] = ast_strformat("%.2f", firstColor[1])
-          firstColor[2] = ast_strformat("%.2f", firstColor[2])
-          firstColor[3] = ast_strformat("%.2f", firstColor[3])
+          r = string.format("%.2f", r)
+          g = string.format("%.2f", g)
+          b = string.format("%.2f", b)
+          firstColor[1] = string.format("%.2f", firstColor[1])
+          firstColor[2] = string.format("%.2f", firstColor[2])
+          firstColor[3] = string.format("%.2f", firstColor[3])
           if r == firstColor[1] and g == firstColor[2] and b == firstColor[3] then
                AsylumTrackerStormLabel:SetColor(AST.sv.color_storm2[1], AST.sv.color_storm2[2], AST.sv.color_storm2[3], AST.sv.color_storm2[4])
           else

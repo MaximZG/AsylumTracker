@@ -1,5 +1,6 @@
 local AST = AsylumTracker
 
+-- Makes the Notifications movable on screen
 function AST.ToggleMovable()
      AST.isMovable = not AST.isMovable
      if AST.isMovable then
@@ -20,6 +21,7 @@ function AST.ToggleMovable()
           AsylumTrackerMaimLabel:SetText(GetString(AST_PREVIEW_MAIM))
           AsylumTrackerChargesLabel:SetText(GetString(AST_PREVIEW_CHARGES))
 
+          -- Makes the backdrop behind the notifications visible while they are movable and adjusts the dimensions of the control to the size of the text.
           AsylumTrackerOlmsHPBackdrop:SetHidden(false) AsylumTrackerOlmsHP:SetDimensions(AsylumTrackerOlmsHPLabel:GetTextWidth(), AsylumTrackerOlmsHPLabel:GetTextHeight())
           AsylumTrackerStormBackdrop:SetHidden(false) AsylumTrackerStorm:SetDimensions(AsylumTrackerStormLabel:GetTextWidth(), AsylumTrackerStormLabel:GetTextHeight())
           AsylumTrackerBlastBackdrop:SetHidden(false) AsylumTrackerBlast:SetDimensions(AsylumTrackerBlastLabel:GetTextWidth(), AsylumTrackerBlastLabel:GetTextHeight())
@@ -31,7 +33,7 @@ function AST.ToggleMovable()
           AsylumTrackerMaimBackdrop:SetHidden(false) AsylumTrackerMaim:SetDimensions(AsylumTrackerMaimLabel:GetTextWidth(), AsylumTrackerMaimLabel:GetTextHeight())
           AsylumTrackerChargesBackdrop:SetHidden(false) AsylumTrackerCharges:SetDimensions(AsylumTrackerChargesLabel:GetTextWidth(), AsylumTrackerChargesLabel:GetTextHeight())
 
-          AsylumTrackerOlmsHP:SetMovable(true)
+          AsylumTrackerOlmsHP:SetMovable(true) -- Olms' HP is always enabled, so there's no check for if it's enabled.
           if AST.sv["storm_the_heavens"] then AsylumTrackerStorm:SetMovable(true) end
           if AST.sv["defiling_blast"] then AsylumTrackerBlast:SetMovable(true) end
           if AST.sv["static_shield"] then AsylumTrackerSphere:SetMovable(true) end
@@ -53,16 +55,17 @@ function AST.ToggleMovable()
           if AST.sv["maim"] then AsylumTrackerMaim:SetHidden(false) end
           if AST.sv["exhaustive_charges"] then AsylumTrackerCharges:SetHidden(false) end
      else
-          AsylumTrackerOlmsHPBackdrop:SetHidden(true) AsylumTrackerOlmsHP:SetDimensions(AsylumTrackerOlmsHPLabel:GetTextWidth(), AsylumTrackerOlmsHPLabel:GetTextHeight())
-          AsylumTrackerStormBackdrop:SetHidden(true) AsylumTrackerStorm:SetDimensions(AsylumTrackerStormLabel:GetTextWidth(), AsylumTrackerStormLabel:GetTextHeight())
-          AsylumTrackerBlastBackdrop:SetHidden(true) AsylumTrackerBlast:SetDimensions(AsylumTrackerBlastLabel:GetTextWidth(), AsylumTrackerBlastLabel:GetTextHeight())
-          AsylumTrackerSphereBackdrop:SetHidden(true) AsylumTrackerSphere:SetDimensions(AsylumTrackerSphereLabel:GetTextWidth(), AsylumTrackerSphereLabel:GetTextHeight())
-          AsylumTrackerTeleportStrikeBackdrop:SetHidden(true) AsylumTrackerTeleportStrike:SetDimensions(AsylumTrackerTeleportStrikeLabel:GetTextWidth(), AsylumTrackerTeleportStrikeLabel:GetTextHeight())
-          AsylumTrackerOppressiveBoltsBackdrop:SetHidden(true) AsylumTrackerOppressiveBolts:SetDimensions(AsylumTrackerOppressiveBoltsLabel:GetTextWidth(), AsylumTrackerOppressiveBoltsLabel:GetTextHeight())
-          AsylumTrackerFireBackdrop:SetHidden(true) AsylumTrackerFire:SetDimensions(AsylumTrackerFireLabel:GetTextWidth(), AsylumTrackerFireLabel:GetTextHeight())
-          AsylumTrackerSteamBackdrop:SetHidden(true) AsylumTrackerSteam:SetDimensions(AsylumTrackerSteamLabel:GetTextWidth(), AsylumTrackerSteamLabel:GetTextHeight())
-          AsylumTrackerMaimBackdrop:SetHidden(true) AsylumTrackerMaim:SetDimensions(AsylumTrackerMaimLabel:GetTextWidth(), AsylumTrackerMaimLabel:GetTextHeight())
-          AsylumTrackerChargesBackdrop:SetHidden(true) AsylumTrackerCharges:SetDimensions(AsylumTrackerChargesLabel:GetTextWidth(), AsylumTrackerChargesLabel:GetTextHeight())
+          -- Hides the backdrop behind the notifications
+          AsylumTrackerOlmsHPBackdrop:SetHidden(true)
+          AsylumTrackerStormBackdrop:SetHidden(true)
+          AsylumTrackerBlastBackdrop:SetHidden(true)
+          AsylumTrackerSphereBackdrop:SetHidden(true)
+          AsylumTrackerTeleportStrikeBackdrop:SetHidden(true)
+          AsylumTrackerOppressiveBoltsBackdrop:SetHidden(true)
+          AsylumTrackerFireBackdrop:SetHidden(true)
+          AsylumTrackerSteamBackdrop:SetHidden(true)
+          AsylumTrackerMaimBackdrop:SetHidden(true)
+          AsylumTrackerChargesBackdrop:SetHidden(true)
 
           AsylumTrackerOlmsHP:SetMovable(false)
           AsylumTrackerStorm:SetMovable(false)
