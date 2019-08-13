@@ -7,7 +7,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerOlmsHP, "AsylumTrackerOlmsHP")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -24,7 +24,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerStorm, "AsylumTrackerStorm")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -41,7 +41,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerBlast, "AsylumTrackerBlast")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -58,7 +58,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerSphere, "AsylumTrackerSphere")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -75,7 +75,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerTeleportStrike, "AsylumTrackerTeleportStrike")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -92,7 +92,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerOppressiveBolts, "AsylumTrackerOppressiveBolts")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -109,7 +109,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerFire, "AsylumTrackerFire")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -126,7 +126,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerSteam, "AsylumTrackerSteam")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -143,7 +143,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerMaim, "AsylumTrackerMaim")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>
@@ -160,7 +160,7 @@
                     AsylumTracker.SavePosition(AsylumTrackerCharges, "AsylumTrackerCharges")
                </OnMoveStop>
                <Controls>
-                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF">
+                    <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
 					<AnchorFill />
 					<Edge edgeSize="2" />
 				</Backdrop>

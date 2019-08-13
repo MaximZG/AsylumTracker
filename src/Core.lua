@@ -491,7 +491,7 @@ end
 
 function AsylumTracker.MonitorOlmsHP()
      local bossName = zo_strformat("<<C:1>>", GetUnitName("boss1"))
-     if bossName ~= "" then -- HP for Boss1 (Since the addon only loads in Asylum, this works to determining if you're in the room with Olms, because if you are not, this function returns an empty string)
+     if bossName ~= "" then -- HP for Boss1 (Since the addon only loads in Asylum, this works for determining if you're in the room with Olms, because if you are not, this function returns an empty string)
           local current, max, effective = GetUnitPower("boss1", POWERTYPE_HEALTH)
           AsylumTracker.olmsHealth = tostring(math.floor(string.format("%.1f", current / max * 100))) -- Format's Olm's health as a percentage
           if not AsylumTracker.olmsJumping then
