@@ -15,7 +15,7 @@
 ## DependsOn: LibAddonMenu-2.0>=29
 
 ; PackageReleaseDir: releases
-: PackageBumpFiles: src/Core.lua
+; PackageBumpFiles: src/Core.lua
 
 src/Core.lua
 src/EventHandling.lua
