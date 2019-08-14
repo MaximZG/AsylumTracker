@@ -14,9 +14,6 @@
 ## SavedVariables: AsylumTrackerVars
 ## DependsOn: LibAddonMenu-2.0>=29
 
-locales/en.lua
-locales/$(language).lua
-
 src/Core.lua
 src/EventHandling.lua
 src/CombatEvents.lua
@@ -25,3 +22,9 @@ src/Units.lua
 src/UI.lua
 src/SlashCommand.lua
 src/AsylumTracker.xml
+
+locales/en.lua
+locales/fr.lua
+locales/de.lua
+locales/ja.lua
+locales.jp.lua

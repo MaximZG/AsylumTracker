@@ -11,6 +11,7 @@ AST.name = "AsylumTracker"
 AST.author = "init3 [NA]"
 AST.version = "2.0"
 AST.variableVersion = 1
+AST.lang = {}
 AST.fontSize = 48
 AST.isMovable = false
 AST.olmsHealth = 100
@@ -69,6 +70,8 @@ AST.defaults = {
      debug_units = false,
 
      -- Settings
+     languageOverride = false,
+     chosenLocale = "en",
      sound_enabled = true,
      llothis_notifications = true,
      felms_notifications = true,
@@ -682,6 +685,17 @@ end
 function AST.Initialize()
      AST.savedVars = ZO_SavedVars:NewCharacterIdSettings("AsylumTrackerVars", AST.variableVersion, nil, AST.defaults) -- Defines saved variables
      AST.sv = AsylumTrackerVars["Default"][GetDisplayName()][GetCurrentCharacterId()]
+
+     AST.lang.en.LoadStrings() -- Always Load English Strings first because the other locale files may not have every string translated
+     if not AsylumTracker.sv.languageOverride then
+          local locale = GetCVar("language.2")
+          if locale ~= "en" then
+               AST.lang[locale].LoadStrings()
+          end
+     else
+          AST.lang[AST.sv.chosenLocale].LoadStrings()
+     end
+
      AST.CreateSettingsWindow() -- Creates the addon settings menu
      AST.RegisterUnitIndexing()
      AST.ResetAnchors()

@@ -1,4 +1,10 @@
 local AST = AsylumTracker
+local locales = {
+     ["English"]    = "en",
+     ["Français"]   = "fr",
+     ["Deutsche"]   = "de",
+     ["日本人"]      = "ja",
+}
 
 function AST.CreateSettingsWindow()
      local LAM2 = LibAddonMenu2
@@ -799,6 +805,42 @@ function AST.CreateSettingsWindow()
                          setFunc = function(value) sv.adjust_timers_llothis = value end,
                          default = false,
                          width = "full",
+                    },
+               }
+          },
+          {
+               type = "submenu",
+               name = "|cAD601C" .. GetString(AST_SETT_LANGUAGE) .. "|r",
+               controls = {
+                    {
+                         type = "checkbox",
+                         name = GetString(AST_SETT_LANGUAGE_OVERRIDE),
+                         tooltip = GetString(AST_SETT_LANGUAGE_OVERRIDE_DESC),
+                         getFunc = function() return sv.languageOverride end,
+                         setFunc = function(value) sv.languageOverride = value end,
+                         default = false,
+                         width = "full",
+                         requiresReload = true,
+                    },
+                    {
+                         type = "dropdown",
+                         name = GetString(AST_SETT_LANGUAGE_DROPDOWN),
+                         tooltip = GetString(AST_SETT_LANGUAGE_DROPDOWN_TOOL),
+                         choices = {"English", "Français", "Deutsche", "日本人"},
+                         getFunc = function()
+                              local locale = sv.chosenLocale
+                              for k, v in pairs(locales) do
+                                   if v == locale then return k end
+                              end
+                         end,
+                         setFunc = function(value)
+                              sv.chosenLocale = locales[value]
+                              ReloadUI()
+                         end,
+                         default = "English",
+                         width = "full",
+                         disabled = function() return not sv.languageOverride end,
+                         requiresReload = true,
                     },
                }
           }
