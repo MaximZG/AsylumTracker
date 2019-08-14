@@ -14,6 +14,9 @@
 ## SavedVariables: AsylumTrackerVars
 ## DependsOn: LibAddonMenu-2.0>=29
 
+; PackageReleaseDir: releases
+: PackageBumpFiles: src/Core.lua
+
 src/Core.lua
 src/EventHandling.lua
 src/CombatEvents.lua

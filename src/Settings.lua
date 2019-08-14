@@ -824,7 +824,7 @@ function AST.CreateSettingsWindow()
                     },
                     {
                          type = "dropdown",
-                         name = GetString(AST_SETT_LANGUAGE_DROPDOWN),
+                         name = GetString(AST_SETT_LANGUAGE),
                          tooltip = GetString(AST_SETT_LANGUAGE_DROPDOWN_TOOL),
                          choices = {"English", "Français", "Deutsche", "日本人"},
                          getFunc = function()

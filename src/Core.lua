@@ -364,7 +364,7 @@ end
 -- Adjusts Olms' timers to correct for another of his mechanics occuring while the next mechanic is queued to occur
 function AST.AdjustTimersOlms()
      local unsorted_timers = {}
-     local durations = {
+     local durations = { -- The amount of time for Olms to cast the ability and recover to cast his next ability
           trial_by_fire = 8,
           storm_the_heavens = 7,
           scalding_roar = 6,
@@ -376,7 +376,7 @@ function AST.AdjustTimersOlms()
      if AST.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AST.timers.exhaustive_charges end
      if AST.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AST.timers.scalding_roar end
 
-     local sortFunction = function(a,b) return a < b end
+     local sortFunction = function(a, b) return a < b end
      local sorted_timers = SortTimers(unsorted_timers, sortFunction)
 
      if #sorted_timers >= 2 then

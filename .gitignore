@@ -1,0 +1,5 @@
+# Ignore releases directory
+releases/
+
+# Redundant, but explictly ignore zip files
+*.zip

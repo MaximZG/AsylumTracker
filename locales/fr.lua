@@ -7,10 +7,9 @@ local locale_strings = {
      ["AST_SETT_INFO"] = "Asylum Tracker Information",
      ["AST_SETT_DESCRIPTION"] = "Affiche des notifications et des alerts pour vous aider sur l'Asile Sanctuaire",
      ["AST_SETT_NOTIFICATIONS"] = "Notifications",
-     ["AST_SETT_LANGUAGE"] = "La langue",
+     ["AST_SETT_LANGUAGE"] = "Langue",
           --     ["AST_SETT_LANGUAGE_OVERRIDE"] = "Language Override",
           --     ["AST_SETT_LANGUAGE_OVERRIDE_DESC"] = "Ignore the game's locale and load a specific language to use for the addon",
-          --     ["AST_SETT_LANGUAGE_DROPDOWN"] = "Locale",
           --     ["AST_SETT_LANGUAGE_DROPDOWN_TOOL"] = "Select Language to load.",
 
           --     ["AST_SETT_TIMERS"] = "Timer Settings",
