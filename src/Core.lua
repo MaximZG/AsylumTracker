@@ -19,6 +19,7 @@ AST.isInVAS = false
 AST.isInCombat = false
 AST.olmsJumping = false
 AST.firstJump = true
+AST.initialStormOccured = false
 AST.spawnTimes = {}
 AST.LlothisSpawned = false
 AST.FelmsSpawned = false
@@ -371,7 +372,7 @@ function AST.AdjustTimersOlms()
           exhaustive_charges = 2,
      }
 
-     if AST.timers.storm_the_heavens > 0 then unsorted_timers["storm_the_heavens"] = AST.timers.storm_the_heavens end
+     if AST.timers.storm_the_heavens > 0 and AST.initialStormOccured then unsorted_timers["storm_the_heavens"] = AST.timers.storm_the_heavens end
      if AST.timers.trial_by_fire > 0 then unsorted_timers["trial_by_fire"] = AST.timers.trial_by_fire end
      if AST.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AST.timers.exhaustive_charges end
      if AST.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AST.timers.scalding_roar end
@@ -672,6 +673,7 @@ function AST.CombatState(event, isInCombat)
                -- Resets Llothis and Felms spawn state for if a group wipes.
                AST.LlothisSpawned = false
                AST.FelmsSpawned = false
+               AST.initialStormOccured = false
                AST.dbg("Resetting Llothis and Felms spawn status")
 
                AST.unitIds = {}

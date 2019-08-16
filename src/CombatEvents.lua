@@ -31,6 +31,7 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
                     PlaySound(SOUNDS.BATTLEGROUND_COUNTDOWN_FINISH)
                end
 
+               if not AST.initialStorm then AST.initialStorm = true end
                AST.stormIsActive = true
 
                AST.SetTimer("storm_the_heavens") -- Storm the Heavens just started, so create a new timer to preemtively warn for the next Storm the Heavens
@@ -107,6 +108,9 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
                if AST.firstJump then -- First in sequence (first of his 4 jumps around the room, not referring to the 90% jump)
                     AST.firstJump = false
+                    if AsylumTracker.olmsHealth > "80" then
+                         AST.SetTimer("storm_the_heavens", 15)
+                    end
                     zo_callLater(function()
                          AsylumTrackerOlmsHP:SetHidden(true)
                          AST.olmsJumping = false

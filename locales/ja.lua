@@ -37,8 +37,8 @@ local locale_strings = {
           --     ["AST_SETT_TIMER_COLOR_TOOL"] = "The color for the countdown number displayed on timers",
 
      -- Center Notifications Button
-     ["AST_SETT_CENTER_NOTIF"] = "通知を中央に配置", -- Center is a verb here
-     ["AST_SETT_CENTER_NOTIF_TOOL"] = "全ての通知を中央に一直線に揃えます",
+          -- ["AST_SETT_CENTER_NOTIF"] = "Reset Positions",
+          -- ["AST_SETT_CENTER_NOTIF_TOOL"] = "Resets the notifications to their default positions",
 
      -- Sound Effects
      ["AST_SETT_SOUND_EFFECT"] = "サウンドエフェクト",

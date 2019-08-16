@@ -1,9 +1,9 @@
 local AST = AsylumTracker
 local locales = {
-     ["English"]    = "en",
-     ["Français"]   = "fr",
-     ["Deutsche"]   = "de",
-     ["日本人"]      = "ja",
+     ["English"] = "en",
+     ["Français"] = "fr",
+     ["Deutsche"] = "de",
+     ["日本人"] = "ja",
 }
 
 function AST.CreateSettingsWindow()
@@ -15,7 +15,7 @@ function AST.CreateSettingsWindow()
           name = "Asylum Tracker",
           displayName = "|cAD601C" .. GetString(AST_SETT_HEADER) .. "|r",
           author = "|cAD601C" .. AST.author .. "|r",
-          version = "|cAD601C"  .. AST.version .. "|r",
+          version = "|cAD601C" .. AST.version .. "|r",
           website = "https://www.esoui.com/downloads/info2111-AST.html",
           feedback = "https://www.esoui.com/downloads/info2111-AST.html#comments",
           translation = "https://github.com/3tini/AsylumTracker/tree/dev/locales",

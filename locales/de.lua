@@ -37,8 +37,8 @@ local locale_strings = {
           --     ["AST_SETT_TIMER_COLOR_TOOL"] = "The color for the countdown number displayed on timers",
 
      -- Center Notifications Button
-     ["AST_SETT_CENTER_NOTIF"] = "Zentrale Benachrichtigung",
-     ["AST_SETT_CENTER_NOTIF_TOOL"] = "Alle Benachrichtigungen werden in der Mitte des Bildschirms ausgerichtet.",
+          -- ["AST_SETT_CENTER_NOTIF"] = "Reset Positions",
+          -- ["AST_SETT_CENTER_NOTIF_TOOL"] = "Resets the notifications to their default positions",
 
      -- Sound Effects
      ["AST_SETT_SOUND_EFFECT"] = "Soundeffekt",

@@ -8,9 +8,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="ff0000" text="OLMSHP" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -25,9 +25,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="FFFFFF" text="KITENOW" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -42,9 +42,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="00FF00" text="BLAST" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -59,9 +59,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="0000FF" text="SPHERE" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -76,9 +76,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="FF00FF" text="FELMS JUMP" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -93,9 +93,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="099FFF" text="BOLTS" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -110,9 +110,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="FF6600" text="FIRE" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -127,9 +127,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="7d12ff" text="STEAM" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -144,9 +144,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="34efca" text="MAIM" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
@@ -161,9 +161,9 @@
                </OnMoveStop>
                <Controls>
                     <Backdrop name="$(parent)Backdrop" centerColor="75000000" edgeColor="AAFFFFFF" hidden="true">
-					<AnchorFill />
-					<Edge edgeSize="2" />
-				</Backdrop>
+                         <AnchorFill/>
+                         <Edge edgeSize="2"/>
+                    </Backdrop>
                     <Label name="$(parent)Label" fontName="ZoFontWinH1" font="$(BOLD_FONT)|$(KB_48)|soft-shadow-thick" color="366f87" text="CHARGES" verticalAlignment="CENTER" horizontalAlignment="CENTER" alpha="1" hidden="false">
                          <Dimensions x="950" y="50"/>
                          <Anchor point="CENTER" offsetX="0" offsetY="0"/>
