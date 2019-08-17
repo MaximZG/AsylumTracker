@@ -28,6 +28,7 @@ function AST.RegisterEvents()
                RegisterForAbility(AST.id["deep_breath"])
                RegisterForAbility(AST.id["charge"])
                RegisterForAbility(AST.id["poison_arrow"])
+               RegisterForAbility(AST.id["shrouded_daggers"])
           end
           RegisterForAbility(AST.id["gusts_of_steam"]) -- Olms Jump at 90/75/50/25
           -- Registers Olms' Steam Breath regardless of whether it is to be displayed in order to correctly track Olms' Storm the Heavens Timer

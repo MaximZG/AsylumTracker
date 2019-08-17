@@ -31,7 +31,7 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
                     PlaySound(SOUNDS.BATTLEGROUND_COUNTDOWN_FINISH)
                end
 
-               if not AST.initialStorm then AST.initialStorm = true end
+               if not AST.initialStorm then AST.initialStormOccured = true end
                AST.stormIsActive = true
 
                AST.SetTimer("storm_the_heavens") -- Storm the Heavens just started, so create a new timer to preemtively warn for the next Storm the Heavens
@@ -49,7 +49,7 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
                targetName = UnitIdToName(targetUnitId) -- Gets the @DisplayName for the player targeted by Llothis' defiling blast cone
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end -- If UnitIdToName failed and returned #targetUnitId, then it was probably because you're not in a group, therefore we're assuming the target is the player
-               if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end -- If the player is the target of the mechanic
+               if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end -- It capitalizes the display name because the UnitIdToName function capitalizes the displayName before returning it
                if HashString(AST.displayName) == 1325046754 then targetName = "Gary" end
 
                if not AST.LlothisSpawned then AST.LlothisSpawned = true end
@@ -81,7 +81,7 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
                targetName = UnitIdToName(targetUnitId)
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end
-               if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end
+               if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end -- It capitalizes the display name because the UnitIdToName function capitalizes the displayName before returning it
 
                if not AST.FelmsSpawned then AST.FelmsSpawned = true end
 
@@ -166,7 +166,6 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
                dbg("Boss Event for [" .. targetUnitId .. "]")
 
           elseif abilityId == AST.id["maim"] then
-               AST.SetTimer("maim")
                AST.dbgability(abilityId, result, hitValue)
           end
      end

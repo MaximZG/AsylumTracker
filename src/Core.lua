@@ -61,6 +61,7 @@ AST.id = {
      deep_breath = 32797,
      charge = 26508,
      poison_arrow = 38648,
+     shrouded_daggers = 38914,
 }
 
 AST.defaults = {
@@ -418,6 +419,7 @@ function AST.UpdateTimers()
      if AST.isInCombat then
           if AST.sv.adjust_timers_olms then AST.AdjustTimersOlms() end
           if AST.sv.adjust_timers_llothis then AST.AdjustTimersLlothis() end
+          if AST.sv.maim then UpdateMaimedStatus() end
 
           for key, value in pairs(AST.timers) do -- The key is the ability and the value is the endTime for the event
                if AST.timers[key] > 0 then -- If there is a timer for the specified key event
@@ -530,7 +532,6 @@ function AST.UpdateTimers()
                          end
 
                     elseif key == "maim" then
-                         if AST.sv.maim then UpdateMaimedStatus() end
                          if timeRemaining >= 0.5 then
                               if AST.sv["maim"] then
                                    AsylumTrackerMaimLabel:SetText(GetString(AST_NOTIF_MAIM) .. "|c" .. AST.RGBToHex(AST.sv.color_timer[1], AST.sv.color_timer[2], AST.sv.color_timer[3]) .. zo_floor(timeRemaining) .. "|r")
