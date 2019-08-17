@@ -163,7 +163,7 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
           elseif abilityId == AST.id["boss_event"] and hitValue == 1 then
                AST.spawnTimes[targetUnitId] = GetGameTimeSeconds();
-               dbg("Boss Event for [" .. targetUnitId .. "]")
+               AST.dbg("Boss Event for [" .. targetUnitId .. "]")
 
           elseif abilityId == AST.id["maim"] then
                AST.dbgability(abilityId, result, hitValue)
