@@ -9,7 +9,7 @@ local LOW_PRIORITY = 1
 
 AST.name = "AsylumTracker"
 AST.author = "init3 [NA]"
-AST.version = "2.0"
+AST.version = "2.0.1"
 AST.variableVersion = 1
 AST.lang = {}
 AST.fontSize = 48
