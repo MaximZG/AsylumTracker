@@ -290,7 +290,7 @@ function AST.SetTimer(key, timer_override, endtime_override)
      elseif key == "scalding_roar" then
           duration = timer_override or 28
      elseif key == "trial_by_fire" then
-          duration = timer_override or 28
+          duration = timer_override or 27
      elseif key == "llothis_dormant" then
           duration = timer_override or 45
      elseif key == "felms_dormant" then

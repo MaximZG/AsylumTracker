@@ -12,7 +12,7 @@ local locale_strings = {
           --     ["AST_SETT_LANGUAGE_OVERRIDE_DESC"] = "Ignore the game's locale and load a specific language to use for the addon",
           --     ["AST_SETT_LANGUAGE_DROPDOWN_TOOL"] = "Select Language to load.",
 
-          --     ["AST_SETT_TIMERS"] = "Timer Settings",
+          --     ["AST_SETT_TIMERS"] = "Timer Settings (BETA)",
           --     ["AST_SETT_OLMS_ADJUST"] = "Adjust Olms' timers",
           --     ["AST_SETT_LLOTHIS_ADJUST"] = "Adjust Llothis' timers",
           --     ["AST_SETT_OLMS_ADJUST_DESC"] = "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0",
@@ -154,7 +154,7 @@ local locale_strings = {
      ["AST_NOTIF_JUMP"] = "FELMS SPRUNG: ",
      ["AST_NOTIF_BOLTS"] = "STOß: ",
      ["AST_NOTIF_INTERRUPT"] = "UNTERBRECHEN",
-     ["AST_NOTIF_FIRE"] = "FEUER",
+     ["AST_NOTIF_FIRE"] = "FEUER: ",
      ["AST_NOTIF_STEAM"] = "BRÜLLEN: ",
      ["AST_NOTIF_MAIM"] = "VERKRÜPPELN: ",
           -- ["AST_NOTIF_CHARGES"] = "CHARGES: ",

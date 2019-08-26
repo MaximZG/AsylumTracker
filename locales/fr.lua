@@ -12,7 +12,7 @@ local locale_strings = {
           --     ["AST_SETT_LANGUAGE_OVERRIDE_DESC"] = "Ignore the game's locale and load a specific language to use for the addon",
           --     ["AST_SETT_LANGUAGE_DROPDOWN_TOOL"] = "Select Language to load.",
 
-          --     ["AST_SETT_TIMERS"] = "Timer Settings",
+          --     ["AST_SETT_TIMERS"] = "Timer Settings (BETA)",
           --     ["AST_SETT_OLMS_ADJUST"] = "Adjust Olms' timers",
           --     ["AST_SETT_LLOTHIS_ADJUST"] = "Adjust Llothis' timers",
           --     ["AST_SETT_OLMS_ADJUST_DESC"] = "Adjust Olms' timers to account for other mechanics happening when a timer reaches 0",
@@ -154,7 +154,7 @@ local locale_strings = {
      ["AST_NOTIF_JUMP"] = "FELMS SAUT: ",
      ["AST_NOTIF_BOLTS"] = "RAYONS: ", -- Referring to Llothis' Oppressive bolts attack
      ["AST_NOTIF_INTERRUPT"] = "INTERRUPTION", -- For when you need to Interrupt Llothis' oppressive bolts attack
-     ["AST_NOTIF_FIRE"] = "FEU",
+     ["AST_NOTIF_FIRE"] = "FEU: ",
      ["AST_NOTIF_STEAM"] = "SOUFFLE: ", -- Referring to Olms' Steam breath
      ["AST_NOTIF_MAIM"] = "MUTILER: ", -- Referring to Felms' Maim
           -- ["AST_NOTIF_CHARGES"] = "CHARGES: ",
