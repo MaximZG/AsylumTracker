@@ -68,7 +68,10 @@ function AST.CreateSettingsWindow()
                type = "checkbox",
                name = AST_SETT_LLOTHIS_NOTIF,
                tooltip = AST_SETT_LLOTHIS_NOTIF_TOOL,
-               getFunc = function() return sv.llothis_notifications end,
+               getFunc = function()
+                    return false
+--                    return sv.llothis_notifications
+               end,
                setFunc = function(value) sv.llothis_notifications = value end,
                default = true,
                disabled = true,
@@ -78,7 +81,10 @@ function AST.CreateSettingsWindow()
                type = "checkbox",
                name = AST_SETT_FELMS_NOTIF,
                tooltip = AST_SETT_FELMS_NOTIF_TOOL,
-               getFunc = function() return sv.felms_notifications end,
+               getFunc = function()
+                    return false
+--                    return sv.felms_notifications
+               end,
                setFunc = function(value) sv.felms_notifications = value end,
                default = true,
                disabled = true,
