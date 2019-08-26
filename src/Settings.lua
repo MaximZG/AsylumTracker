@@ -71,6 +71,7 @@ function AST.CreateSettingsWindow()
                getFunc = function() return sv.llothis_notifications end,
                setFunc = function(value) sv.llothis_notifications = value end,
                default = true,
+               disabled = true,
                width = "full",
           },
           {
@@ -80,6 +81,7 @@ function AST.CreateSettingsWindow()
                getFunc = function() return sv.felms_notifications end,
                setFunc = function(value) sv.felms_notifications = value end,
                default = true,
+               disabled = true,
                width = "full",
           },
           {

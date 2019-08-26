@@ -304,19 +304,21 @@ end
 
 --
 local function UpdateMaimedStatus()
-     for i = 1, 50 do
-          local buffName, timeStarted, timeEnding, buffSlot, stackCount, fileName, buffType, effectType, abilityType, statusEffectType, abilityId, canClickOff, castByPlayer = GetUnitBuffInfo("player", i)
-          if abilityId == AST.id.maim then
-               local timerState = AST.timers.maim
-               local timeRemaining = timeEnding - GetGameTimeSeconds()
-               local diff = zo_abs(timerState - timeRemaining)
-               if diff > 0.15 then
-                    AST.SetTimer("maim", timeEnding - GetGameTimeSeconds(), timeEnding)
-                    AST.dbg("Updated Maim timer to " .. AST.timers.maim .. " seconds.")
+     if AST.sv.maim then
+          for i = 1, 50 do
+               local buffName, timeStarted, timeEnding, buffSlot, stackCount, fileName, buffType, effectType, abilityType, statusEffectType, abilityId, canClickOff, castByPlayer = GetUnitBuffInfo("player", i)
+               if abilityId == AST.id.maim then
+                    local timerState = AST.timers.maim
+                    local timeRemaining = timeEnding - GetGameTimeSeconds()
+                    local diff = zo_abs(timerState - timeRemaining)
+                    if diff > 0.15 then
+                         AST.SetTimer("maim", timeEnding - GetGameTimeSeconds(), timeEnding)
+                         AST.dbg("Updated Maim timer to " .. AST.timers.maim .. " seconds.")
+                    end
+                    break
+               elseif abilityId == nil or abilityId == "" or abilityId == 0 then
+                    break
                end
-               break
-          elseif abilityId == nil or abilityId == "" or abilityId == 0 then
-               break
           end
      end
 end
@@ -365,35 +367,37 @@ end
 
 -- Adjusts Olms' timers to correct for another of his mechanics occuring while the next mechanic is queued to occur
 function AST.AdjustTimersOlms()
-     local unsorted_timers = {}
-     local durations = { -- The amount of time for Olms to cast the ability and recover to cast his next ability
-          trial_by_fire = 8,
-          storm_the_heavens = 7,
-          scalding_roar = 6,
-          exhaustive_charges = 2,
-     }
+     if AST.sv.adjust_timers_olms then
+          local unsorted_timers = {}
+          local durations = { -- The amount of time for Olms to cast the ability and recover to cast his next ability
+               trial_by_fire = 8,
+               storm_the_heavens = 7,
+               scalding_roar = 6,
+               exhaustive_charges = 2,
+          }
 
-     if AST.timers.storm_the_heavens > 0 and AST.initialStormOccured then unsorted_timers["storm_the_heavens"] = AST.timers.storm_the_heavens end
-     if AST.timers.trial_by_fire > 0 then unsorted_timers["trial_by_fire"] = AST.timers.trial_by_fire end
-     if AST.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AST.timers.exhaustive_charges end
-     if AST.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AST.timers.scalding_roar end
+          if AST.timers.storm_the_heavens > 0 and AST.initialStormOccured then unsorted_timers["storm_the_heavens"] = AST.timers.storm_the_heavens end
+          if AST.timers.trial_by_fire > 0 then unsorted_timers["trial_by_fire"] = AST.timers.trial_by_fire end
+          if AST.timers.exhaustive_charges > 0 then unsorted_timers["exhaustive_charges"] = AST.timers.exhaustive_charges end
+          if AST.timers.scalding_roar > 0 then unsorted_timers["scalding_roar"] = AST.timers.scalding_roar end
 
-     local sortFunction = function(a, b) return a < b end
-     local sorted_timers = SortTimers(unsorted_timers, sortFunction)
+          local sortFunction = function(a, b) return a < b end
+          local sorted_timers = SortTimers(unsorted_timers, sortFunction)
 
-     if #sorted_timers >= 2 then
-          for i = 1, #sorted_timers - 1 do
-               local timer1, timer2 = AST.timers[sorted_timers[i]], AST.timers[sorted_timers[i + 1]]
-               local endTime1, endTime2 = AST.endTimes[sorted_timers[i]], AST.endTimes[sorted_timers[i + 1]]
-               local duration1 = durations[sorted_timers[i]]
-               if (timer2 - timer1) < duration1 then
-                    if (timer2 - timer1) >= 1 then
-                         local old_timeRemaining = timer2
-                         local new_timeRemaining = timer2 + (duration1 - (timer2 - timer1))
-                         local new_endTime = endTime2 + (duration1 - (endTime2 - endTime1))
-                         if zo_abs(new_timeRemaining - old_timeRemaining) > 0.15 then
-                              AST.SetTimer(sorted_timers[i + 1], new_timeRemaining, new_endTime)
-                              AST.dbg("Updated timer for " .. sorted_timers[i + 1] .. " to " .. AST.timers[sorted_timers[i + 1]])
+          if #sorted_timers >= 2 then
+               for i = 1, #sorted_timers - 1 do
+                    local timer1, timer2 = AST.timers[sorted_timers[i]], AST.timers[sorted_timers[i + 1]]
+                    local endTime1, endTime2 = AST.endTimes[sorted_timers[i]], AST.endTimes[sorted_timers[i + 1]]
+                    local duration1 = durations[sorted_timers[i]]
+                    if (timer2 - timer1) < duration1 then
+                         if (timer2 - timer1) >= 1 then
+                              local old_timeRemaining = timer2
+                              local new_timeRemaining = timer2 + (duration1 - (timer2 - timer1))
+                              local new_endTime = endTime2 + (duration1 - (endTime2 - endTime1))
+                              if zo_abs(new_timeRemaining - old_timeRemaining) > 0.15 then
+                                   AST.SetTimer(sorted_timers[i + 1], new_timeRemaining, new_endTime)
+                                   AST.dbg("Updated timer for " .. sorted_timers[i + 1] .. " to " .. AST.timers[sorted_timers[i + 1]])
+                              end
                          end
                     end
                end
@@ -403,12 +407,14 @@ end
 
 -- Adjusts Llothis' Oppressive Bolts timer to correct for his Defiling Blast mechanic occuring first.
 function AST.AdjustTimersLlothis()
-     local db, ob = AST.timers.defiling_blast, AST.timers.oppressive_bolts
-     local db_end, ob_end, ec_end = AST.endTimes.defiling_blast, AST.endTimes.oppressive_bolts
-     if (ob > db) then
-          if (ob - db < 7) and (ob - db >= 2) and (db > 0) then
-               AST.SetTimer("oppressive_bolts", ob + (7 - (ob - db)), ob_end + (7 - (ob_end - db_end)))
-               AST.dbg("[ob > db]: Updated Oppressive Bolts timer to: " .. AST.timers.oppressive_bolts)
+     if AST.sv.adjust_timers_llothis then
+          local db, ob = AST.timers.defiling_blast, AST.timers.oppressive_bolts
+          local db_end, ob_end, ec_end = AST.endTimes.defiling_blast, AST.endTimes.oppressive_bolts
+          if (ob > db) then
+               if (ob - db < 7) and (ob - db >= 2) and (db > 0) then
+                    AST.SetTimer("oppressive_bolts", ob + (7 - (ob - db)), ob_end + (7 - (ob_end - db_end)))
+                    AST.dbg("[ob > db]: Updated Oppressive Bolts timer to: " .. AST.timers.oppressive_bolts)
+               end
           end
      end
 end
@@ -417,9 +423,9 @@ end
 -- EM:RegisterForUpdate(AST.name .. "_updateTimers", AST.refreshRate, AST.UpdateTimers) in EventHandling.lua
 function AST.UpdateTimers()
      if AST.isInCombat then
-          if AST.sv.adjust_timers_olms then AST.AdjustTimersOlms() end
-          if AST.sv.adjust_timers_llothis then AST.AdjustTimersLlothis() end
-          if AST.sv.maim then UpdateMaimedStatus() end
+          AST.AdjustTimersOlms()
+          AST.AdjustTimersLlothis()
+          UpdateMaimedStatus()
 
           for key, value in pairs(AST.timers) do -- The key is the ability and the value is the endTime for the event
                if AST.timers[key] > 0 then -- If there is a timer for the specified key event
@@ -510,24 +516,24 @@ function AST.UpdateTimers()
                     elseif key == "llothis_dormant" then
                          if timeRemaining == 10 then
                               if AST.sv["llothis_notifications"] then
-                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
+--                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
 
                          elseif timeRemaining == 5 then
                               if AST.sv["llothis_notifications"] then
-                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
+--                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
                          end
 
                     elseif key == "felms_dormant" then
                          if timeRemaining == 10 then
                               if AST.sv["felms_notifications"] then
-                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
+--                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
 
                          elseif timeRemaining == 5 then
                               if AST.sv["felms_notifications"] then
-                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
+--                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
                          end
 
