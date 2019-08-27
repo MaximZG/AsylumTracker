@@ -9,7 +9,7 @@ local LOW_PRIORITY = 1
 
 AST.name = "AsylumTracker"
 AST.author = "init3 [NA]"
-AST.version = "2.0.2"
+AST.version = "2.0.3"
 AST.variableVersion = 1
 AST.lang = {}
 AST.fontSize = 48
@@ -324,15 +324,15 @@ local function UpdateMaimedStatus()
 end
 
 -- Creates a notification using Center_Screen_Announce. This is called when Llothis/Felms switch between active and dormant.
-function AST.CreateNotification(text, duration, category, priority)
-     local CSA = CENTER_SCREEN_ANNOUNCE
-     local params = CSA:CreateMessageParams(category)
-     params:SetCSAType(CENTER_SCREEN_ANNOUNCE_TYPE_RAID_TRIAL)
-     params:SetText(text)
-     params:SetLifespanMS(duration)
-     params:SetPriority(priority)
-     CSA:AddMessageWithParams(params)
-end
+--function AST.CreateNotification(text, duration, category, priority)
+--     local CSA = CENTER_SCREEN_ANNOUNCE
+--     local params = CSA:CreateMessageParams(category)
+--     params:SetCSAType(CENTER_SCREEN_ANNOUNCE_TYPE_RAID_TRIAL)
+--     params:SetText(text)
+--     params:SetLifespanMS(duration)
+--     params:SetPriority(priority)
+--     CSA:AddMessageWithParams(params)
+--end
 
 -- Looping a sound effect makes it louder. Used for changing the volume of sound notifications
 function AST.LoopSound(numberOfLoops, soundEffect)
