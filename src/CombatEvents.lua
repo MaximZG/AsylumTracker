@@ -1,9 +1,5 @@
 local AST = AsylumTracker
 
-local HIGH_PRIORITY = 5
-local MED_PRIORITY = 3
-local LOW_PRIORITY = 1
-
 -- Converts a unitID obtained from AST.OnCombatEvent into the displayName for a player
 local function UnitIdToName(unitId)
      local name = AST.GetNameForUnitId(unitId) -- Obtains the character name for a player's unitID
@@ -228,7 +224,7 @@ function AST.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beg
                     AST.SetTimer("llothis_dormant")
 
                     if AST.sv["llothis_notifications"] then
-                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_DOWN) .. "|r", 3000, 5, MED_PRIORITY)
+                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_DOWN) .. "|r", 3000)
                     end
 
                elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
@@ -241,7 +237,7 @@ function AST.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beg
                     AST.SetTimer("felms_dormant")
 
                     if AST.sv["felms_notifications"] then
-                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_DOWN) .. "|r", 3000, 5, MED_PRIORITY)
+                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_DOWN) .. "|r", 3000)
                     end
                end
           elseif changeType == EFFECT_RESULT_FADED then
@@ -250,7 +246,7 @@ function AST.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beg
                     AST.SetTimer("llothis_dormant", 0)
 
                     if AST.sv["llothis_notifications"] then
-                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_UP) .. "|r", 3000, 5, MED_PRIORITY)
+                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_LLOTHIS_UP) .. "|r", 3000)
                     end
 
                elseif unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
@@ -258,7 +254,7 @@ function AST.OnEffectChanged(_, changeType, effectSlot, effectName, unitTag, beg
                     AST.SetTimer("felms_dormant", 0)
 
                     if AST.sv["felms_notifications"] then
-                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_UP) .. "|r", 3000, 5, MED_PRIORITY)
+                         AST.CreateNotification("|c00ff00" .. GetString(AST_NOTIF_FELMS_UP) .. "|r", 3000)
                     end
                end
           end
