@@ -69,12 +69,10 @@ function AST.CreateSettingsWindow()
                name = AST_SETT_LLOTHIS_NOTIF,
                tooltip = AST_SETT_LLOTHIS_NOTIF_TOOL,
                getFunc = function()
-                    return false
---                    return sv.llothis_notifications
+                    return sv.llothis_notifications
                end,
                setFunc = function(value) sv.llothis_notifications = value end,
                default = true,
-               disabled = true,
                width = "full",
           },
           {
@@ -82,12 +80,10 @@ function AST.CreateSettingsWindow()
                name = AST_SETT_FELMS_NOTIF,
                tooltip = AST_SETT_FELMS_NOTIF_TOOL,
                getFunc = function()
-                    return false
---                    return sv.felms_notifications
+                    return sv.felms_notifications
                end,
                setFunc = function(value) sv.felms_notifications = value end,
                default = true,
-               disabled = true,
                width = "full",
           },
           {

@@ -324,15 +324,28 @@ local function UpdateMaimedStatus()
 end
 
 -- Creates a notification using Center_Screen_Announce. This is called when Llothis/Felms switch between active and dormant.
---function AST.CreateNotification(text, duration, category, priority)
---     local CSA = CENTER_SCREEN_ANNOUNCE
---     local params = CSA:CreateMessageParams(category)
---     params:SetCSAType(CENTER_SCREEN_ANNOUNCE_TYPE_RAID_TRIAL)
---     params:SetText(text)
---     params:SetLifespanMS(duration)
---     params:SetPriority(priority)
---     CSA:AddMessageWithParams(params)
---end
+function AST.CreateNotification(text, duration, category, priority)
+     if text == nil then
+          AST.dbg("Attempt to create a Center Screen Announce notification terminated due to nil text value")
+          return
+     elseif duration == nil then
+          AST.dbg("Attempt to create a Center Screen Announce notification terminated due to nil duration value")
+          return
+     elseif category == nil then
+          AST.dbg("Attempt to create a Center Screen Announce notification terminated due to nil category value")
+          return
+     elseif priority == nil then
+          AST.dbg("Attempt to create a Center Screen Announce notification terminated due to nil priority value")
+          return
+     end
+     local CSA = CENTER_SCREEN_ANNOUNCE
+     local params = CSA:CreateMessageParams(category)
+     params:SetCSAType(CENTER_SCREEN_ANNOUNCE_TYPE_RAID_TRIAL)
+     params:SetText(text)
+     params:SetLifespanMS(duration)
+     params:SetPriority(priority)
+     CSA:AddMessageWithParams(params)
+end
 
 -- Looping a sound effect makes it louder. Used for changing the volume of sound notifications
 function AST.LoopSound(numberOfLoops, soundEffect)
@@ -516,24 +529,24 @@ function AST.UpdateTimers()
                     elseif key == "llothis_dormant" then
                          if timeRemaining == 10 then
                               if AST.sv["llothis_notifications"] then
---                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
+                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
 
                          elseif timeRemaining == 5 then
                               if AST.sv["llothis_notifications"] then
---                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
+                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_LLOTHIS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
                          end
 
                     elseif key == "felms_dormant" then
                          if timeRemaining == 10 then
                               if AST.sv["felms_notifications"] then
---                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
+                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_10) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
 
                          elseif timeRemaining == 5 then
                               if AST.sv["felms_notifications"] then
---                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
+                                   AST.CreateNotification("|cff9933" .. GetString(AST_NOTIF_FELMS_IN_5) .. "|r", 3000, 5, HIGH_PRIORITY)
                               end
                          end
 
