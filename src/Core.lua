@@ -673,6 +673,7 @@ function AST.CombatState(event, isInCombat)
           AST.isInCombat = isInCombat
           if isInCombat then
                AST.IndexGroupMembers() -- Creates a table of group members character names to display names every time you enter combat.
+               AST.unitIds = {}
           else
                -- When you exit combat, this will remove any notifications that were on your screen when you left combat.
                AsylumTrackerOlmsHP:SetHidden(true)

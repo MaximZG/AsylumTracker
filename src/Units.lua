@@ -11,12 +11,8 @@ AST.unitIds = {}
 local function OnEffectChanged(_, _, _, _, _, _, _, _, _, _, _, _, _, unitName, unitId)
      if GetZoneNameById(ASYLUM_SANCTORIUM) == GetUnitZone("player") then
           unitName = zo_strformat("<<1>>", unitName)
-          if unitName ~= "Offline" then
-               if not AST.unitIds[unitId] then
-                    AST.unitIds[unitId] = unitName
-                    AST.dbgunits(unitName .. " [" .. unitId .. "] has been added to unitIds")
-               end
-          end
+          AST.unitIds[unitId] = unitName
+          AST.dbgunits(unitName .. " [" .. unitId .. "] has been added to unitIds")
      end
 end
 -- Returns the unitName for a given player's unitId if it is in the table, otherwise returns an empty string
