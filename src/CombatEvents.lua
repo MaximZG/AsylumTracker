@@ -1,7 +1,7 @@
 local AST = AsylumTracker
 
 -- Converts a unitID obtained from AST.OnCombatEvent into the displayName for a player
-local function UnitIdToName(unitId)
+function AST.UnitIdToName(unitId)
      local name = AST.GetNameForUnitId(unitId) -- Obtains the character name for a player's unitID
      if name == "" then
           name = "#"..unitId -- If the function couldn't determine the player's name, then return #unitID
@@ -47,7 +47,8 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
           elseif abilityId == AST.id["defiling_blast"] and hitValue == 2000 then
 
-               targetName = UnitIdToName(targetUnitId) -- Gets the @DisplayName for the player targeted by Llothis' defiling blast cone
+               targetName = AST.UnitIdToName(targetUnitId) -- Gets the @DisplayName for the player targeted by Llothis' defiling blast cone
+               AST.dbgtargets("Defiling Blast on " .. AST.GetNameForUnitId(targetUnitId) .. " (" .. DecorateDisplayName(targetName) .. ") [" .. targetUnitId .. "]")
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end -- If UnitIdToName failed and returned #targetUnitId, then it was probably because you're not in a group, therefore we're assuming the target is the player
                if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end -- It capitalizes the display name because the UnitIdToName function capitalizes the displayName before returning it
                if HashString(AST.displayName) == 1325046754 then targetName = "Gary" end
@@ -79,7 +80,8 @@ function AST.OnCombatEvent(_, result, isError, abilityName, abilityGraphic, abil
 
           elseif abilityId == AST.id["teleport_strike"] then
 
-               targetName = UnitIdToName(targetUnitId)
+               targetName = AST.UnitIdToName(targetUnitId)
+               AST.dbgtargets("Teleport Strike on " .. AST.GetNameForUnitId(targetUnitId) .. " (" .. DecorateDisplayName(targetName) .. ") [" .. targetUnitId .. "]")
                if targetName:sub(1, 1) == "#" then targetName = GetString(AST_SETT_YOU) end
                if targetName == zo_strformat("<<C:1>>", AST.displayName) then targetName = GetString(AST_SETT_YOU) end -- It capitalizes the display name because the UnitIdToName function capitalizes the displayName before returning it
 

@@ -1,6 +1,7 @@
 AsylumTracker = AsylumTracker or {}
 local AST = AsylumTracker
 local EM = EVENT_MANAGER
+local LIBMW = LibMsgWin
 
 local ASYLUM_SANCTORIUM = 1000
 
@@ -69,6 +70,8 @@ AST.defaults = {
      debug_ability = false,
      debug_timers = false,
      debug_units = false,
+     debug_window = false,
+     debug_targets = false,
 
      -- Settings
      languageOverride = false,
@@ -226,27 +229,53 @@ end
 -------------------------
 function AST.dbg(text)
      if AST.sv.debug then
-          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c992A18 " .. text .. "|r")
+          if AST.debugWindow then
+               AST.debugWindow:AddText("|cff0096[" .. GetTimeString() .. "] ::|r|c992A18 " .. text .. "|r")
+          else
+               d("|cff0096AsylumTracker [" .. GetTimeString() .. "] ::|r|c992A18 " .. text .. "|r")
+          end
      end
 end
 
 function AST.dbgability(abilityId, result, hitValue)
      if abilityId and result and hitValue then
           if AST.sv.debug_ability then
-               d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c184599 " .. GetAbilityName(abilityId) .. " (" .. abilityId .. ") with a result of " .. result .. " and a hit value of " .. hitValue)
+               if AST.debugWindow then
+                    AST.debugWindow:AddText("|cff0096[" .. GetTimeString() .. "] ::|r|c184599 " .. GetAbilityName(abilityId) .. " (" .. abilityId .. ") with a result of " .. result .. " and a hit value of " .. hitValue)
+               else
+                    d("|cff0096AsylumTracker [" .. GetTimeString() .. "] ::|r|c184599 " .. GetAbilityName(abilityId) .. " (" .. abilityId .. ") with a result of " .. result .. " and a hit value of " .. hitValue)
+               end
           end
      end
 end
 
 function AST.dbgtimers(text)
      if AST.sv.debug_timers then
-          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c02731E " .. text .. "|r")
+          if AST.debugWindow then
+               AST.debugWindow:AddText("|cff0096[" .. GetTimeString() .. "] ::|r|c02731E " .. text .. "|r")
+          else
+               d("|cff0096AsylumTracker [" .. GetTimeString() .. "] ::|r|c02731E " .. text .. "|r")
+          end
      end
 end
 
 function AST.dbgunits(text)
      if AST.sv.debug_units then
-          d("|cff0096AsylumTracker [" .. round(GetGameTimeSeconds(), 3) .. "] ::|r|c992A18 " .. text .. "|r")
+          if AST.debugWindow then
+               AST.debugWindow:AddText("|cff0096[" .. GetTimeString() .. "] ::|r|c992A18 " .. text .. "|r")
+          else
+               d("|cff0096AsylumTracker [" .. GetTimeString() .. "] ::|r|c992A18 " .. text .. "|r")
+          end
+     end
+end
+
+function AST.dbgtargets(text)
+     if AST.sv.debug_targets then
+          if AST.debugWindow then
+               AST.debugWindow:AddText("|cff0096[" .. GetTimeString() .. "] ::|r|ceaed47 " .. text .. "|r")
+          else
+               d("|cff0096AsylumTracker [" .. GetTimeString() .. "] ::|r|ceaed47 " .. text .. "|r")
+          end
      end
 end
 
@@ -672,7 +701,9 @@ function AST.CombatState(event, isInCombat)
      if isInCombat ~= AST.isInCombat then
           AST.isInCombat = isInCombat
           if isInCombat then
+               AST.dbgunits("Entering Combat. Reindexing Group Members")
                AST.IndexGroupMembers() -- Creates a table of group members character names to display names every time you enter combat.
+               AST.dbgunits("Entering Combat. Clearing Units Table")
                AST.unitIds = {}
           else
                -- When you exit combat, this will remove any notifications that were on your screen when you left combat.
@@ -704,6 +735,10 @@ end
 function AST.Initialize()
      AST.savedVars = ZO_SavedVars:NewCharacterIdSettings("AsylumTrackerVars", AST.variableVersion, nil, AST.defaults) -- Defines saved variables
      AST.sv = AsylumTrackerVars["Default"][GetDisplayName()][GetCurrentCharacterId()]
+
+     if LibMsgWin and AST.sv.debug_window then
+          AST.debugWindow = LIBMW:CreateMsgWindow(AST.name .. "_DebugWindow", "AsylumTracker Debug Window", 0, 0)
+     end
 
      AST.lang.en.LoadStrings() -- Always Load English Strings first because the other locale files may not have every string translated
      if not AsylumTracker.sv.languageOverride then

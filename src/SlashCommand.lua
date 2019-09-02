@@ -25,6 +25,9 @@ function AST.SlashCommand(cmd)
      elseif cmd == "debug units" then
           AST.sv.debug_units = not AST.sv.debug_units
           d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
+     elseif cmd == "debug targets" then
+          AST.sv.debug_targets = not AST.sv.debug_targets
+          d("|cff0096AsylumTracker ::|r Targets Debugging: |cff0096" .. tostring(AST.sv.debug_targets) .. "|r")
      elseif cmd == "debug all on" then
           AST.sv.debug = true
           d("|cff0096AsylumTracker ::|r General Debugging:  |cff0096" .. tostring(AST.sv.debug) .. "|r")
@@ -43,6 +46,16 @@ function AST.SlashCommand(cmd)
           d("|cff0096AsylumTracker ::|r Timers Debugging: |cff0096" .. tostring(AST.sv.debug_timers) .. "|r")
           AST.sv.debug_units = false
           d("|cff0096AsylumTracker ::|r Units Debugging: |cff0096" .. tostring(AST.sv.debug_units) .. "|r")
+     elseif cmd == "debug window on" then
+          AST.sv.debug_window = true
+          ReloadUI()
+     elseif cmd == "debug window off" then
+          AST.sv.debug_window = false
+          ReloadUI()
+     elseif cmd == "debug window clear" then
+          if AST.debugWindow then
+               AST.debugWindow:ClearText()
+          end
      elseif cmd == "storm on" then
           AST.sv.storm_the_heavens = true
           d("|cff0096AsylumTracker ::|r Storm the Heavens:  |cff0096" .. tostring(AST.sv.storm_the_heavens) .. "|r")
@@ -109,8 +122,12 @@ function AST.SlashCommand(cmd)
           d("|cff0096/astracker debug ability:|r Toggles ability debugging messages")
           d("|cff0096/astracker debug timers:|r Toggles timer debugging messages")
           d("|cff0096/astracker debug units:|r Toggles unit debugging messages")
+          d("|cff0096/astracker debug targets:|r Toggles target debugging messages")
           d("|cff0096/astracker debug all on:|r Enables all debugging messages")
           d("|cff0096/astracker debug all off:|r Disables all debugging messages")
+          d("|cff0096/astracker debug window on:|r Enables debugging window")
+          d("|cff0096/astracker debug window off:|r Disables debugging window")
+          d("|cff0096/astracker debug window clear:|r Clears debugging window")
           d(" ")
           d("|cff0096/astracker storm on/off:|r Toggles Storm The Heavens Notification")
           d("|cff0096/astracker blast on/off:|r Toggles Defiling Blast Notification")

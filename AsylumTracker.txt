@@ -14,6 +14,7 @@
 ## AddOnVersion: 20005
 ## SavedVariables: AsylumTrackerVars
 ## DependsOn: LibAddonMenu-2.0>=29
+## OptionalDependsOn: LibMsgWin
 
 ; PackageReleaseDir: releases
 ; PackageBumpFiles: src/Core.lua
