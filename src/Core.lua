@@ -6,7 +6,7 @@ local ASYLUM_SANCTORIUM = 1000
 
 AST.name = "AsylumTracker"
 AST.author = "init3 [NA]"
-AST.version = "2.0.4"
+AST.version = "2.0.5"
 AST.variableVersion = 1
 AST.lang = {}
 AST.fontSize = 48
