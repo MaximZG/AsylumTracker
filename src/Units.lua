@@ -8,12 +8,16 @@ AST.unitIds = {}
 	The problem is unitIds are not stable and there is no API function to convert a unitID to a unitName.
 	OnEffectChanged is an exception to this and returns both unitNames and unitIds; therefore, we can use this function to build a table of unitIds to unitNames.
 ]]
-local function OnEffectChanged(_, _, _, _, _, _, _, _, _, _, _, _, _, unitName, unitId)
+local function OnEffectChanged(_, _, _, _, unitTag, _, _, _, _, _, _, _, _, unitName, unitId)
      if GetZoneNameById(ASYLUM_SANCTORIUM) == GetUnitZone("player") then
           unitName = zo_strformat("<<1>>", unitName)
-          if AST.unitIds[unitId] ~= unitName then
-               AST.unitIds[unitId] = unitName
-               AST.dbgunits(unitName .. " [" .. unitId .. "] has been added to unitIds")
+          if unitTag ~= "reticleover" then
+               if unitTag ~= "" or unitName:find("Llothis") or unitName:find("ロシス") or unitName:find("ллотис") or unitName:find("Felms") or unitName:find("フェルムス") or unitName:find("фелмс") then
+                    if AST.unitIds[unitId] ~= unitName then
+                         AST.unitIds[unitId] = unitName
+                         AST.dbgunits(unitName .. " [" .. unitId .. "] has been added to unitIds")
+                    end
+               end
           end
      end
 end
